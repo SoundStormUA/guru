@@ -848,22 +848,25 @@ add_shortcode('testimonials', 'drawTestimonials');
 //[content=lessons]
 function contentLessons($atts) {
 	extract(shortcode_atts(array(
-					'lang'=>'',
+					'lang'=>'en',
 					'courseid'=>''), $atts));
-	$result = '<ul>';
+	$result = '';
 	$rows = get_table('themes');
-
 
 	$tmp=array();
 
 	foreach ($rows as $row) {
-		$tmp[$row['day']][] = $row['theme_ua'];
+		$tmp[$row['day']][] = $row['theme_' . $atts['lang']];
 	}
 
-		foreach ($rows as $row){
-			$result .= '<div class="day">' . $row['day'] .'</div>' . '<div class="thme">' . '<li>' . $row['theme_ua'] . '</li>' . '</div>';
+	foreach ($tmp as $key => $rows){
+	$result .= '<div class="themesPerDay">';
+	    $result .= '<span class="day">' . $key .'</span>' . '<div class="themes"><ul>';
+	     foreach ($rows as $element) {
+	        $result .= '<li>' . $element . '</li>';
+	     }
+	     $result .= '</ul></div></div>';
 	}
-	$result .= '</ul>';
 	return $result;
 }
 
