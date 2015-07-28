@@ -278,7 +278,7 @@ function get_data_for_select($table)
 
     if ($table === 'courses') {
         foreach ($names as $name) {
-            $names_caption[] = get_variables($name, 'en')['caption'];
+           /* $names_caption[] = get_variables($name, 'en')['caption'];*/
         }
     } else {
         $names_caption = $names;
@@ -309,8 +309,7 @@ function contact_form($atts, $content = null)
     $form .= '<div class="clearboth"></div>';
     $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
     $form .= '<div class="clearboth"></div>';
-    $form .= '<div class="buttonsHolder"><button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<button id="addFile" class="contact-submit addFile" data-style="move-up">+ резюме</button></div>';
+    $form .= '<div class="buttonsHolder"><button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button></div>';
     $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
 
     $form .= "</form></div>";
@@ -532,9 +531,7 @@ add_action('admin_menu', 'register_my_menu_page');
 
 function register_my_menu_page()
 {
-    add_menu_page('Manage tables', 'Manage tables', 'manage_options', 'my_menu', 'my_menu_output');
-    add_submenu_page('my_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
-    add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_menu_page2');
+    add_menu_page('Manage registered users', 'Manage registered users', 'manage_options', 'custompage', 'my_menu_page', '', 3);
 }
 
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
@@ -847,8 +844,6 @@ function drawTestimonials($atts, $content = null)
 
 
 add_shortcode('testimonials', 'drawTestimonials');
-
-
 
 //[content=lessons]
 function contentLessons($atts) {
