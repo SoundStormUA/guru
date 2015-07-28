@@ -854,15 +854,23 @@ add_shortcode('testimonials', 'drawTestimonials');
 function contentLessons($atts) {
 	extract(shortcode_atts(array(
 					'lang'=>'en',
-					'courseid'=>''), $atts));
+					'coursename'=>''), $atts));
 	$result = '';
 	$rows = get_table('themes');
-
+    $someCourse = get_table('cources');
+    foreach ($someCourse as $course){
+        if ($course['name'] == $atts['coursename']) {
+        $courseid = $course['id'];
+        break;
+        }
+    }
 
 	$tmp=array();
 
 	foreach ($rows as $row) {
-		$tmp[$row['day']][] = $row['theme_ua'];
+        if ($row['course_id'] == $course['id']) {
+		    $tmp[$row['day']][] = $row['theme_' . $atts['lang']];
+	    }
 	}
 
 	foreach ($tmp as $key => $rows){
