@@ -185,12 +185,12 @@ body {
   background-image: url("../img/header_bg.jpg");
   background-size: cover;
   #top-menu-container {
-    width: ~"calc(65% - 14px)";
     position: fixed;
     background-color: rgba(255, 255, 255, 0.9);
     z-index: 999;
   }
   #site-navigation {
+    width: ~"calc(85% + 20px)";
     margin: 0 auto;
     font-family: Lato-Semibold;
     &, & a {
@@ -1389,9 +1389,7 @@ th {
   margin: -200px auto 0 auto;
   padding-bottom: 100px;
   position: relative;
-  .phSpan {
-    opacity: 0.5;
-  }
+  .phSpan,
   ::-webkit-input-placeholder {
     color: @placeHolder;
   }
@@ -1765,6 +1763,9 @@ th {
 }
 
 @media (min-width: @screen-lg) {
+  #top-menu-container {
+    width: ~"calc(1250px - 14px)";
+  }
   #wrapper {
     width: @wrapperXSWidth;
     width: 1250px;
