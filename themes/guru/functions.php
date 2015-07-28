@@ -851,21 +851,17 @@ function contentLessons($atts) {
 					'lang'=>'',
 					'courseid'=>''), $atts));
 	$result = '<ul>';
-	$rows = array
-	(
-		array ('course' => '1', 'day'=>'1','theme'=>'ua'),
-		array ('course' => '1', 'day'=>'2','theme'=>'ru'),
-		array ('course' => '1', 'day'=>'3','theme'=>'en')
-	);
+	$rows = get_table('themes');
+
 
 	$tmp=array();
 
 	foreach ($rows as $row) {
-		$tmp[$row['day']][] = $row['theme'];
+		$tmp[$row['day']][] = $row['theme_ua'];
 	}
 
 		foreach ($rows as $row){
-			$result .= '<div class="day">' . $row['day'] .'</div>' . '<div class="thme">' . '<li>' . $row['theme'] . '</li>' . '</div>';
+			$result .= '<div class="day">' . $row['day'] .'</div>' . '<div class="thme">' . '<li>' . $row['theme_ua'] . '</li>' . '</div>';
 	}
 	$result .= '</ul>';
 	return $result;
