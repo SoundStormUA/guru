@@ -853,10 +853,11 @@ function contentLessons($atts) {
 	$result = '';
 	$rows = get_table('themes');
 
+
 	$tmp=array();
 
 	foreach ($rows as $row) {
-		$tmp[$row['day']][] = $row['theme_' . $atts['lang']];
+		$tmp[$row['day']][] = $row['theme_ua'];
 	}
 
 	foreach ($tmp as $key => $rows){
