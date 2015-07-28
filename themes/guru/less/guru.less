@@ -1,5 +1,7 @@
 @text-blue: #049ACF;
 @main-blue: #049ACF;
+@main-blue-button: #00ACDA;
+@main-blue-buttonShadow: #0692B8;
 @main-sea-color: #5EE5D1;
 @main-sea-colorShadow: #32C9B7;
 @sR: #397ccb;
@@ -36,6 +38,9 @@
 
 @equaliser-height: 57px;
 @titleLinesWidth: 50px;
+
+@registerButtonShadow: 5px;
+@registerButtonPressedShadow: 3px;
 
 .circle-default {
   background: #ffffff;
@@ -903,24 +908,45 @@ th {
 }
 
 .register {
+  background-color: @main-sea-color;
+
+  box-shadow: 0 @registerButtonShadow 0 0 @main-sea-colorShadow;
+  -webkit-box-shadow: 0 @registerButtonShadow 0 0 @main-sea-colorShadow;
+  -moz-box-shadow: 0 @registerButtonShadow 0 0 @main-sea-colorShadow;
+  -o-box-shadow: 0 @registerButtonShadow 0 0 @main-sea-colorShadow;
+
+  &:active {
+    box-shadow: 0 @registerButtonPressedShadow 0 0 @main-sea-colorShadow;
+    -webkit-box-shadow: 0 @registerButtonPressedShadow 0 0 @main-sea-colorShadow;
+    -moz-box-shadow: 0 @registerButtonPressedShadow 0 0 @main-sea-colorShadow;
+    -o-box-shadow: 0 @registerButtonPressedShadow 0 0 @main-sea-colorShadow;
+  }
+}
+
+.addFile {
+  background-color: @main-blue-button;
+
+  box-shadow: 0 @registerButtonShadow 0 0 @main-blue-buttonShadow;
+  -webkit-box-shadow: 0 @registerButtonShadow 0 0 @main-blue-buttonShadow;
+  -moz-box-shadow: 0 @registerButtonShadow 0 0 @main-blue-buttonShadow;
+  -o-box-shadow: 0 @registerButtonShadow 0 0 @main-blue-buttonShadow;
+
+  &:active {
+    box-shadow: 0 @registerButtonPressedShadow 0 0 @main-blue-buttonShadow;
+    -webkit-box-shadow: 0 @registerButtonPressedShadow 0 0 @main-blue-buttonShadow;
+    -moz-box-shadow: 0 @registerButtonPressedShadow 0 0 @main-blue-buttonShadow;
+    -o-box-shadow: 0 @registerButtonPressedShadow 0 0 @main-blue-buttonShadow;
+  }
+}
+
+.register, .addFile {
   text-transform: uppercase;
   color: white;
-  background-color: @main-sea-color;
   border-radius: 5px;
   text-decoration: none;
   padding: 10px 30px;
 
-  box-shadow: 0 3px 0 0 @main-sea-colorShadow;
-  -webkit-box-shadow: 0 3px 0 0 @main-sea-colorShadow;
-  -moz-box-shadow: 0 3px 0 0 @main-sea-colorShadow;
-  -o-box-shadow: 0 3px 0 0 @main-sea-colorShadow;
-
   &:active {
-    box-shadow: 0 1px 0 0 @main-sea-colorShadow;
-    -webkit-box-shadow: 0 1px 0 0 @main-sea-colorShadow;
-    -moz-box-shadow: 0 1px 0 0 @main-sea-colorShadow;
-    -o-box-shadow: 0 1px 0 0 @main-sea-colorShadow;
-
     transform: translateY(2px);
   }
 }
@@ -1409,10 +1435,27 @@ th {
     background-color: #ffffff;
     background-image: url("../img/border.png");
     border: 3px solid @main-blue;
-    #register {
-      margin-top: 40px;
-      outline: none;
-      border: none;
+    .sectionTitle {
+      margin: 30px 0 60px 0;
+    }
+    .buttonsHolder {
+      display: inline-block;
+      width: 100%;
+      #register, #addFile {
+        font-family: Lato-Bold;
+        font-size: 21px;
+        width: 45%;
+        padding: 20px;
+        margin-top: 40px;
+        outline: none;
+        border: none;
+      }
+      #register {
+        float: left;
+      }
+      #addFile {
+        float: right;
+      }
     }
   }
 
@@ -1498,7 +1541,6 @@ th {
         span {
           display: block;
           position: relative;
-          //padding: 1.2em 0.8em;
           opacity: 0;
           -webkit-transform: translate3d(100%, 0, 0);
           -moz-transform: translate3d(100%, 0, 0);
@@ -1547,6 +1589,7 @@ th {
   }
 
   .selectPlaceholder {
+    text-align: left;
     display: inline-block;
     overflow: hidden;
     span {

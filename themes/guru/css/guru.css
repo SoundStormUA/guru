@@ -797,22 +797,41 @@ th {
   vertical-align: top;
 }
 .register {
-  text-transform: uppercase;
-  color: white;
   background-color: #5ee5d1;
-  border-radius: 5px;
-  text-decoration: none;
-  padding: 10px 30px;
+  box-shadow: 0 5px 0 0 #32c9b7;
+  -webkit-box-shadow: 0 5px 0 0 #32c9b7;
+  -moz-box-shadow: 0 5px 0 0 #32c9b7;
+  -o-box-shadow: 0 5px 0 0 #32c9b7;
+}
+.register:active {
   box-shadow: 0 3px 0 0 #32c9b7;
   -webkit-box-shadow: 0 3px 0 0 #32c9b7;
   -moz-box-shadow: 0 3px 0 0 #32c9b7;
   -o-box-shadow: 0 3px 0 0 #32c9b7;
 }
-.register:active {
-  box-shadow: 0 1px 0 0 #32c9b7;
-  -webkit-box-shadow: 0 1px 0 0 #32c9b7;
-  -moz-box-shadow: 0 1px 0 0 #32c9b7;
-  -o-box-shadow: 0 1px 0 0 #32c9b7;
+.addFile {
+  background-color: #00acda;
+  box-shadow: 0 5px 0 0 #0692b8;
+  -webkit-box-shadow: 0 5px 0 0 #0692b8;
+  -moz-box-shadow: 0 5px 0 0 #0692b8;
+  -o-box-shadow: 0 5px 0 0 #0692b8;
+}
+.addFile:active {
+  box-shadow: 0 3px 0 0 #0692b8;
+  -webkit-box-shadow: 0 3px 0 0 #0692b8;
+  -moz-box-shadow: 0 3px 0 0 #0692b8;
+  -o-box-shadow: 0 3px 0 0 #0692b8;
+}
+.register,
+.addFile {
+  text-transform: uppercase;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+  padding: 10px 30px;
+}
+.register:active,
+.addFile:active {
   transform: translateY(2px);
 }
 .equaliser,
@@ -1258,10 +1277,28 @@ th {
   background-image: url("../img/border.png");
   border: 3px solid #049acf;
 }
-#registration #registrationFormDiv #register {
+#registration #registrationFormDiv .sectionTitle {
+  margin: 30px 0 60px 0;
+}
+#registration #registrationFormDiv .buttonsHolder {
+  display: inline-block;
+  width: 100%;
+}
+#registration #registrationFormDiv .buttonsHolder #register,
+#registration #registrationFormDiv .buttonsHolder #addFile {
+  font-family: Lato-Bold;
+  font-size: 21px;
+  width: 45%;
+  padding: 20px;
   margin-top: 40px;
   outline: none;
   border: none;
+}
+#registration #registrationFormDiv .buttonsHolder #register {
+  float: left;
+}
+#registration #registrationFormDiv .buttonsHolder #addFile {
+  float: right;
 }
 #registration .select_div li:nth-child(5) span,
 #registration .select_div.active li:first-child span {
@@ -1380,6 +1417,7 @@ th {
 }
 .input_div .selectPlaceholder,
 .select_div .selectPlaceholder {
+  text-align: left;
   display: inline-block;
   overflow: hidden;
 }
