@@ -278,7 +278,7 @@ function get_data_for_select($table)
 
     if ($table === 'courses') {
         foreach ($names as $name) {
-            $names_caption[] = get_variables($name, 'en')['caption'];
+           /* $names_caption[] = get_variables($name, 'en')['caption'];*/
         }
     } else {
         $names_caption = $names;
@@ -845,3 +845,30 @@ function drawTestimonials($atts, $content = null)
 
 add_shortcode('testimonials', 'drawTestimonials');
 
+//[content=lessons]
+function contentLessons($atts) {
+	extract(shortcode_atts(array(
+					'lang'=>'',
+					'courseid'=>''), $atts));
+	$result = '<ul>';
+	$rows = array
+	(
+		array ('course' => '1', 'day'=>'1','theme'=>'ua'),
+		array ('course' => '1', 'day'=>'2','theme'=>'ru'),
+		array ('course' => '1', 'day'=>'3','theme'=>'en')
+	);
+
+	$tmp=array();
+
+	foreach ($rows as $row) {
+		$tmp[$row['day']][] = $row['theme'];
+	}
+
+		foreach ($rows as $row){
+			$result .= '<div class="day">' . $row['day'] .'</div>' . '<div class="thme">' . '<li>' . $row['theme'] . '</li>' . '</div>';
+	}
+	$result .= '</ul>';
+	return $result;
+}
+
+add_shortcode( 'content-lessons', 'contentLessons' );
