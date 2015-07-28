@@ -534,7 +534,7 @@ function register_my_menu_page()
 {
     add_menu_page('Manage tables', 'Manage tables', 'manage_options', 'my_menu', 'my_menu_output');
     add_submenu_page('my_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
-    add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_menu_page2');
+    add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my');
 }
 
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
