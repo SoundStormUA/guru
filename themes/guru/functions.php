@@ -583,7 +583,7 @@ function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_
     }
 
     $query = "SELECT reg_users.id as ID, reg_users.FIO as FIO, reg_users.email as email,
-    reg_users.phone_number as phone_number, reg_users.city as city, courses.name as course_name,
+    reg_users.phone_number as phone_number, reg_users.city as city, courses.name_en as course_name,
     reg_users.course_id as selected_course, reg_users.status_id as selected_status, status.name as status
     FROM {$wpdb->prefix}registered_users reg_users
     INNER JOIN {$wpdb->prefix}courses courses ON courses.id = reg_users.course_id
@@ -599,8 +599,8 @@ function my_menu_page()
 {
     global $title;
 
-    $coursesSelectList = get_data_for_select('courses');
-    $statusSelectList = get_data_for_select('reg_users_status');
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
+    $statusSelectList = get_data_for_select('reg_users_status', 'name');
 
     $coursesSelectList['ids'] = '0, ' . $coursesSelectList['ids'];
     $coursesSelectList['names'] = 'All, ' . $coursesSelectList['names'];
@@ -684,8 +684,8 @@ add_action('wp_ajax_nopriv_render-user', 'renderUsersTable');
 
 function renderUsersTable($returned)
 {
-    $coursesSelectList = get_data_for_select('courses');
-    $statusSelectList = get_data_for_select('reg_users_status');
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
+    $statusSelectList = get_data_for_select('reg_users_status', 'name');
     $usersTable = get_users_data($_POST['fio'], $_POST['email'], $_POST['phone_number'], $_POST['city'], $_POST['course_id'], $_POST['status_id']);
 
     $resultHtml = '';
@@ -925,7 +925,7 @@ function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
     }
 
     $query = "SELECT theme.id as ID, theme.day as DAY, theme.theme_en as THEME_EN,theme.theme_ua as THEME_UA,
-    theme.theme_ru as THEME_RU,courses.name as course_name
+    theme.theme_ru as THEME_RU,courses.name_en as course_name
     FROM {$wpdb->prefix}themes theme
     INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id" . $themeWhere . "
     ORDER BY id";
@@ -999,7 +999,6 @@ function my_theme_page()
 function renderThemeTable($returned)
 {
     $coursesSelectList = get_data_for_select('courses', 'name_en');
-    var_dump($coursesSelectList);
     $themesTable = get_theme_content($_POST['course_id'], $_POST['day'], $_POST['theme_en'], $_POST['theme_ua'], $_POST['theme_ru']);
     $resultHtml = '';
     $count = 0;
@@ -1052,4 +1051,4 @@ function renderThemeTable($returned)
     echo $resultHtml;
     die();
     exit;
-};
+}
