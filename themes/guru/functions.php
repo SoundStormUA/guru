@@ -287,7 +287,7 @@ function get_data_for_select($table)
 
     if ($table === 'courses') {
         foreach ($names as $name) {
-           // $names_caption[] = get_variables($name, 'en')['caption'];
+            $names_caption[] = get_variables($name, 'en')['caption'];
         }
     } else {
         $names_caption = $names;

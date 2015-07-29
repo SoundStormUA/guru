@@ -116,7 +116,7 @@ jQuery("#registrationForm").submit(function (event) {
         type: 'POST',
         data: formData,
         success: function (result) {
-            //console.dir(result);
+            console.dir(result);
         }
     });
 });
