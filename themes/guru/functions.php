@@ -271,7 +271,7 @@ function courses($atts, $content = null)
 
 add_shortcode('add_course', 'courses');
 
-function get_data_for_select($table)
+function get_data_for_select($table, $field)
 {
     $coursesTable = get_table($table);
 
@@ -279,21 +279,11 @@ function get_data_for_select($table)
     $names = array();
 
     foreach ($coursesTable as $row) {
-        $ids[] = $row['ID'];
-        $names[] = $row['name'];
+        $ids[] = $row['id'] ? $row['id'] : $row['ID'];
+        $names[] = $row[$field];
     }
 
-    $names_caption = array();
-
-    if ($table === 'courses') {
-        foreach ($names as $name) {
-            $names_caption[] = get_variables($name, 'en')['caption'];
-        }
-    } else {
-        $names_caption = $names;
-    }
-
-    return array('ids' => implode(", ", $ids), 'names' => implode(", ", $names_caption));
+    return array('ids' => implode(", ", $ids), 'names' => implode(", ", $names));
     die();
     exit;
 }
@@ -949,7 +939,7 @@ function my_theme_page()
 {
     global $title;
 
-    $coursesSelectList = get_data_for_select('courses');
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
 
     $coursesSelectList['ids'] = '0, ' . $coursesSelectList['ids'];
     $coursesSelectList['names'] = 'All, ' . $coursesSelectList['names'];
@@ -998,7 +988,6 @@ function my_theme_page()
     $page .= renderThemeTable('true');
     $page .= '</div>';
     $page .= '</div>';
-
     $page .= '</section>';
     $page .= '</div>';
 
@@ -1009,7 +998,8 @@ function my_theme_page()
 
 function renderThemeTable($returned)
 {
-    $coursesSelectList = get_data_for_select('courses');
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
+    var_dump($coursesSelectList);
     $themesTable = get_theme_content($_POST['course_id'], $_POST['day'], $_POST['theme_en'], $_POST['theme_ua'], $_POST['theme_ru']);
     $resultHtml = '';
     $count = 0;
@@ -1062,4 +1052,4 @@ function renderThemeTable($returned)
     echo $resultHtml;
     die();
     exit;
-}
+};
