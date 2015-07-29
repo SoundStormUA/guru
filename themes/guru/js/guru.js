@@ -100,18 +100,23 @@ jQuery("#registrationForm").submit(function (event) {
     event.preventDefault();
     event.stopPropagation();
 
-    var formData = 'action=insert-user&' + jQuery(this).serialize();
+    var form = jQuery(this)[0];
+    var formData = new FormData(form);
 
-    jQuery.each(files, function(key, value) {
-        formData += '&' + key + '=' + value;
-    });
+    //var file_data = jQuery("#addFileInput").prop('files')[0];
+
+    //var formData = 'action=insert-user&' + jQuery(this).serialize() + '&file=' + file_data;
+
+    formData.append('action', 'insert-user');
+
+    console.log(formData);
 
     jQuery.ajax({
         url: WPAjax.ajaxurl,
         type: 'POST',
         data: formData,
-        success: function () {
-            alert('good');
+        success: function (result) {
+            //console.dir(result);
         }
     });
 });

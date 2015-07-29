@@ -136,9 +136,13 @@ function insert_registered_user()
         'FILE' => $_FILES['addingFile']
     );
 
-    echo "<script type='text/javascript'>console.dir($_POST);</script>";
+    //return "<script type='text/javascript'>alert($data));</script>";
 
-    echo($_POST);
+
+    echo (basename($_FILES['addingFile']['name']));
+
+
+    //echo( $data['FILE']['name'] );
 
     $wpdb->insert(
         $wpdb->prefix . 'registered_users',
@@ -933,7 +937,7 @@ function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
     $query = "SELECT theme.id as ID, theme.day as DAY, theme.theme_en as THEME_EN,theme.theme_ua as THEME_UA,
     theme.theme_ru as THEME_RU,courses.name as course_name
     FROM {$wpdb->prefix}themes theme
-    INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id
+    INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id" . $themeWhere . "
     ORDER BY id";
     $themeTable = $wpdb->get_results($query, ARRAY_A);
     return array('data' => $themeTable, 'query' => $themeWhere);
@@ -1009,7 +1013,6 @@ function my_theme_page()
 function renderThemeTable($returned)
 {
     $coursesSelectList = get_data_for_select('courses');
-    //$statusSelectList = get_data_for_select('reg_users_status');
     $themesTable = get_theme_content($_POST['course_id'], $_POST['day'], $_POST['theme_en'], $_POST['theme_ua'], $_POST['theme_ru']);
     var_dump($themesTable);
     $resultHtml = '';
