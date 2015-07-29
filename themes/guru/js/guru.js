@@ -2,6 +2,8 @@
  * Created by soundstorm on 05.06.15.
  */
 var courses = [];
+var files;
+
 function getCourses() {
     jQuery.ajax({
         url: WPAjax.ajaxurl,
@@ -96,9 +98,13 @@ jQuery(document).click(function (event) {
 
 jQuery("#registrationForm").submit(function (event) {
     event.preventDefault();
+    event.stopPropagation();
 
     var formData = 'action=insert-user&' + jQuery(this).serialize();
-    console.dir(jQuery(this).serialize());
+
+    jQuery.each(files, function(key, value) {
+        formData += '&' + key + '=' + value;
+    });
 
     jQuery.ajax({
         url: WPAjax.ajaxurl,
@@ -202,8 +208,19 @@ jQuery('.selectOptions li').click(function () {
     displaySelector(this);
 });
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
     drawAnimatedLines();
+
+    $('#addFile').click(function() {
+        $('#addFileInput').click();
+    });
+
+    $('#addFileInput').on('change', prepareUpload);
+
+    function prepareUpload(event)
+    {
+        files = event.target.files;
+    }
 });
 
 jQuery(window).resize(function() {

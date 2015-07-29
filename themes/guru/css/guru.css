@@ -1363,7 +1363,7 @@ th {
   list-style: none;
 }
 #registration .select_div .selectOptions ul li {
-  text-align: center;
+  text-align: left;
 }
 #registration .select_div .selectOptions ul span {
   display: block;
@@ -1413,7 +1413,7 @@ th {
 }
 .input_div .selectOptions li span,
 .select_div .selectOptions li span {
-  border-top: none;
+  border: none;
 }
 .input_div .selectPlaceholder,
 .select_div .selectPlaceholder {

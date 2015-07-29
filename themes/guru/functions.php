@@ -132,8 +132,13 @@ function insert_registered_user()
         'phone_number' => $_POST['phone_number'],
         'city' => $_POST['city'],
         'course_id' => $_POST['selectedCourse'],
-        'status_id' => 1
+        'status_id' => 1,
+        'FILE' => $_FILES['addingFile']
     );
+
+    echo "<script type='text/javascript'>console.dir($_POST);</script>";
+
+    echo($_POST);
 
     $wpdb->insert(
         $wpdb->prefix . 'registered_users',
@@ -309,8 +314,10 @@ function contact_form($atts, $content = null)
     $form .= '<div class="clearboth"></div>';
     $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
     $form .= '<div class="clearboth"></div>';
-    $form .= '<div class="buttonsHolder"><button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<button id="addFile" class="contact-submit addFile" data-style="move-up">+ резюме</button></div>';
+    $form .= '<div class="buttonsHolder">';
+    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
+    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" /></div>';
+    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
     $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
 
     $form .= "</form></div>";
