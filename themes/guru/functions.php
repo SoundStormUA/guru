@@ -177,7 +177,7 @@ function update_registered_user()
         'status_id' => $_POST['selected_status']
     );
 
-    print $data;
+    //print $data;
 
     $id = $_POST['user_id'];
 
@@ -195,9 +195,7 @@ function update_registered_user()
         ),
         array('%d')
     );
-}
-
-;
+};
 
 add_action('wp_ajax_delete-user', 'delete_registered_user');
 function delete_registered_user()

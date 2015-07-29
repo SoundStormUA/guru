@@ -73,6 +73,9 @@ function eventsLoad(element) {
             });
 
         } else if (jQuery(this).hasClass("save")) {
+            var formData;
+            var title = jQuery(this).closest('h1').text();
+
             var self = this;
             var row = jQuery(this).closest(".row");
             var inputs = jQuery(row).find("input:not(:checkbox)");
@@ -84,7 +87,15 @@ function eventsLoad(element) {
             var dataSelects = jQuery(selects).serialize();
             var checkId = jQuery(сheckboxId).attr("data-id");
 
-            var formData = 'action=update-user&' + dataInputs + '&' + dataSelects + '&user_id=' + checkId;
+            var functionName = '';
+
+            if ( title.indexOf("themes") > -1 ) {
+                functionName = 'update-themes';
+            } else {
+                functionName = 'update-user';
+            }
+
+            formData = 'action=' + functionName + '&' + dataInputs + '&' + dataSelects + '&user_id=' + checkId;
 
             if (jQuery(inputs[0]).attr("readonly")) {
                 return;
