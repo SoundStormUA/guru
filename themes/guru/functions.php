@@ -947,7 +947,7 @@ function my_theme_page()
     $page = '<div class="wrap">';
     $page .= '<h1>' . $title . '</h1>';
     $page .= '<section id="usersList">';
-    $page .= '<div id="users-table" class="table" cellspacing="0" cellpadding="0">';
+    $page .= '<div id="theme-table" class="table" cellspacing="0" cellpadding="0">';
     $page .= '<div class="col layer"></div>';
     $page .= '<div class="col checkCol"></div>';
     $page .= '<div class="col numberCol"></div>';
@@ -1050,3 +1050,36 @@ function renderThemeTable($returned)
     die();
     exit;
 }
+
+add_action('wp_ajax_update-themes', 'update_themes');
+function update_themes()
+{
+
+    global $wpdb;
+
+    $data = array(
+        'course_id' => $_POST['selected_course'],
+        'day' => $_POST['DAY'],
+        'theme_en' => $_POST['theme_en'],
+        'theme_ua' => $_POST['theme_ua'],
+        'theme_ru' => $_POST['theme_ru'],
+    );
+
+    //print $data;
+
+    $id = $_POST['user_id'];
+
+    $wpdb->update(
+        $wpdb->prefix . 'registered_users',
+        $data,
+        array('ID' => $id),
+        array(
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s'
+        ),
+        array('%d')
+    );
+};
