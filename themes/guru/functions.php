@@ -283,7 +283,7 @@ function get_data_for_select($table)
 
     if ($table === 'courses') {
         foreach ($names as $name) {
-            $names_caption[] = get_variables($name, 'en')['caption'];
+           // $names_caption[] = get_variables($name, 'en')['caption'];
         }
     } else {
         $names_caption = $names;
@@ -541,7 +541,7 @@ function register_my_menu_page()
 {
     add_menu_page('Manage tables', 'Manage tables', 'manage_options', 'my_menu', 'my_menu_output');
     add_submenu_page('my_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
-    add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my');
+    add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_theme_page');
 }
 
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
@@ -857,9 +857,9 @@ add_shortcode('testimonials', 'drawTestimonials');
 
 
 
-//[content=lessons]
+//[content-lessons]
 function contentLessons($atts) {
-	extract(shortcode_atts(array(
+	extract( shortcode_atts(array(
 					'lang'=>'en',
 					'coursename'=>''), $atts));
 	$result = '';
@@ -892,3 +892,190 @@ function contentLessons($atts) {
 }
 
 add_shortcode( 'content-lessons', 'contentLessons' );
+
+function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
+{
+    global $wpdb;
+
+    $themeWhere = '';
+
+    if ($course_id && $course_id !== 0 && $course_id !== undefined) {
+        $themeWhere .= 'course_id=' . $course_id;
+    }
+
+    if ($day && $themeWhere) {
+        $themeWhere .= ' and day like "' . $day . '%"';
+    } else if ($day) {
+        $themeWhere .= 'day like "' . $day . '%"';
+    }
+
+    if ($theme_en && $themeWhere) {
+        $themeWhere .= ' and theme_en like "' . $theme_en  . '%"';
+    } else if ($theme_en ) {
+        $themeWhere .= ' theme_en like "' . $theme_en . '%"';
+    }
+
+    if ($theme_ua && $themeWhere) {
+        $themeWhere .= ' and theme_ua like "' . $theme_ua  . '%"';
+    } else if ($theme_ua ) {
+        $themeWhere .= ' theme_ua like "' . $theme_ua . '%"';
+    }
+
+    if ($theme_ru && $themeWhere) {
+        $themeWhere .= ' and theme_ru like "' . $theme_ru  . '%"';
+    } else if ($theme_ru ) {
+        $themeWhere .= ' theme_ru like "' . $theme_ru . '%"';
+    }
+    if ($themeWhere) {
+        $themeWhere = ' WHERE ' . $themeWhere;
+    }
+
+    $query = "SELECT theme.id as ID, theme.day as DAY, theme.theme_en as THEME_EN,theme.theme_ua as THEME_UA,
+    theme.theme_ru as THEME_RU,courses.name as course_name
+    FROM {$wpdb->prefix}themes theme
+    INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id
+    ORDER BY id";
+    $themeTable = $wpdb->get_results($query, ARRAY_A);
+    return array('data' => $themeTable, 'query' => $themeWhere);
+    die();
+    exit;
+}
+
+function my_theme_page()
+{
+    global $title;
+
+    $coursesSelectList = get_data_for_select('courses');
+    $statusSelectList = get_data_for_select('reg_users_status');
+
+    $coursesSelectList['ids'] = '0, ' . $coursesSelectList['ids'];
+    $coursesSelectList['names'] = 'All, ' . $coursesSelectList['names'];
+    $statusSelectList['ids'] = '0, ' . $statusSelectList['ids'];
+    $statusSelectList['names'] = 'All, ' . $statusSelectList['names'];
+
+    $page = '<div class="wrap">';
+    $page .= '<h1>' . $title . '</h1>';
+    $page .= '<section id="usersList">';
+    $page .= '<div id="users-table" class="table" cellspacing="0" cellpadding="0">';
+    $page .= '<div class="col layer"></div>';
+    $page .= '<div class="col checkCol"></div>';
+    $page .= '<div class="col numberCol"></div>';
+    $page .= '<div class="col fioCol"></div>';
+    $page .= '<div class="col emailCol"></div>';
+    $page .= '<div class="col phoneCol"></div>';
+    $page .= '<div class="col cityCol"></div>';
+    $page .= '<div class="col courseCol"></div>';
+    $page .= '<div class="col statusCol"></div>';
+    $page .= '<div class="col settingsCol"></div>';
+    $page .= '<div class="headerContainer">';
+    $page .= '<div id="sortRow" class="sort row">';
+    $page .= '<div class="layer"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"><input id="fioInput" name="fio"></input></div>';
+    $page .= '<div class="cell"><input id="emailInput" name="email"></input></div>';
+    $page .= '<div class="cell"><input id="phoneInput" name="phone_number"></input></div>';
+    $page .= '<div class="cell"><input id="cityInput" name="city"></input></div>';
+    $page .= '<div class="cell">' . do_shortcode("[select id='courseInput' not_form='true' values='" . $coursesSelectList['ids'] . "'  options='" . $coursesSelectList['names'] . "' type='text'][/select]") . '</div>';
+    $page .= '<div class="cell">' . do_shortcode("[select id='statusInput' not_form='true' values='" . $statusSelectList['ids'] . "'  options='" . $statusSelectList['names'] . "' type='text'][/select]") . '</div>';
+    $page .= '<div class="cell emailSend fa fa-envelope"></div>';
+    $page .= '</div>';
+    $page .= '<div class="row header">';
+    $page .= '<div class="layer"></div>';
+    $page .= '<div class="cell check"><input type="checkbox" id="selectAll"></input></div>';
+    $page .= '<div class="cell number">#</div>';
+    $page .= '<div class="cell">Full Name</div>';
+    $page .= '<div class="cell">Email</div>';
+    $page .= '<div class="cell">Phone Number</div>';
+    $page .= '<div class="cell">City</div>';
+    $page .= '<div class="cell">Course</div>';
+    $page .= '<div class="cell">Status</div>';
+    $page .= '<div class="cell settings"></div>';
+    $page .= '</div>';
+    $page .= '</div>';
+    $page .= '<div id="tableBody" class="bodyContainer">';
+    $page .= renderThemeTable('true');
+    $page .= '</div>';
+    $page .= '</div>';
+
+    $page .= '</section>';
+    $page .= '</div>';
+
+    echo $page;
+}
+
+;
+
+function renderThemeTable($returned)
+{
+    $coursesSelectList = get_data_for_select('courses');
+    //$statusSelectList = get_data_for_select('reg_users_status');
+    $themesTable = get_theme_content($_POST['course_id'], $_POST['day'], $_POST['theme_en'], $_POST['theme_ua'], $_POST['theme_ru']);
+    var_dump($themesTable);
+    $resultHtml = '';
+    $count = 0;
+    foreach ($themeTable['data'] as $row) {
+        $count += 1;
+        $resultHtml .= '<div class="row">';
+        $resultHtml .= '<div class="layer"></div>';
+        $resultHtml .= '<div class="cell check"><input name="user_id"  type="checkbox" data-id="' . $row['ID'] . '"></input></div>';
+        $resultHtml .= '<div class="cell number">' . $count . '</div>';
+        $resultHtml .= '<div class="cell"><input name="FIO" readonly value="' . $row['FIO'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="email" readonly value="' . $row['email'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="phone_number" readonly value="' . $row['phone_number'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="city" readonly value="' . $row['city'] . '"></input></div>';
+
+        $courses_values_array = explode(", ", $coursesSelectList['ids']);
+        $courses_options_array = explode(", ", $coursesSelectList['names']);
+
+        $courseSelector = "<select  name='selected_course' id='courseSelect_" . $row['course_id'] . "' readonly disabled> ";
+        $selected = $row['selected_course'];
+
+        foreach ($courses_values_array as $value) {
+            if ($value == $selected) {
+                $selectedValue = 'selected';
+            } else {
+                $selectedValue = '';
+            }
+            $courseSelector .= "<option value='" . $value . "' " . $selectedValue . ">" . $courses_options_array[$value - 1] . "</option>";
+        }
+
+        $courseSelector .= "</select>";
+
+        $status_values_array = explode(", ", $statusSelectList['ids']);
+        $status_options_array = explode(", ", $statusSelectList['names']);
+
+        $statusSelector = "<select  name='selected_status' id='statusSelect_" . $row['course_id'] . "' readonly disabled> ";
+        $selected = $row['selected_status'];
+
+        foreach ($status_values_array as $value) {
+            if ($value == $selected) {
+                $selectedValue = 'selected';
+            } else {
+                $selectedValue = '';
+            }
+            $statusSelector .= "<option value='" . $value . "' " . $selectedValue . ">" . $status_options_array[$value - 1] . "</option>";
+        }
+        $statusSelector .= "</select>";
+
+        $resultHtml .= '<div class="cell">' . $courseSelector . '</div>';
+        $resultHtml .= '<div class="cell">' . $statusSelector . '</div>';
+        $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
+        $resultHtml .= '<div class="settingsIcons">';
+        $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
+        $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
+        $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
+        $resultHtml .= '</div>';
+        $resultHtml .= '</div>';
+        $resultHtml .= '</div>';
+    }
+
+    if ($returned) {
+        return $resultHtml;
+    }
+
+    echo $resultHtml;
+    die();
+    exit;
+}
