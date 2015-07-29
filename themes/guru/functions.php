@@ -963,12 +963,11 @@ function my_theme_page()
     $page .= '<div class="col layer"></div>';
     $page .= '<div class="col checkCol"></div>';
     $page .= '<div class="col numberCol"></div>';
-    $page .= '<div class="col fioCol"></div>';
-    $page .= '<div class="col emailCol"></div>';
-    $page .= '<div class="col phoneCol"></div>';
-    $page .= '<div class="col cityCol"></div>';
+    $page .= '<div class="col dayCol"></div>';
+    $page .= '<div class="col themelCol"></div>';
+    $page .= '<div class="col themeCol"></div>';
+    $page .= '<div class="col themeCol"></div>';
     $page .= '<div class="col courseCol"></div>';
-    $page .= '<div class="col statusCol"></div>';
     $page .= '<div class="col settingsCol"></div>';
     $page .= '<div class="headerContainer">';
     $page .= '<div id="sortRow" class="sort row">';
@@ -976,10 +975,10 @@ function my_theme_page()
     $page .= '<div class="cell"></div>';
     $page .= '<div class="cell"></div>';
     $page .= '<div class="cell">' . do_shortcode("[select id='courseInput' not_form='true' values='" . $coursesSelectList['ids'] . "'  options='" . $coursesSelectList['names'] . "' type='text'][/select]") . '</div>';
-    $page .= '<div class="cell"><input id="fioInput" name="DAY"></input></div>';
-    $page .= '<div class="cell"><input id="emailInput" name="THEME_EN"></input></div>';
-    $page .= '<div class="cell"><input id="phoneInput" name="THEME_UA"></input></div>';
-    $page .= '<div class="cell"><input id="cityInput" name="THEME_RU"></input></div>';
+    $page .= '<div class="cell"><input id="dayInput" name="DAY"></input></div>';
+    $page .= '<div class="cell"><input id="themeEnInput" name="THEME_EN"></input></div>';
+    $page .= '<div class="cell"><input id="themeUaInput" name="THEME_UA"></input></div>';
+    $page .= '<div class="cell"><input id="themeRuInput" name="THEME_RU"></input></div>';
 
     $page .= '<div class="cell emailSend fa fa-envelope"></div>';
     $page .= '</div>';
@@ -1012,7 +1011,6 @@ function renderThemeTable($returned)
 {
     $coursesSelectList = get_data_for_select('courses');
     $themesTable = get_theme_content($_POST['course_id'], $_POST['day'], $_POST['theme_en'], $_POST['theme_ua'], $_POST['theme_ru']);
-    var_dump($themesTable);
     $resultHtml = '';
     $count = 0;
     foreach ($themesTable['data'] as $row) {
