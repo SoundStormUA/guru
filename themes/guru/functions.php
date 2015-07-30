@@ -139,7 +139,8 @@ function insert_registered_user()
     //return "<script type='text/javascript'>alert($data));</script>";
 
 
-    echo (basename($_FILES['addingFile']['name']));
+    //echo (basename($_FILES['addingFile']['name']));
+    echo ($data['FIO']);
 
 
     //echo( $data['FILE']['name'] );
@@ -176,8 +177,6 @@ function update_registered_user()
         'course_id' => $_POST['selected_course'],
         'status_id' => $_POST['selected_status']
     );
-
-    print $data;
 
     $id = $_POST['user_id'];
 
@@ -271,6 +270,7 @@ add_shortcode('add_course', 'courses');
 
 function get_data_for_select($table, $field)
 {
+    $field = $field ? $field : 'name';
     $coursesTable = get_table($table);
 
     $ids = array();
@@ -1025,7 +1025,7 @@ function renderThemeTable($returned)
         $count += 1;
         $resultHtml .= '<div class="row">';
         $resultHtml .= '<div class="layer"></div>';
-        $resultHtml .= '<div class="cell check"><input name="course_id"  type="checkbox" data-id="' . $row['ID'] . '"></input></div>';
+        $resultHtml .= '<div class="cell check"><input name="theme_id"  type="checkbox" data-id="' . $row['ID'] . '"></input></div>';
         $resultHtml .= '<div class="cell number">' . $count . '</div>';
 
         $courses_values_array = explode(", ", $coursesSelectList['ids']);
@@ -1075,8 +1075,9 @@ function renderThemeTable($returned)
 add_action('wp_ajax_update-themes', 'update_themes');
 function update_themes()
 {
-
     global $wpdb;
+
+    $id = $_POST['theme_id'];
 
     $data = array(
         'course_id' => $_POST['selected_course'],
@@ -1086,10 +1087,12 @@ function update_themes()
         'theme_ru' => $_POST['theme_ru'],
     );
 
+    echo($data[course_id]);
+
     $wpdb->update(
         $wpdb->prefix . 'themes',
         $data,
-        array('id' => $id),
+        array('ID' => $id),
         array(
             '%d',
             '%d',
