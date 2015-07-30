@@ -879,9 +879,7 @@ add_shortcode( 'content-themes', 'contentThemes' );
 
 function contentLessons($lang, $name) {
 	$result = '';
-	$rows = get_table('themes', 'theme_' . $lang);
-    //$course = get_table('courses', 'name_en');
-
+	$rows = get_table('themes');
 
     $id = caseCourse($name);
 
@@ -1105,4 +1103,42 @@ function update_themes()
         ),
         array('%d')
     );
+}
+//[course-literature]
+function courseLiterature($atts) {
+	extract( shortcode_atts(array(
+					'lang'=>'en',
+					'img' =>'',
+					'coursename'=>''), $atts));
+	$page = '';
+	$page .= '<div class="tab">';
+	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
+	$page .= '<div class="literature">';
+    $page .= contentLiterature($atts['lang'], $atts['coursename']);
+    $page .= '</div>' . '/<div>';
+    return $page;
+}
+add_shortcode( 'course-literature', 'courseLiterature' );
+
+function contentLiterature($lang, $name) {
+	$result = '';
+	$litTable = get_table('literature');
+
+    $id = caseCourse($name);
+
+	$tmp=array();
+
+	foreach ($litTable as $row) {
+        if ($row['course_id'] == $id) {
+		    $tmp[$row['author_' . $lang]][] = $row['title_' . $lang];
+	    }
+	}
+	foreach ($tmp as $author => $title){
+	    foreach($title as $key => $valua){
+	        $result .= '<span class="title">' . $valua . '</span>';
+	    }
+	    $result .= '<span class="author">' . $author . '</span>';
+	}
+
+	return $result;
 }
