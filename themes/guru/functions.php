@@ -859,8 +859,6 @@ function caseCourse($courses) {
             return 4;
         } elseif ($courses === 'qa') {
             return 5;
-        } else {
-            return 1;
         }
 }
 
@@ -882,6 +880,8 @@ add_shortcode( 'content-themes', 'contentThemes' );
 function contentLessons($lang, $name) {
 	$result = '';
 	$rows = get_table('themes', 'theme_' . $lang);
+    //$course = get_table('courses', 'name_en');
+
 
     $id = caseCourse($name);
 
@@ -944,7 +944,7 @@ function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
     }
 
     $query = "SELECT theme.id as ID, theme.day as DAY, theme.theme_en as THEME_EN,theme.theme_ua as THEME_UA,
-    theme.theme_ru as THEME_RU,courses.name_en as course_name,
+    theme.theme_ru as THEME_RU, courses.name_en as course_name, courses.ID as selected_course
     FROM {$wpdb->prefix}themes theme
     INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id" . $themeWhere . "
     ORDER BY id";
