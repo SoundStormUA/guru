@@ -1015,6 +1015,9 @@ function my_theme_page()
 
 ;
 
+add_action('wp_ajax_render-themes', 'renderThemeTable');
+add_action('wp_ajax_nopriv_render-themes', 'renderThemeTable');
+
 function renderThemeTable($returned)
 {
     $coursesSelectList = get_data_for_select('courses', 'name_en');
