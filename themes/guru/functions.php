@@ -1139,6 +1139,5 @@ function contentLiterature($lang, $name) {
 	    }
 	    $result .= '<span class="author">' . $author . '</span>';
 	}
-
 	return $result;
 }
