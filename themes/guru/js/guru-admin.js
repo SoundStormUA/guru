@@ -74,7 +74,7 @@ function eventsLoad(element) {
 
         } else if (jQuery(this).hasClass("save")) {
             var formData;
-            var title = jQuery(this).closest('h1').text();
+            var title = jQuery('h1').text();
 
             var self = this;
             var row = jQuery(this).closest(".row");
@@ -88,14 +88,17 @@ function eventsLoad(element) {
             var checkId = jQuery(сheckboxId).attr("data-id");
 
             var functionName = '';
+            var checkName = '';
 
             if ( title.indexOf("themes") > -1 ) {
                 functionName = 'update-themes';
+                checkName = 'theme_id';
             } else {
                 functionName = 'update-user';
+                checkName = 'user_id';
             }
 
-            formData = 'action=' + functionName + '&' + dataInputs + '&' + dataSelects + '&user_id=' + checkId;
+            formData = 'action=' + functionName + '&' + dataInputs + '&' + dataSelects + '&' + checkName + '=' + checkId;
 
             if (jQuery(inputs[0]).attr("readonly")) {
                 return;
@@ -131,7 +134,8 @@ function eventsLoad(element) {
                 url: WPAjax.ajaxurl,
                 type: 'POST',
                 data: formData,
-                success: function() {
+                success: function(result) {
+                    alert(result);
                     setReadOnly(self)
                     jQuery.ajax({
                         url: WPAjax.ajaxurl,
