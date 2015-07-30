@@ -859,6 +859,8 @@ function caseCourse($courses) {
             return 4;
         } elseif ($courses === 'qa') {
             return 5;
+        } else {
+            return 1;
         }
 }
 
@@ -880,8 +882,6 @@ add_shortcode( 'content-themes', 'contentThemes' );
 function contentLessons($lang, $name) {
 	$result = '';
 	$rows = get_table('themes', 'theme_' . $lang);
-    //$course = get_table('courses', 'name_en');
-
 
     $id = caseCourse($name);
 
