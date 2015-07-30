@@ -89,13 +89,16 @@ function eventsLoad(element) {
 
             var functionName = '';
             var checkName = '';
+            var successAction = '';
 
             if ( title.indexOf("themes") > -1 ) {
                 functionName = 'update-themes';
                 checkName = 'theme_id';
+                successAction = 'render-themes';
             } else {
                 functionName = 'update-user';
                 checkName = 'user_id';
+                successAction = 'render-user';
             }
 
             formData = 'action=' + functionName + '&' + dataInputs + '&' + dataSelects + '&' + checkName + '=' + checkId;
@@ -140,7 +143,7 @@ function eventsLoad(element) {
                     jQuery.ajax({
                         url: WPAjax.ajaxurl,
                         type: 'POST',
-                        data: {action: 'render-user'},
+                        data: {action: successAction},
                         success: function (data) {
                             var html = jQuery.parseHTML(data);
                             var resHTML = '';
