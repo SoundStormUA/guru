@@ -178,7 +178,7 @@ function update_registered_user()
         'status_id' => $_POST['selected_status']
     );
 
-    //print $data;
+    print $data;
 
     $id = $_POST['user_id'];
 
@@ -850,42 +850,63 @@ function drawTestimonials($atts, $content = null)
 add_shortcode('testimonials', 'drawTestimonials');
 
 
+function caseCourse($courses) {
+        if ($courses === 'basic') {
+            return 1;
+        } elseif ($courses === 'js') {
+            return 2;
+        } elseif ($courses === 'android') {
+            return 3;
+        } elseif ($courses === 'ios') {
+            return 4;
+        } elseif ($courses === 'qa') {
+            return 5;
+        }
+}
 
-//[content-lessons]
-function contentLessons($atts) {
+//[content-themes]
+function contentThemes($atts) {
 	extract( shortcode_atts(array(
 					'lang'=>'en',
 					'coursename'=>''), $atts));
+	$page = '';
+	$page .= '<div class="tab">';
+	$page .= '<div class="video">' . '</div>';
+	$page .= '<div class="themesWrap">';
+    $page .= contentLessons($atts['lang'], $atts['coursename']);
+    $page .= '</div>' . '/<div>';
+    return $page;
+}
+add_shortcode( 'content-themes', 'contentThemes' );
+
+function contentLessons($lang, $name) {
 	$result = '';
-	$rows = get_table('themes');
-    $someCourse = get_table('courses');
-    foreach ($someCourse as $course){
-        if ($course['name'] == $atts['coursename']) {
-        $courseid = $course['id'];
-        break;
-        }
-    }
+	$rows = get_table('themes', 'theme_' . $lang);
+    //$course = get_table('courses', 'name_en');
+
+
+    $id = caseCourse($name);
 
 	$tmp=array();
 
 	foreach ($rows as $row) {
-        if ($row['course_id'] == $course['id']) {
-		    $tmp[$row['day']][] = $row['theme_' . $atts['lang']];
+        if ($row['course_id'] == $id) {
+		    $tmp[$row['day']][] = $row['theme_' . $lang];
 	    }
 	}
-
-	foreach ($tmp as $key => $rows){
+	foreach ($tmp as $day => $rows){
 	$result .= '<div class="themesPerDay">';
-	    $result .= '<span class="day">' . $key .'</span>' . '<div class="themes"><ul>';
+	$result .= '<div class="title">';
+	$result .= '<span class="day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</span>';
+	$result .= '</div>';
+	$result .= '<ul>';
 	     foreach ($rows as $element) {
-	        $result .= '<li>' . $element . '</li>';
+	        $result .= '<li class="theme">' . $element . '</li>';
 	     }
-	     $result .= '</ul></div></div>';
+	     $result .= '</ul></div>';
 	}
 	return $result;
 }
-
-add_shortcode( 'content-lessons', 'contentLessons' );
 
 function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
 {
@@ -949,7 +970,7 @@ function my_theme_page()
     $page = '<div class="wrap">';
     $page .= '<h1>' . $title . '</h1>';
     $page .= '<section id="usersList">';
-    $page .= '<div id="users-table" class="table" cellspacing="0" cellpadding="0">';
+    $page .= '<div id="theme-table" class="table" cellspacing="0" cellpadding="0">';
     $page .= '<div class="col layer"></div>';
     $page .= '<div class="col checkCol"></div>';
     $page .= '<div class="col numberCol"></div>';
@@ -1051,4 +1072,33 @@ function renderThemeTable($returned)
     echo $resultHtml;
     die();
     exit;
+}
+
+add_action('wp_ajax_update-themes', 'update_themes');
+function update_themes()
+{
+
+    global $wpdb;
+
+    $data = array(
+        'course_id' => $_POST['selected_course'],
+        'day' => $_POST['DAY'],
+        'theme_en' => $_POST['theme_en'],
+        'theme_ua' => $_POST['theme_ua'],
+        'theme_ru' => $_POST['theme_ru'],
+    );
+
+    $wpdb->update(
+        $wpdb->prefix . 'themes',
+        $data,
+        array('id' => $id),
+        array(
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s'
+        ),
+        array('%d')
+    );
 }
