@@ -100,25 +100,23 @@ jQuery("#registrationForm").submit(function (event) {
     event.preventDefault();
     event.stopPropagation();
 
-    var form = jQuery(this)[0];
+    var form = document.getElementById("registrationForm");
     var formData = new FormData(form);
 
-    //var file_data = jQuery("#addFileInput").prop('files')[0];
-
-    //var formData = 'action=insert-user&' + jQuery(this).serialize() + '&file=' + file_data;
+    var oReq = new XMLHttpRequest();
 
     formData.append('action', 'insert-user');
 
-    console.log(formData);
+    oReq.open("POST", WPAjax.ajaxurl, true);
 
-    jQuery.ajax({
-        url: WPAjax.ajaxurl,
-        type: 'POST',
-        data: formData,
-        success: function (result) {
-            console.dir(result);
-        }
-    });
+    oReq.onreadystatechange = function() {
+        if (oReq.readyState == 4 && oReq.status == 200) {
+            alert(oReq.responseText);
+            return;
+        };
+    };
+
+    oReq.send(formData);
 });
 
 function drawAnimatedLines() {

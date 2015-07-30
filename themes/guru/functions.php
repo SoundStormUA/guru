@@ -139,7 +139,8 @@ function insert_registered_user()
     //return "<script type='text/javascript'>alert($data));</script>";
 
 
-    echo (basename($_FILES['addingFile']['name']));
+    //echo (basename($_FILES['addingFile']['name']));
+    echo ($data['FIO']);
 
 
     //echo( $data['FILE']['name'] );
@@ -271,6 +272,7 @@ add_shortcode('add_course', 'courses');
 
 function get_data_for_select($table, $field)
 {
+    $field = $field ? $field : 'name';
     $coursesTable = get_table($table);
 
     $ids = array();
