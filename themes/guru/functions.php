@@ -847,18 +847,23 @@ function drawTestimonials($atts, $content = null)
 
 add_shortcode('testimonials', 'drawTestimonials');
 
-
 function caseCourse($courses) {
-        if ($courses === 'basic') {
-            return 1;
-        } elseif ($courses === 'js') {
-            return 2;
-        } elseif ($courses === 'android') {
-            return 3;
-        } elseif ($courses === 'ios') {
-            return 4;
-        } elseif ($courses === 'qa') {
-            return 5;
+        switch ($courses) {
+            case 'basic':
+                return 1;
+                break;
+            case 'js':
+                return 2;
+                break;
+            case 'android':
+                return 3;
+                break;
+            case 'ios':
+                return 4;
+                break;
+            case 'qa':
+                return 5;
+                break;
         }
 }
 
@@ -890,6 +895,7 @@ function contentLessons($lang, $name) {
 		    $tmp[$row['day']][] = $row['theme_' . $lang];
 	    }
 	}
+    ksort($tmp);
 	foreach ($tmp as $day => $rows){
 	$result .= '<div class="themesPerDay">';
 	$result .= '<div class="title">';
@@ -1088,8 +1094,6 @@ function update_themes()
         'theme_ru' => $_POST['theme_ru'],
     );
 
-    echo($data[course_id]);
-
     $wpdb->update(
         $wpdb->prefix . 'themes',
         $data,
@@ -1134,10 +1138,66 @@ function contentLiterature($lang, $name) {
 	    }
 	}
 	foreach ($tmp as $author => $title){
-	    foreach($title as $key => $valua){
-	        $result .= '<span class="title">' . $valua . '</span>';
+	    foreach($title as $key => $value){
+	        $result .= '<span class="title">' . $value . '</span>';
 	    }
 	    $result .= '<span class="author">' . $author . '</span>';
 	}
 	return $result;
+}
+
+add_action('wp_ajax_delete-themes', 'delete_themes');
+function delete_themes()
+{
+    global $wpdb;
+
+    $id = $_POST['theme_id'];
+
+    $wpdb->delete(
+        $wpdb->prefix . 'themes',
+        array('ID' => $id),
+        array('%d')
+    );
+}
+
+;
+
+function insertThemeTable() {
+    global $wpdb;
+
+    $wpdb->insert(
+        $wpdb->prefix .'themes',
+        array(
+            'id' => $_POST['theme_id'],
+            'course_id' => $_POST['selected_course'],
+            'day' => $_POST['DAY'],
+            'theme_en' => $_POST['theme_en'],
+            'theme_ua' => $_POST['theme_ua'],
+            'theme_ru' => $_POST['theme_ru'],
+        ),
+        array(
+            '%d',
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+        ));
+}
+
+;
+
+function add_theme_form()
+{
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
+
+    $coursesSelectList['ids'] = '0, ' . $coursesSelectList['ids'];
+    $coursesSelectList['names'] = 'All, ' . $coursesSelectList['names'];
+    $statusSelectList['ids'] = '0, ' . $statusSelectList['ids'];
+    $statusSelectList['names'] = 'All, ' . $statusSelectList['names'];
+
+    $form = '';
+    $form .= '<div class="form">';
+    $form .= 'div ';
+    $form .= '</div>';
 }

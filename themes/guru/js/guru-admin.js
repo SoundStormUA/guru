@@ -53,12 +53,28 @@ function eventsLoad(element) {
                 .removeClass("backLayer");
 
         } else if (jQuery(this).hasClass("delete")) {
+            var formData;
+            var title = jQuery('h1').text();
 
             var row = jQuery(this).closest(".row");
             var сheckboxId = jQuery(row).find("input:checkbox");
             var checkId = jQuery(сheckboxId).attr("data-id");
 
-            var formData = 'action=delete-user&' + 'user_id=' + checkId;
+            var functionName = '';
+            var checkName = '';
+            var successAction = '';
+
+            if ( title.indexOf("themes") > -1 ) {
+                functionName = 'delete-themes';
+                checkName = 'theme_id';
+                successAction = 'render-themes';
+            } else {
+                functionName = 'delete-user';
+                checkName = 'user_id';
+                successAction = 'render-user';
+            }
+
+            formData = 'action=' + functionName + '&' + checkName + '=' + checkId;
 
             jQuery.ajax({
                 url: WPAjax.ajaxurl,
