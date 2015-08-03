@@ -3,7 +3,7 @@
  */
 
 function eventsLoad(element) {
-    jQuery(element).find(".controlDiv").not('.nohover').hover(function () {
+    jQuery(element).find(".controlDiv").hover(function () {
         jQuery(this).children(".settingsIcons").toggleClass("display");
     });
     jQuery(element).find(".settingsIcon").click(function() {
@@ -191,9 +191,31 @@ function eventsLoad(element) {
 }
 
 function newRow() {
-    var html = '<div class="row editRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="DAY"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings nohover"><div class="settingsIcons display"><div class="settingsIcon save fa fa-save"></div></div></div></div>';
+    var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="DAY"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
     var div = jQuery('<div>' + html + '</div>');
     eventsLoad(div);
+    jQuery("#tableBody").append(div.children());
+    jQuery("#users-table, #theme-table").find(".row").each(function() {
+        if (!jQuery(this).hasClass("addRow")) {
+            var rowEl = jQuery(this);
+
+            var bottomWidth = jQuery(rowEl).css('width');
+            var bottomHeight = jQuery(rowEl).css('height');
+            var rowPos = jQuery(rowEl).position();
+
+            jQuery(this).find(".layer").addClass("backLayer");
+
+            jQuery(this).find(".backLayer").css('width', bottomWidth);
+            jQuery(this).find(".backLayer").css('height', bottomHeight);
+            jQuery(this).find(".backLayer").css('top', rowPos.top);
+        } else {
+            jQuery("#tableBody").find(".controlDiv").find(".delete").click(function() {
+                jQuery("#users-table, #theme-table").find(".layer")
+                    .removeAttr('style')
+                    .removeClass("backLayer");
+            })
+        }
+    });
 }
 jQuery(document).ready(function(){
     eventsLoad('#tableBody');
@@ -256,7 +278,7 @@ function getFilteredData(that) {
     var status_id = jQuery(that).closest("#sortRow").find("#statusInput_i").val();
 
     if ( title.indexOf("themes") > -1 ){
-        actionName= "action=render-themes";
+        actionName = "action=render-themes";
     } else {
         actionName = "action=render-user";
     }
