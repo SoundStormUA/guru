@@ -178,7 +178,7 @@ function eventsLoad(element) {
                             jQuery(row).empty();
                             jQuery(row).append(resHTML);
                             jQuery(row).addClass('updated-item')
-                                .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                                .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function() {
                                     jQuery(row).removeClass('updated-item')
                                 });
                             eventsLoad(row);
@@ -191,7 +191,7 @@ function eventsLoad(element) {
 }
 
 function newRow() {
-    var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="DAY"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
+    var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
     var div = jQuery('<div>' + html + '</div>');
     eventsLoad(div);
     jQuery("#tableBody").append(div.children());
@@ -239,7 +239,7 @@ jQuery(".emailSend").click(function () {
             file: 'admin/sendEmail.php'
         },
         success: function (html) {
-            jQuery("#users-table").prepend("<div class='backLayer'></div>");
+            jQuery("#users-table, #theme-table").prepend("<div class='backLayer'></div>");
             jQuery("#usersList").append(html);
             jQuery("#sForm").addClass("open");
             addEventCloseEmailForm();

@@ -897,7 +897,7 @@ function contentLessons($lang, $name) {
 	}
     ksort($tmp);
 	foreach ($tmp as $day => $rows){
-	$result .= '<div class="themesPerDay">';
+	$result .= '<div class="themesPerday">';
 	$result .= '<div class="title">';
 	$result .= '<span class="day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</span>';
 	$result .= '</div>';
@@ -947,8 +947,8 @@ function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
         $themeWhere = ' WHERE ' . $themeWhere;
     }
 
-    $query = "SELECT theme.id as ID, theme.day as DAY, theme.theme_en as THEME_EN,theme.theme_ua as THEME_UA,
-    theme.theme_ru as THEME_RU, courses.name_en as course_name, courses.ID as selected_course
+    $query = "SELECT theme.id as ID, theme.day as day, theme.theme_en as theme_en,theme.theme_ua as theme_ua,
+    theme.theme_ru as theme_ru, courses.name_en as course_name, courses.ID as selected_course
     FROM {$wpdb->prefix}themes theme
     INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id" . $themeWhere . "
     ORDER BY id";
@@ -971,7 +971,7 @@ function my_theme_page()
 
     $page = '<div class="wrap">';
     $page .= '<h1>' . $title . '</h1>';
-    $page .= '<section id="usersList">';
+    $page .= '<section id="themeList">';
     $page .= '<div id="theme-table" class="table" cellspacing="0" cellpadding="0">';
     $page .= '<div class="col layer"></div>';
     $page .= '<div class="col checkCol"></div>';
@@ -988,10 +988,10 @@ function my_theme_page()
     $page .= '<div class="cell"></div>';
     $page .= '<div class="cell"></div>';
     $page .= '<div class="cell">' . do_shortcode("[select id='courseInput' not_form='true' values='" . $coursesSelectList['ids'] . "'  options='" . $coursesSelectList['names'] . "' type='text'][/select]") . '</div>';
-    $page .= '<div class="cell"><input id="dayInput" name="DAY"></input></div>';
-    $page .= '<div class="cell"><input id="themeEnInput" name="THEME_EN"></input></div>';
-    $page .= '<div class="cell"><input id="themeUaInput" name="THEME_UA"></input></div>';
-    $page .= '<div class="cell"><input id="themeRuInput" name="THEME_RU"></input></div>';
+    $page .= '<div class="cell"><input id="dayInput" name="day"></input></div>';
+    $page .= '<div class="cell"><input id="themeEnInput" name="theme_en"></input></div>';
+    $page .= '<div class="cell"><input id="themeUaInput" name="theme_ua"></input></div>';
+    $page .= '<div class="cell"><input id="themeRuInput" name="theme_ru"></input></div>';
 
     $page .= '<div class="cell addIcon fa fa-plus"></div>';
     $page .= '</div>';
@@ -1000,10 +1000,10 @@ function my_theme_page()
     $page .= '<div class="cell check"><input type="checkbox" id="selectAll"></input></div>';
     $page .= '<div class="cell number">#</div>';
     $page .= '<div class="cell">Course</div>';
-    $page .= '<div class="cell">Day</div>';
-    $page .= '<div class="cell">Theme_EN</div>';
-    $page .= '<div class="cell">Theme_UA</div>';
-    $page .= '<div class="cell">Theme_RU</div>';
+    $page .= '<div class="cell">day</div>';
+    $page .= '<div class="cell">theme_en</div>';
+    $page .= '<div class="cell">theme_ua</div>';
+    $page .= '<div class="cell">theme_ru</div>';
     $page .= '<div class="cell settings"></div>';
     $page .= '</div>';
     $page .= '</div>';
@@ -1055,10 +1055,10 @@ function renderThemeTable($returned)
 
         $resultHtml .= '<div class="cell">' . $courseSelector . '</div>';
 
-        $resultHtml .= '<div class="cell"><input name="DAY" readonly value="' . $row['DAY'] . '"></input></div>';
-        $resultHtml .= '<div class="cell"><input name="theme_en" readonly value="' . $row['THEME_EN'] . '"></input></div>';
-        $resultHtml .= '<div class="cell"><input name="theme_ua" readonly value="' . $row['THEME_UA'] . '"></input></div>';
-        $resultHtml .= '<div class="cell"><input name="theme_ru" readonly value="' . $row['THEME_RU'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="day" readonly value="' . $row['day'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="theme_en" readonly value="' . $row['theme_en'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="theme_ua" readonly value="' . $row['theme_ua'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="theme_ru" readonly value="' . $row['theme_ru'] . '"></input></div>';
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
@@ -1088,7 +1088,7 @@ function updateTheme()
 
     $data = array(
         'course_id' => $_POST['selected_course'],
-        'day' => $_POST['DAY'],
+        'day' => $_POST['day'],
         'theme_en' => $_POST['theme_en'],
         'theme_ua' => $_POST['theme_ua'],
         'theme_ru' => $_POST['theme_ru'],
@@ -1116,7 +1116,7 @@ function insertThemeTable() {
         $wpdb->prefix .'themes',
         array(
             'course_id' => $_POST['selected_course'],
-            'day' => $_POST['DAY'],
+            'day' => $_POST['day'],
             'theme_en' => $_POST['theme_en'],
             'theme_ua' => $_POST['theme_ua'],
             'theme_ru' => $_POST['theme_ru'],
