@@ -1134,6 +1134,21 @@ function insertThemeTable() {
     exit;
 }
 
+add_action('wp_ajax_delete-themes', 'delete_themes');
+function delete_themes()
+{
+    global $wpdb;
+
+    $id = $_POST['theme_id'];
+
+    $wpdb->delete(
+        $wpdb->prefix . 'themes',
+        array('ID' => $id),
+        array('%d')
+    );
+};
+
+
 //[course-literature]
 function courseLiterature($atts) {
 	extract( shortcode_atts(array(
@@ -1145,7 +1160,7 @@ function courseLiterature($atts) {
 	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
     $page .= contentLiterature($atts['lang'], $atts['coursename']);
-    $page .= '</div>' . '/<div>';
+    $page .= '</div>' . '</div>';
     return $page;
 }
 add_shortcode( 'course-literature', 'courseLiterature' );
@@ -1171,18 +1186,4 @@ function contentLiterature($lang, $name) {
 	}
 	return $result;
 }
-
-add_action('wp_ajax_delete-themes', 'delete_themes');
-function delete_themes()
-{
-    global $wpdb;
-
-    $id = $_POST['theme_id'];
-
-    $wpdb->delete(
-        $wpdb->prefix . 'themes',
-        array('ID' => $id),
-        array('%d')
-    );
-};
 

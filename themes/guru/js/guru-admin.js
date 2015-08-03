@@ -6,8 +6,8 @@ function eventsLoad(element) {
     jQuery(element).find(".controlDiv").not('.nohover').hover(function () {
         jQuery(this).children(".settingsIcons").toggleClass("display");
     });
-
     jQuery(element).find(".settingsIcon").click(function() {
+
         if (jQuery(this).hasClass("edit")) {
 
             var row = jQuery(this).closest(".row");
@@ -29,7 +29,7 @@ function eventsLoad(element) {
 
             jQuery(row).addClass("editRow");
 
-            jQuery("#users-table").find(".row").each(function() {
+            jQuery("#users-table, #theme-table").find(".row").each(function() {
                 if (!jQuery(this).hasClass("editRow")) {
                     var rowEl = jQuery(this);
 
@@ -48,7 +48,7 @@ function eventsLoad(element) {
             jQuery(this).closest(".row").find("input:checkbox").attr("checked", true);
         } else if (jQuery(this).hasClass("close")) {
             setReadOnly(this);
-            jQuery("#users-table").find(".layer")
+            jQuery("#users-table, #theme-table").find(".layer")
                 .removeAttr('style')
                 .removeClass("backLayer");
 
@@ -138,7 +138,7 @@ function eventsLoad(element) {
             }).get();
 
             if ((selectDataVals.join() === selectVals.join()) && (inputDataVals.join() === inputVals.join())) {
-                jQuery("#users-table").find(".layer")
+                jQuery("#theme-table, #users-table").find(".layer")
                     .removeAttr('style')
                     .removeClass("backLayer");
 
@@ -158,7 +158,7 @@ function eventsLoad(element) {
                     if (!checkId && result) {
                         checkId = result;
                     }
-                    setReadOnly(self)
+                    setReadOnly(self);
                     jQuery.ajax({
                         url: WPAjax.ajaxurl,
                         type: 'POST',
@@ -172,7 +172,7 @@ function eventsLoad(element) {
                                     resHTML += el.innerHTML;
                                 }
                             });
-                            jQuery("#users-table").find(".layer")
+                            jQuery("#users-table, #theme-table").find(".layer")
                                 .removeAttr('style')
                                 .removeClass("backLayer");
                             jQuery(row).empty();
@@ -191,13 +191,10 @@ function eventsLoad(element) {
 }
 
 function newRow() {
-    var html = '<div class="row"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="DAY"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings nohover"><div class="settingsIcons display"><div class="settingsIcon save fa fa-save"></div></div></div></div>';
+    var html = '<div class="row editRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="DAY"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings nohover"><div class="settingsIcons display"><div class="settingsIcon save fa fa-save"></div></div></div></div>';
     var div = jQuery('<div>' + html + '</div>');
     eventsLoad(div);
-
-    jQuery('#tableBody').append(div.children());
 }
-
 jQuery(document).ready(function(){
     eventsLoad('#tableBody');
     jQuery('.addIcon').click(newRow);
@@ -291,7 +288,7 @@ function getFilteredData(that) {
                 //setTimeout(function() {
 
                 //jQuery(el).addClass('new-item');
-                jQuery("#tableBody").append(el)
+                jQuery("#tableBody").append(el);
                     //.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
                     //    jQuery(el).removeClass('new-item')
                     //});
