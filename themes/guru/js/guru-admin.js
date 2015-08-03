@@ -3,7 +3,7 @@
  */
 
 function eventsLoad(element) {
-    jQuery(element).find(".controlDiv").hover(function () {
+    jQuery(element).find(".controlDiv").not('.nohover').hover(function () {
         jQuery(this).children(".settingsIcons").toggleClass("display");
     });
 
@@ -108,7 +108,7 @@ function eventsLoad(element) {
             var successAction = '';
 
             if ( title.indexOf("themes") > -1 ) {
-                functionName = 'update-themes';
+                functionName = checkId ? 'update-themes' : 'create-themes';
                 checkName = 'theme_id';
                 successAction = 'render-themes';
             } else {
@@ -154,7 +154,10 @@ function eventsLoad(element) {
                 type: 'POST',
                 data: formData,
                 success: function(result) {
-                    alert(result);
+                    //alert(result);
+                    if (!checkId && result) {
+                        checkId = result;
+                    }
                     setReadOnly(self)
                     jQuery.ajax({
                         url: WPAjax.ajaxurl,
@@ -187,8 +190,17 @@ function eventsLoad(element) {
     });
 }
 
+function newRow() {
+    var html = '<div class="row"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="DAY"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings nohover"><div class="settingsIcons display"><div class="settingsIcon save fa fa-save"></div></div></div></div>';
+    var div = jQuery('<div>' + html + '</div>');
+    eventsLoad(div);
+
+    jQuery('#tableBody').append(div.children());
+}
+
 jQuery(document).ready(function(){
     eventsLoad('#tableBody');
+    jQuery('.addIcon').click(newRow);
 });
 
 jQuery("#sortRow").find("select").change(function() {
@@ -240,12 +252,19 @@ function addEventCloseEmailForm() {
 }
 
 function getFilteredData(that) {
-
+    var actionName = '';
+    var title = jQuery('h1').text();
     var inputs = jQuery(that).closest("#sortRow").find("input");
     var course_id = jQuery(that).closest("#sortRow").find("#courseInput_i").val();
     var status_id = jQuery(that).closest("#sortRow").find("#statusInput_i").val();
 
-    var formData = "action=render-user";
+    if ( title.indexOf("themes") > -1 ){
+        actionName= "action=render-themes";
+    } else {
+        actionName = "action=render-user";
+    }
+
+    var formData = actionName;
 
     if (course_id) {
         formData += "&course_id=" + course_id;
@@ -311,4 +330,4 @@ function setReadOnly(that) {
     jQuery(inputs).attr("readonly", true);
     jQuery(selects).attr("readonly", true);
     jQuery(selects).attr("disabled", true);
-};
+}

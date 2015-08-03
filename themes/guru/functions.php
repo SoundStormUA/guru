@@ -993,7 +993,7 @@ function my_theme_page()
     $page .= '<div class="cell"><input id="themeUaInput" name="THEME_UA"></input></div>';
     $page .= '<div class="cell"><input id="themeRuInput" name="THEME_RU"></input></div>';
 
-    $page .= '<div class="cell emailSend fa fa-envelope"></div>';
+    $page .= '<div class="cell addIcon fa fa-plus"></div>';
     $page .= '</div>';
     $page .= '<div class="row header">';
     $page .= '<div class="layer"></div>';
@@ -1079,8 +1079,8 @@ function renderThemeTable($returned)
     exit;
 }
 
-add_action('wp_ajax_update-themes', 'update_themes');
-function update_themes()
+add_action('wp_ajax_update-themes', 'updateTheme');
+function updateTheme()
 {
     global $wpdb;
 
@@ -1108,6 +1108,32 @@ function update_themes()
         array('%d')
     );
 }
+add_action('wp_ajax_create-themes', 'insertThemeTable');
+function insertThemeTable() {
+    global $wpdb;
+
+    $wpdb->insert(
+        $wpdb->prefix .'themes',
+        array(
+            'course_id' => $_POST['selected_course'],
+            'day' => $_POST['DAY'],
+            'theme_en' => $_POST['theme_en'],
+            'theme_ua' => $_POST['theme_ua'],
+            'theme_ru' => $_POST['theme_ru'],
+        ),
+        array(
+            '%d',
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+        ));
+
+    echo $wpdb->insert_id;
+    die;
+    exit;
+}
+
 //[course-literature]
 function courseLiterature($atts) {
 	extract( shortcode_atts(array(
@@ -1158,46 +1184,5 @@ function delete_themes()
         array('ID' => $id),
         array('%d')
     );
-}
+};
 
-;
-
-function insertThemeTable() {
-    global $wpdb;
-
-    $wpdb->insert(
-        $wpdb->prefix .'themes',
-        array(
-            'id' => $_POST['theme_id'],
-            'course_id' => $_POST['selected_course'],
-            'day' => $_POST['DAY'],
-            'theme_en' => $_POST['theme_en'],
-            'theme_ua' => $_POST['theme_ua'],
-            'theme_ru' => $_POST['theme_ru'],
-        ),
-        array(
-            '%d',
-            '%d',
-            '%d',
-            '%s',
-            '%s',
-            '%s',
-        ));
-}
-
-;
-
-function add_theme_form()
-{
-    $coursesSelectList = get_data_for_select('courses', 'name_en');
-
-    $coursesSelectList['ids'] = '0, ' . $coursesSelectList['ids'];
-    $coursesSelectList['names'] = 'All, ' . $coursesSelectList['names'];
-    $statusSelectList['ids'] = '0, ' . $statusSelectList['ids'];
-    $statusSelectList['names'] = 'All, ' . $statusSelectList['names'];
-
-    $form = '';
-    $form .= '<div class="form">';
-    $form .= 'div ';
-    $form .= '</div>';
-}
