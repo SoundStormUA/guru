@@ -50,8 +50,8 @@ function eventsLoad(element) {
             setReadOnly(this);
             jQuery("#users-table, #theme-table").find(".layer")
                 .removeAttr('style')
-                .removeClass("backLayer")
-
+                .removeClass("backLayer");
+            jQuery("#users-table, #theme-table").find(".row").removeClass("editRow");
 
         } else if (jQuery(this).hasClass("delete")) {
             var formData;
@@ -142,7 +142,8 @@ function eventsLoad(element) {
                 jQuery("#theme-table, #users-table").find(".layer")
                     .removeAttr('style')
                     .removeClass("backLayer");
-
+                jQuery("#users-table, #theme-table").find(".row").removeClass("editRow");
+                jQuery("#users-table, #theme-table").find(".row").removeClass("addRow");
                 jQuery(inputs).attr("readonly", true);
                 jQuery(selects)
                     .attr("readonly", true)
@@ -180,7 +181,9 @@ function eventsLoad(element) {
                             jQuery(row).append(resHTML);
                             jQuery(row).addClass('updated-item')
                                 .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function() {
-                                    jQuery(row).removeClass('updated-item')
+                                    jQuery(row).removeClass('updated-item');
+                                    jQuery("#users-table, #theme-table").find(".row").removeClass("editRow");
+                                    jQuery("#users-table, #theme-table").find(".row").removeClass("addRow");
                                 });
                             eventsLoad(row);
                         }
@@ -214,6 +217,7 @@ function newRow() {
                 jQuery("#users-table, #theme-table").find(".layer")
                     .removeAttr('style')
                     .removeClass("backLayer");
+                jQuery("#users-table, #theme-table").find(".row").removeClass("addRow");
             })
         }
     });

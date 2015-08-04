@@ -967,7 +967,7 @@ function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
     theme.theme_ru as theme_ru, courses.name_en as course_name, courses.ID as selected_course
     FROM {$wpdb->prefix}themes theme
     INNER JOIN {$wpdb->prefix}courses courses ON courses.id = theme.course_id" . $themeWhere . "
-    ORDER BY id";
+    ORDER BY selected_course, day";
     $themeTable = $wpdb->get_results($query, ARRAY_A);
     return array('data' => $themeTable, 'query' => $themeWhere);
     die();
