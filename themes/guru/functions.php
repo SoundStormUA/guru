@@ -872,18 +872,17 @@ function contentThemes($atts) {
 	extract( shortcode_atts(array(
 					'lang'=>'en',
 					'coursename'=>''), $atts));
-	$page = '';
-	$page .= '<div class="tab">';
-	$page .= '<div class="video">' . '</div>';
-	$page .= '<div class="themesWrap">';
-    $page .= contentLessons($atts['lang'], $atts['coursename']);
-    $page .= '</div>' . '</div>';
-    return $page;
+	$html = '';
+	$html .= '<div class="tab">';
+	$html .= '<div class="video">' . '</div>';
+	$html .= '<div class="themesWrap">';
+    $html .= contentLessons($atts['lang'], $atts['coursename']);
+    $html .= '</div>' . '</div>';
+    return $html;
 }
 add_shortcode( 'content-themes', 'contentThemes' );
 
 function contentLessons($lang, $name) {
-	$count = 0;
 	$rows = get_table('themes');
 
     $id = caseCourse($name);
@@ -896,19 +895,21 @@ function contentLessons($lang, $name) {
 	    }
 	}
     ksort($tmp);
-    echo  '<section>';
+    $page = '';
+    $page .='<div class="themeCont">';
+    $count = 0;
     foreach ($tmp as $day => $rows){
-        if ($count % 3){
-            dayThemes($day, $rows);
-            echo '</section>';
-            echo '<section>';
-            $count++;
+    $count++;
+        if ($count % 3 === 0){
+            $page .= dayThemes($day, $rows);
+            $page .= '</div>';
+            $page .= '<div class="themeCont">';
         } else {
-            dayThemes($day, $rows);
-            $count++;
+            $page .= dayThemes($day, $rows);
         }
     }
-    echo '</section>';
+   $page .= '</div>';
+   return $page;
 }
 
 function dayThemes($day, $rows){
@@ -922,7 +923,7 @@ function dayThemes($day, $rows){
                 $result .= '<li class="theme">' . $element . '</li>';
             }
             $result .= '</ul></div>';
-    echo $result;
+    return $result;
 }
 
 function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)
