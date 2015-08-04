@@ -877,13 +877,13 @@ function contentThemes($atts) {
 	$page .= '<div class="video">' . '</div>';
 	$page .= '<div class="themesWrap">';
     $page .= contentLessons($atts['lang'], $atts['coursename']);
-    $page .= '</div>' . '/<div>';
+    $page .= '</div>' . '</div>';
     return $page;
 }
 add_shortcode( 'content-themes', 'contentThemes' );
 
 function contentLessons($lang, $name) {
-	$result = '';
+	$count = 0;
 	$rows = get_table('themes');
 
     $id = caseCourse($name);
@@ -896,18 +896,33 @@ function contentLessons($lang, $name) {
 	    }
 	}
     ksort($tmp);
-	foreach ($tmp as $day => $rows){
-	$result .= '<div class="themesPerday">';
-	$result .= '<div class="title">';
-	$result .= '<span class="day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</span>';
-	$result .= '</div>';
-	$result .= '<ul>';
-	     foreach ($rows as $element) {
-	        $result .= '<li class="theme">' . $element . '</li>';
-	     }
-	     $result .= '</ul></div>';
-	}
-	return $result;
+    echo  '<section>';
+    foreach ($tmp as $day => $rows){
+        if ($count % 3){
+            dayThemes($day, $rows);
+            echo '</section>';
+            echo '<section>';
+            $count++;
+        } else {
+            dayThemes($day, $rows);
+            $count++;
+        }
+    }
+    echo '</section>';
+}
+
+function dayThemes($day, $rows){
+        $result = '';
+        $result .= '<div class="themesPerDay">';
+        $result .= '<div class="title">';
+        $result .= '<span class="day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</span>';
+        $result .= '</div>';
+        $result .= '<ul>';
+            foreach ($rows as $element) {
+                $result .= '<li class="theme">' . $element . '</li>';
+            }
+            $result .= '</ul></div>';
+    echo $result;
 }
 
 function get_theme_content($course_id, $day, $theme_en, $theme_ua, $theme_ru)

@@ -50,7 +50,8 @@ function eventsLoad(element) {
             setReadOnly(this);
             jQuery("#users-table, #theme-table").find(".layer")
                 .removeAttr('style')
-                .removeClass("backLayer");
+                .removeClass("backLayer")
+
 
         } else if (jQuery(this).hasClass("delete")) {
             var formData;
