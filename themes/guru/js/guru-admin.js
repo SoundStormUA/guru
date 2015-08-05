@@ -48,10 +48,10 @@ function eventsLoad(element) {
             jQuery(this).closest(".row").find("input:checkbox").attr("checked", true);
         } else if (jQuery(this).hasClass("close")) {
             setReadOnly(this);
-            jQuery("#users-table, #theme-table").find(".layer")
+            jQuery("#users-table, #theme-table, #literature-table").find(".layer")
                 .removeAttr('style')
                 .removeClass("backLayer");
-            jQuery("#users-table, #theme-table").find(".row").removeClass("editRow");
+            jQuery("#users-table, #theme-table, #literature-table").find(".row").removeClass("editRow");
 
         } else if (jQuery(this).hasClass("delete")) {
             var formData;
@@ -69,11 +69,17 @@ function eventsLoad(element) {
                 functionName = 'delete-themes';
                 checkName = 'theme_id';
                 successAction = 'render-themes';
-            } else {
+            } else if ( title.indexOf("literature") > -1 ){
+                functionName = 'delete-literature';
+                checkName = 'lit_id';
+                successAction = 'render-literature';
+            }
+            else {
                 functionName = 'delete-user';
                 checkName = 'user_id';
                 successAction = 'render-user';
             }
+
 
             formData = 'action=' + functionName + '&' + checkName + '=' + checkId;
 
@@ -112,6 +118,11 @@ function eventsLoad(element) {
                 functionName = checkId ? 'update-themes' : 'create-themes';
                 checkName = 'theme_id';
                 successAction = 'render-themes';
+
+            }else if ( title.indexOf("literature") > -1 ) {
+                functionName = checkId ? 'update-literature' : 'create-literature';
+                checkName = 'lit_id';
+                successAction = 'render-literature';
             } else {
                 functionName = 'update-user';
                 checkName = 'user_id';
@@ -139,11 +150,11 @@ function eventsLoad(element) {
             }).get();
 
             if ((selectDataVals.join() === selectVals.join()) && (inputDataVals.join() === inputVals.join())) {
-                jQuery("#theme-table, #users-table").find(".layer")
+                jQuery("#theme-table, #users-table, #literature-table").find(".layer")
                     .removeAttr('style')
                     .removeClass("backLayer");
-                jQuery("#users-table, #theme-table").find(".row").removeClass("editRow");
-                jQuery("#users-table, #theme-table").find(".row").removeClass("addRow");
+                jQuery("#users-table, #theme-table, #literature-table").find(".row").removeClass("editRow");
+                jQuery("#theme-table, #literature-table").find(".row").removeClass("addRow");
                 jQuery(inputs).attr("readonly", true);
                 jQuery(selects)
                     .attr("readonly", true)
@@ -174,7 +185,7 @@ function eventsLoad(element) {
                                     resHTML += el.innerHTML;
                                 }
                             });
-                            jQuery("#users-table, #theme-table").find(".layer")
+                            jQuery("#users-table, #theme-table, #literature-table").find(".layer")
                                 .removeAttr('style')
                                 .removeClass("backLayer");
                             jQuery(row).empty();
@@ -182,8 +193,8 @@ function eventsLoad(element) {
                             jQuery(row).addClass('updated-item')
                                 .one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function() {
                                     jQuery(row).removeClass('updated-item');
-                                    jQuery("#users-table, #theme-table").find(".row").removeClass("editRow");
-                                    jQuery("#users-table, #theme-table").find(".row").removeClass("addRow");
+                                    jQuery("#users-table, #theme-table, #literature-table").find(".row").removeClass("editRow");
+                                    jQuery("#theme-table, #literature-table").find(".row").removeClass("addRow");
                                 });
                             eventsLoad(row);
                         }
@@ -195,11 +206,18 @@ function eventsLoad(element) {
 }
 
 function newRow() {
-    var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
+    var title = jQuery("h1").text();
+
+    if (title.indexOf("themes")> -1){
+        var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
+    } else {
+        var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ru"></div><div class="cell"><input name="author_ua"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon delete fa fa-delete"></div><div class="settingsIcon save fa fa-save"></div></div></div>';
+    }
+
     var div = jQuery('<div>' + html + '</div>');
     eventsLoad(div);
     jQuery("#tableBody").append(div.children());
-    jQuery("#users-table, #theme-table").find(".row").each(function() {
+    jQuery("#theme-table, #literature-table").find(".row").each(function() {
         if (!jQuery(this).hasClass("addRow")) {
             var rowEl = jQuery(this);
 
@@ -214,14 +232,15 @@ function newRow() {
             jQuery(this).find(".backLayer").css('top', rowPos.top);
         } else {
             jQuery("#tableBody").find(".controlDiv").find(".delete").click(function() {
-                jQuery("#users-table, #theme-table").find(".layer")
+                jQuery("#theme-table, #literature-table").find(".layer")
                     .removeAttr('style')
                     .removeClass("backLayer");
-                jQuery("#users-table, #theme-table").find(".row").removeClass("addRow");
+                jQuery("#theme-table, #literature-table").find(".row").removeClass("addRow");
             })
         }
     });
 }
+
 jQuery(document).ready(function(){
     eventsLoad('#tableBody');
     jQuery('.addIcon').click(newRow);
@@ -284,6 +303,8 @@ function getFilteredData(that) {
 
     if ( title.indexOf("themes") > -1 ){
         actionName = "action=render-themes";
+    } else if ( title.indexOf("literature") > -1) {
+        actionName= "action=render-literature";
     } else {
         actionName = "action=render-user";
     }

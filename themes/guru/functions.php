@@ -534,6 +534,7 @@ function register_my_menu_page()
     add_menu_page('Manage tables', 'Manage tables', 'manage_options', 'my_menu', 'my_menu_output');
     add_submenu_page('my_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
     add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_theme_page');
+    add_submenu_page('my_menu', 'Manage literature', 'Manage literature', 'manage_options', 'literapage', 'my_literature_page');
 }
 
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
@@ -996,7 +997,7 @@ function my_theme_page()
     $page .= '<div class="col themelCol"></div>';
     $page .= '<div class="col themeCol"></div>';
     $page .= '<div class="col themeCol"></div>';
-    $page .= '<div class="col courseCol"></div>';
+    $page .= '<div class="col Col"></div>';
     $page .= '<div class="col settingsCol"></div>';
     $page .= '<div class="headerContainer">';
     $page .= '<div id="sortRow" class="sort row">';
@@ -1125,7 +1126,8 @@ function updateTheme()
     );
 }
 add_action('wp_ajax_create-themes', 'insertThemeTable');
-function insertThemeTable() {
+function insertThemeTable()
+{
     global $wpdb;
 
     $wpdb->insert(
@@ -1203,3 +1205,272 @@ function contentLiterature($lang, $name) {
 	return $result;
 }
 
+function my_literature_page()
+{
+    global $title;
+
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
+
+    $coursesSelectList['ids'] = '0, ' . $coursesSelectList['ids'];
+    $coursesSelectList['names'] = 'All, ' . $coursesSelectList['names'];
+    $statusSelectList['ids'] = '0, ' . $statusSelectList['ids'];
+    $statusSelectList['names'] = 'All, ' . $statusSelectList['names'];
+
+    $page = '<div class="wrap">';
+    $page .= '<h1>' . $title . '</h1>';
+    $page .= '<section id="literatureList">';
+    $page .= '<div id="literature-table" class="table" cellspacing="0" cellpadding="0">';
+    $page .= '<div class="col layer"></div>';
+    $page .= '<div class="col checkCol"></div>';
+    $page .= '<div class="col numberCol"></div>';
+    $page .= '<div class="col titleCol"></div>';
+    $page .= '<div class="col titlelCol"></div>';
+    $page .= '<div class="col titleCol"></div>';
+    $page .= '<div class="col authorCol"></div>';
+    $page .= '<div class="col authorCol"></div>';
+    $page .= '<div class="col authorCol"></div>';
+    $page .= '<div class="col settingsCol"></div>';
+    $page .= '<div class="headerContainer">';
+    $page .= '<div id="sortRow" class="sort row">';
+    $page .= '<div class="layer"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell">' . do_shortcode("[select id='courseInput' not_form='true' values='" . $coursesSelectList['ids'] . "'  options='" . $coursesSelectList['names'] . "' type='text'][/select]") . '</div>';
+    $page .= '<div class="cell"><input id="titleEnItput" name="title_en"></input></div>';
+    $page .= '<div class="cell"><input id="titleUaInput" name="title_ua"></input></div>';
+    $page .= '<div class="cell"><input id="titleRuInput" name="title_ru"></input></div>';
+    $page .= '<div class="cell"><input id="authorEnInput" name="author_en"></input></div>';
+    $page .= '<div class="cell"><input id="authorUaInput" name="author_ua"></input></div>';
+    $page .= '<div class="cell"><input id="authorRuInput" name="author_ru"></input></div>';
+
+    $page .= '<div class="cell addIcon fa fa-plus"></div>';
+    $page .= '</div>';
+    $page .= '<div class="row header">';
+    $page .= '<div class="layer"></div>';
+    $page .= '<div class="cell check"><input type="checkbox" id="selectAll"></input></div>';
+    $page .= '<div class="cell number">#</div>';
+    $page .= '<div class="cell">Course</div>';
+    $page .= '<div class="cell">title_en</div>';
+    $page .= '<div class="cell">title_ua</div>';
+    $page .= '<div class="cell">title_ru</div>';
+    $page .= '<div class="cell">author_en</div>';
+    $page .= '<div class="cell">author_ua</div>';
+    $page .= '<div class="cell">author_ru</div>';
+    $page .= '<div class="cell settings"></div>';
+    $page .= '</div>';
+    $page .= '</div>';
+    $page .= '<div id="tableBody" class="bodyContainer">';
+    $page .= renderLitTable('true');
+    $page .= '</div>';
+    $page .= '</div>';
+    $page .= '</section>';
+    $page .= '</div>';
+
+    echo $page;
+}
+
+;
+
+add_action('wp_ajax_render-literature', 'renderLitTable');
+add_action('wp_ajax_nopriv_render-literature', 'renderLitTable');
+function renderLitTable($returned)
+{
+    $coursesSelectList = get_data_for_select('courses', 'name_en');
+    $litTable = get_lit_content($_POST['course_id'], $_POST['title_en'], $_POST['title_ua'], $_POST['title_ru'], $_POST['author_en'], $_POST['author_ua'], $_POST['author_ru']);
+    $resultHtml = '';
+    $count = 0;
+    foreach ($litTable['data'] as $row) {
+        $count += 1;
+        $resultHtml .= '<div class="row">';
+        $resultHtml .= '<div class="layer"></div>';
+        $resultHtml .= '<div class="cell check"><input name="lit_id"  type="checkbox" data-id="' . $row['ID'] . '"></input></div>';
+        $resultHtml .= '<div class="cell number">' . $count . '</div>';
+
+        $courses_values_array = explode(", ", $coursesSelectList['ids']);
+        $courses_options_array = explode(", ", $coursesSelectList['names']);
+
+                $courseSelector = "<select  name='selected_course' id='courseSelect_" . $row['course_id'] . "' readonly disabled> ";
+                $selected = $row['selected_course'];
+
+                foreach ($courses_values_array as $value) {
+                    if ($value == $selected) {
+                        $selectedValue = 'selected';
+                    } else {
+                        $selectedValue = '';
+                    }
+                    $courseSelector .= "<option value='" . $value . "' " . $selectedValue . ">" . $courses_options_array[$value - 1] . "</option>";
+                }
+
+                $courseSelector .= "</select>";
+
+
+        $resultHtml .= '<div class="cell">' . $courseSelector . '</div>';
+
+        $resultHtml .= '<div class="cell"><input name="title_en" readonly value="' . $row['title_en'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="title_ua" readonly value="' . $row['title_ua'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="title_ru" readonly value="' . $row['title_ru'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="author_en" readonly value="' . $row['author_en'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="author_ru" readonly value="' . $row['author_ru'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="author_ua" readonly value="' . $row['author_ua'] . '"></input></div>';
+        $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
+        $resultHtml .= '<div class="settingsIcons">';
+        $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
+        $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
+        $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
+        $resultHtml .= '</div>';
+        $resultHtml .= '</div>';
+        $resultHtml .= '</div>';
+    }
+
+    if ($returned) {
+        return $resultHtml;
+    }
+
+    echo $resultHtml;
+    die();
+    exit;
+}
+
+;
+
+function get_lit_content($course_id, $title_en, $title_ua, $title_ru, $author_en, $author_ua, $author_ru)
+{
+    global $wpdb;
+
+    $litWhere = '';
+
+    if ($course_id && $course_id !== 0 && $course_id !== undefined) {
+        $litWhere .= 'course_id=' . $course_id;
+    }
+
+    if ($title_en && $litWhere) {
+        $litWhere .= ' and title_en like "' . $title_en . '%"';
+    } else if ($title_en) {
+        $litWhere .= 'title_en like "' . $title_en . '%"';
+    }
+
+    if ($title_ua && $liWhere) {
+        $litWhere .= ' and title_ua like "' . $title_ua  . '%"';
+    } else if ($title_ua ) {
+        $litWhere .= ' title_ua like "' . $title_ua . '%"';
+    }
+
+    if ($title_ru && $litWhere) {
+        $litWhere .= ' and title_ru like "' . $title_ru  . '%"';
+    } else if ($title_ru ) {
+        $litWhere .= ' title_ru like "' . $title_ru . '%"';
+    }
+
+    if ($author_en && $litWhere) {
+        $litWhere .= ' and author_en like "' . $author_en  . '%"';
+    } else if ($author_en ) {
+        $litWhere .= ' author_en like "' . $author_en . '%"';
+    }
+
+    if ($author_ua && $litWhere) {
+        $litWhere .= ' and author_ua like "' . $author_ua  . '%"';
+    } else if ($author_ua ) {
+        $litWhere .= ' author_ua like "' . $author_ua . '%"';
+    }
+
+    if ($author_ru && $litWhere) {
+            $litWhere .= ' and author_ru like "' . $author_ru  . '%"';
+    } else if ($author_ru ) {
+            $litWhere .= ' author_ru like "' . $author_ru . '%"';
+    }
+
+    if ($litWhere) {
+        $litWhere = ' WHERE ' . $litWhere;
+    }
+
+    $query = "SELECT lit.id as ID, lit.title_en as title_en, lit.title_ua as title_ua,lit.title_ru as title_ru,
+    lit.author_en as author_en, lit.author_ua as author_ua, lit.author_ru as author_ru,
+    courses.name_en as course_name, courses.ID as selected_course
+    FROM {$wpdb->prefix}literature lit
+    INNER JOIN {$wpdb->prefix}courses courses ON courses.id = lit.course_id" . $liteWhere . "
+    ORDER BY selected_course";
+    $litTable = $wpdb->get_results($query, ARRAY_A);
+    return array('data' => $litTable, 'query' => $litWhere);
+    die();
+    exit;
+}
+
+add_action('wp_ajax_update-literature', 'updateLiterature');
+function updateLiterature()
+{
+    global $wpdb;
+
+    $id = $_POST['lit_id'];
+
+    $data = array(
+        'course_id' => $_POST['selected_course'],
+        'title_en' => $_POST['title_en'],
+        'title_ua' => $_POST['title_ua'],
+        'title_ru' => $_POST['title_ru'],
+        'author_en' => $_POST['author_en'],
+        'author_ua' => $_POST['author_ua'],
+        'author_ru' => $_POST['author_ru']
+    );
+
+    $wpdb->update(
+        $wpdb->prefix . 'literature',
+        $data,
+        array('id' => $id),
+        array(
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s'
+        ),
+        array('%d')
+    );
+}
+
+add_action('wp_ajax_create-literature', 'insertLitTable');
+function insertLitTable()
+{
+    global $wpdb;
+
+    $wpdb->insert(
+        $wpdb->prefix .'literature',
+        array(
+            'course_id' => $_POST['selected_course'],
+            'title_en' => $_POST['title_en'],
+            'title_ua' => $_POST['title_ua'],
+            'title_ru' => $_POST['title_ru'],
+            'author_en' => $_POST['author_en'],
+            'author_ua' => $_POST['author_ua'],
+            'author_ru' => $_POST['author_ru']
+        ),
+        array(
+            '%d',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%s'
+        ));
+
+    echo $wpdb->insert_id;
+    die;
+    exit;
+}
+
+add_action('wp_ajax_delete-literature', 'delete_lit');
+function delete_lit()
+{
+    global $wpdb;
+
+    $id = $_POST['lit_id'];
+
+    $wpdb->delete(
+        $wpdb->prefix . 'literature',
+        array('id' => $id),
+        array('%d')
+    );
+};
