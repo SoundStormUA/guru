@@ -225,7 +225,7 @@ function renderPage($attr, $content)
 
 ;
 
-function get_variables($name, $language)
+/*function get_variables($name, $language)
 {
     $caption = just_variable($name . '_' . $language, FALSE);
 
@@ -238,9 +238,10 @@ function get_variables($name, $language)
     $result = array('caption' => $caption, 'info' => $info);
 
     return $result;
-}
+}*/
 
 ;
+
 
 function courses($atts, $content = null)
 {
@@ -253,15 +254,29 @@ function courses($atts, $content = null)
             ), $atts)
     );
 
-    $variables = get_variables($atts['name'], $atts['language']);
+    $rows = get_table('courses');
+    $id = caseCourse($atts['name']);
+
+    foreach($rows as $row){
+        $needRow[] = $row;
+    }
+
+    $ar = array_slice($needRow, $id - 1, true);
+
+    foreach($ar as $needArray){
+        $ar = $needArray;
+    }
 
     $img = (!empty($atts['img'])) ? ("<img src='" . $atts['img'] . "' />") : '';
 
+    if ($ar['name_' . $atts['language']] == null){
+        $ar['name_' . $atts['language']] = $ar['name_en'];
+    }
     $content = "<div class='course-container course " . $atts['name'] . "'>";
     $content .= "<div>" . $img . "</div>";
     $content .= "<header class='course-caption'>";
-    $content .= "<span>" . $variables['caption'] . "</span></header>";
-    $content .= "<p>" . $variables['info'] . "</p></div>";
+    $content .= "<span>" . $ar['name_' . $atts['language']]  . "</span></header>";
+    $content .= "<p>" . $ar['info_' . $atts['language']] . "</p></div>";
 
     return $content;
 };
@@ -271,12 +286,12 @@ add_shortcode('add_course', 'courses');
 function get_data_for_select($table, $field)
 {
     $field = $field ? $field : 'name';
-    $coursesTable = get_table($table);
+    $someTable = get_table($table);
 
     $ids = array();
     $names = array();
 
-    foreach ($coursesTable as $row) {
+    foreach ($someTable as $row) {
         $ids[] = $row['i'] ? $row['id'] : $row['ID'];
         $names[] = $row[$field];
     }
@@ -994,7 +1009,7 @@ function my_theme_page()
     $page .= '<div class="col checkCol"></div>';
     $page .= '<div class="col numberCol"></div>';
     $page .= '<div class="col dayCol"></div>';
-    $page .= '<div class="col themelCol"></div>';
+    $page .= '<div class="col themeCol"></div>';
     $page .= '<div class="col themeCol"></div>';
     $page .= '<div class="col themeCol"></div>';
     $page .= '<div class="col Col"></div>';
@@ -1223,6 +1238,7 @@ function my_literature_page()
     $page .= '<div class="col layer"></div>';
     $page .= '<div class="col checkCol"></div>';
     $page .= '<div class="col numberCol"></div>';
+    $page .= '<div class="col courseCol"></div>';
     $page .= '<div class="col titleCol"></div>';
     $page .= '<div class="col titlelCol"></div>';
     $page .= '<div class="col titleCol"></div>';
@@ -1350,7 +1366,7 @@ function get_lit_content($course_id, $title_en, $title_ua, $title_ru, $author_en
         $litWhere .= 'title_en like "' . $title_en . '%"';
     }
 
-    if ($title_ua && $liWhere) {
+    if ($title_ua && $litWhere) {
         $litWhere .= ' and title_ua like "' . $title_ua  . '%"';
     } else if ($title_ua ) {
         $litWhere .= ' title_ua like "' . $title_ua . '%"';
@@ -1388,7 +1404,7 @@ function get_lit_content($course_id, $title_en, $title_ua, $title_ru, $author_en
     lit.author_en as author_en, lit.author_ua as author_ua, lit.author_ru as author_ru,
     courses.name_en as course_name, courses.ID as selected_course
     FROM {$wpdb->prefix}literature lit
-    INNER JOIN {$wpdb->prefix}courses courses ON courses.id = lit.course_id" . $liteWhere . "
+    INNER JOIN {$wpdb->prefix}courses courses ON courses.id = lit.course_id" . $litWhere . "
     ORDER BY selected_course";
     $litTable = $wpdb->get_results($query, ARRAY_A);
     return array('data' => $litTable, 'query' => $litWhere);

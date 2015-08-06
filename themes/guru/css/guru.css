@@ -58,6 +58,7 @@
 }
 .fa-plus:before {
   content: "\f067";
+  font-size: xx-large;
 }
 * {
   margin: 0;
