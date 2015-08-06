@@ -73,8 +73,7 @@ function eventsLoad(element) {
                 functionName = 'delete-literature';
                 checkName = 'lit_id';
                 successAction = 'render-literature';
-            }
-            else {
+            } else {
                 functionName = 'delete-user';
                 checkName = 'user_id';
                 successAction = 'render-user';
@@ -118,8 +117,7 @@ function eventsLoad(element) {
                 functionName = checkId ? 'update-themes' : 'create-themes';
                 checkName = 'theme_id';
                 successAction = 'render-themes';
-
-            }else if ( title.indexOf("literature") > -1 ) {
+            } else if ( title.indexOf("literature") > -1 ) {
                 functionName = checkId ? 'update-literature' : 'create-literature';
                 checkName = 'lit_id';
                 successAction = 'render-literature';
@@ -211,7 +209,7 @@ function newRow() {
     if (title.indexOf("themes")> -1){
         var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
     } else {
-        var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ru"></div><div class="cell"><input name="author_ua"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon delete fa fa-delete"></div><div class="settingsIcon save fa fa-save"></div></div></div>';
+        var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ua"></div><div class="cell"><input name="author_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon delete fa fa-delete"></div><div class="settingsIcon save fa fa-save"></div></div></div>';
     }
 
     var div = jQuery('<div>' + html + '</div>');
@@ -304,7 +302,7 @@ function getFilteredData(that) {
     if ( title.indexOf("themes") > -1 ){
         actionName = "action=render-themes";
     } else if ( title.indexOf("literature") > -1) {
-        actionName= "action=render-literature";
+        actionName = "action=render-literature";
     } else {
         actionName = "action=render-user";
     }

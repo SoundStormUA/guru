@@ -58,9 +58,6 @@
 }
 .fa-plus:before {
   content: "\f067";
-  font-size: 34px;
-  font-weight: bolder;
-  cursor: pointer;
 }
 * {
   margin: 0;

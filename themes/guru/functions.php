@@ -277,7 +277,7 @@ function get_data_for_select($table, $field)
     $names = array();
 
     foreach ($coursesTable as $row) {
-        $ids[] = $row['id'] ? $row['id'] : $row['ID'];
+        $ids[] = $row['i'] ? $row['id'] : $row['ID'];
         $names[] = $row[$field];
     }
 
@@ -291,7 +291,7 @@ function get_data_for_select($table, $field)
 function contact_form($atts, $content = null)
 {
 
-    $selectList = get_data_for_select('courses');
+    $selectList = get_data_for_select('courses', 'name_en');
 
     $form = "<div id='registrationFormDiv'>";
     $form .= "<header class='sectionTitle'><span>Реєстрація</span></header>";
@@ -1310,8 +1310,8 @@ function renderLitTable($returned)
         $resultHtml .= '<div class="cell"><input name="title_ua" readonly value="' . $row['title_ua'] . '"></input></div>';
         $resultHtml .= '<div class="cell"><input name="title_ru" readonly value="' . $row['title_ru'] . '"></input></div>';
         $resultHtml .= '<div class="cell"><input name="author_en" readonly value="' . $row['author_en'] . '"></input></div>';
-        $resultHtml .= '<div class="cell"><input name="author_ru" readonly value="' . $row['author_ru'] . '"></input></div>';
         $resultHtml .= '<div class="cell"><input name="author_ua" readonly value="' . $row['author_ua'] . '"></input></div>';
+        $resultHtml .= '<div class="cell"><input name="author_ru" readonly value="' . $row['author_ru'] . '"></input></div>';
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
@@ -1416,7 +1416,7 @@ function updateLiterature()
     $wpdb->update(
         $wpdb->prefix . 'literature',
         $data,
-        array('id' => $id),
+        array('ID' => $id),
         array(
             '%d',
             '%s',
@@ -1470,7 +1470,7 @@ function delete_lit()
 
     $wpdb->delete(
         $wpdb->prefix . 'literature',
-        array('id' => $id),
+        array('ID' => $id),
         array('%d')
     );
 };
