@@ -327,7 +327,7 @@ function contact_form($atts, $content = null)
     $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
     $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
 
-    $form .= "</form></div>";
+    $form .= "</form>";
     return $form;
 }
 
