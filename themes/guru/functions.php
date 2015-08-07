@@ -922,11 +922,14 @@ function contentThemes($atts) {
 					'lang'=>'en',
 					'coursename'=>''), $atts));
 	$html = '';
-	$html .= '<div class="tab">';
-	$html .= '<div class="video">' . '</div>';
-	$html .= '<div class="themesWrap">';
+	$html .= '<div class="first-tab-page">';
+    $html .= '<div class="about-cours">';
+    $html .= '<div class="video-wrap">';
+	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
+    $html .= '<p class="vide-desc">' . '</p></div>';
+    $html .= '<div class="themesWrap">';
     $html .= contentLessons($atts['lang'], $atts['coursename']);
-    $html .= '</div>' . '</div>';
+    $html .= '</div>' . '</div>' . '</div>';
     return $html;
 }
 add_shortcode( 'content-themes', 'contentThemes' );
@@ -1222,7 +1225,7 @@ function courseLiterature($atts) {
 					'img' =>'',
 					'coursename'=>''), $atts));
 	$page = '';
-	$page .= '<div class="tab">';
+	$page .= '<div class="second-tab-page">';
 	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
     $page .= contentLiterature($atts['lang'], $atts['coursename']);
@@ -1523,3 +1526,4 @@ function delete_lit()
         array('%d')
     );
 };
+
