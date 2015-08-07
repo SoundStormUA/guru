@@ -240,9 +240,6 @@ function renderPage($attr, $content)
     return $result;
 }*/
 
-;
-
-
 function courses($atts, $content = null)
 {
     // Attributes
@@ -272,6 +269,7 @@ function courses($atts, $content = null)
     if ($ar['name_' . $atts['language']] == null){
         $ar['name_' . $atts['language']] = $ar['name_en'];
     }
+
     $content = "<div class='course-container course " . $atts['name'] . "'>";
     $content .= "<div>" . $img . "</div>";
     $content .= "<header class='course-caption'>";
@@ -282,6 +280,41 @@ function courses($atts, $content = null)
 };
 
 add_shortcode('add_course', 'courses');
+
+function courseName($atts)
+{
+    //Atributes
+    extract(shortcode_atts(
+            array(
+              'name' => '',
+              'language' => 'en'
+            ), $atts)
+    );
+
+    $rows = get_table('courses');
+    $id = caseCourse($atts['name']);
+
+    foreach($rows as $row){
+        $needRow[] = $row;
+    }
+
+    $ar = array_slice($needRow, $id - 1, true);
+
+    foreach($ar as $needArray){
+        $ar = $needArray;
+    }
+
+    if ($ar['name_' . $atts['language']] == null){
+        $atts['language'] = 'en';
+    }
+
+    $name = $ar['name_' . $atts['language']];
+
+    return $name;
+}
+
+add_shortcode('name_course', 'courseName');
+
 
 function get_data_for_select($table, $field)
 {
@@ -323,11 +356,11 @@ function contact_form($atts, $content = null)
     $form .= '<div class="clearboth"></div>';
     $form .= '<div class="buttonsHolder">';
     $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" /></div>';
+    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
     $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
     $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
-
     $form .= "</form></div>";
+
     return $form;
 }
 
@@ -512,8 +545,8 @@ function select_shortcode_ul($atts, $content = null)
         $values_array = explode(", ", $atts['values']);
         $options_array = explode(", ", $atts['options']);
 
-        $input .= "<div class='selectOptions hidden'>";
-        $input .= "<ul>";
+        $input .= '<div class="selectOptions hidden">';
+        $input .= '<ul>';
 
 
         foreach ($values_array as $value) {
