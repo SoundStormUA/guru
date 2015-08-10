@@ -927,7 +927,7 @@ function contentThemes($atts) {
     $html .= '<div class="video-wrap">';
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
     $html .= '<p class="vide-desc">' . '</p></div>';
-    $html .= '<div class="themesWrap">';
+    $html .= '<div class="lections">';
     $html .= contentLessons($atts['lang'], $atts['coursename']);
     $html .= '</div>' . '</div>' . '</div>';
     return $html;
@@ -948,14 +948,14 @@ function contentLessons($lang, $name) {
 	}
     ksort($tmp);
     $page = '';
-    $page .='<div class="themeCont">';
+    $page .='<div class="lections-block">';
     $count = 0;
     foreach ($tmp as $day => $rows){
-    $count++;
+        $count++;
         if ($count % 3 === 0){
             $page .= dayThemes($day, $rows);
             $page .= '</div>';
-            $page .= '<div class="themeCont">';
+            $page .= '<div class="lections-block">';
         } else {
             $page .= dayThemes($day, $rows);
         }
@@ -966,13 +966,14 @@ function contentLessons($lang, $name) {
 
 function dayThemes($day, $rows){
         $result = '';
-        $result .= '<div class="themesPerDay">';
-        $result .= '<div class="title">';
-        $result .= '<span class="day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</span>';
+        $result .= '<div class="lection">';
+        $result .= '<div class="caption">';
+        $result .= '<p class="lection-day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</p>';
+        $result .= '<span class="play"></span>';
         $result .= '</div>';
         $result .= '<ul>';
             foreach ($rows as $element) {
-                $result .= '<li class="theme">' . $element . '</li>';
+                $result .= '<li>' . $element . '</li>';
             }
             $result .= '</ul></div>';
     return $result;
