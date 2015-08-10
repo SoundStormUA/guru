@@ -1,5 +1,5 @@
         <div id="footer">
-            img
+
         </div>
     </div>
 </div>
