@@ -343,10 +343,6 @@ body {
 #delimiter {
   clear: both;
 }
-#footer {
-  height: 300px;
-  background-color: #179bd2;
-}
 #post-13,
 #post-13 .entry-content {
   padding: 0;
@@ -1801,7 +1797,7 @@ a {
   margin-bottom: 20px;
   min-height: 35px;
 }
-.lection .caption .lection-num {
+.lection .caption .lection-day {
   color: black;
   float: left;
   font-size: 16px;
@@ -1814,7 +1810,7 @@ a {
   background: url('../img/play.png') no-repeat;
   margin: 3px 0 0 5px;
 }
-.lection .caption .lection-day {
+.lection .caption .lection-name {
   color: #049acf;
   float: right;
   width: 72%;
