@@ -922,7 +922,7 @@ function contentThemes($atts) {
 					'lang'=>'en',
 					'coursename'=>''), $atts));
 	$html = '';
-	$html .= '<div class="first-tab-page">';
+	$html .= '<div id="first-tab-page">';
     $html .= '<div class="about-cours">';
     $html .= '<div class="video-wrap">';
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
@@ -1228,7 +1228,7 @@ function courseLiterature($atts) {
 					'img' =>'',
 					'coursename'=>''), $atts));
 	$page = '';
-	$page .= '<div class="second-tab-page">';
+	$page .= '<div id="second-tab-page">';
 	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
     $page .= contentLiterature($atts['lang'], $atts['coursename']);
