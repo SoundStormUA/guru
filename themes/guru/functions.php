@@ -927,9 +927,10 @@ function contentThemes($atts) {
     $html .= '<div class="video-wrap">';
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
     $html .= '<p class="vide-desc">' . '</p></div>';
+    $html .= '</div>';
     $html .= '<div class="lections">';
     $html .= contentLessons($atts['lang'], $atts['coursename']);
-    $html .= '</div>' . '</div>' . '</div>';
+    $html .= '</div>' . '</div>';
     return $html;
 }
 add_shortcode( 'content-themes', 'contentThemes' );
