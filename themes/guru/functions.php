@@ -49,12 +49,10 @@ if (!function_exists('guru_scripts_styles')) :
         $assets = array(
             'css' => '/css/guru.css',
             'js' => '/js/guru.js',
-            'own' => '/js/own.js',
         );
 
         wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
-        wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['own'], array('jquery'), $version, true);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
@@ -971,7 +969,7 @@ function dayThemes($day, $rows){
         $result = '';
         $result .= '<div class="lection">';
         $result .= '<div class="caption">';
-        $result .= '<p class="lection-day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</p>';
+        $result .= '<p class="lection-day">' . $day = strlen($day) > 1 ? '#' . $day . '</p>' : '#0' . $day . '</p>';
         $result .= '<span class="play"></span>';
         $result .= '<a href="" class="lection-name"></a>';
         $result .= '</div>';

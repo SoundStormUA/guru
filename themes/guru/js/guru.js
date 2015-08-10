@@ -212,6 +212,7 @@ jQuery('.selectOptions li').click(function () {
 });
 
 jQuery(document).ready(function($) {
+
     drawAnimatedLines();
 
     $('#addFile').click(function() {
