@@ -8,10 +8,11 @@
     </head>
     <body>
         <div id="wrapper">
-            <div id="header">
-                <div id="top-menu-container">
-                    <nav id="site-navigation" class="navigation main-navigation" role="navigation">
-            	        <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu', 'container' => false ) ); ?>
-                    </nav>
+            <div id="wrap-bg">
+                <div id="header">
+                    <div id="top-menu-container">
+                        <nav id="site-navigation" class="navigation main-navigation" role="navigation">
+            	            <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu', 'container' => false ) ); ?>
+                        </nav>
+                    </div>
                 </div>
-            </div>

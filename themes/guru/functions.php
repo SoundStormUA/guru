@@ -1527,10 +1527,9 @@ function delete_lit()
     );
 };
 
-function htmlShortcode()
+function htmlShortcodeTab()
 {
-    $html = '
-    <!-- Begin Main-Tab -->
+    $html = '<!-- Begin Main-Tab -->
 	<div class="main-tab">
 		<ul class="tabs">
 			<li>
@@ -1571,4 +1570,4 @@ function htmlShortcode()
 
     return $html;
 }
-add_shortcode ('course-tabs', 'htmlShortcode');
+add_shortcode ('course-tabs', 'htmlShortcodeTab');

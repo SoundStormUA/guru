@@ -1,6 +1,7 @@
-    <li class="equaliser"></li>
-    <div id="footer">
+
+        <div id="footer">
         img
+        </div>
     </div>
 </div>
 <<?php wp_footer(); ?>

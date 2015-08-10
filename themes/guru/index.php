@@ -6,6 +6,7 @@
             <?php endwhile; else: ?>
             <p><?php _e('Sorry, no posts matched your criteria.'); ?></p><?php endif; ?>
         </div>
+        <li class="equaliser"></li>
     </div>
     <div id="delimiter">
     </div>
