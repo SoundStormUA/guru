@@ -922,7 +922,7 @@ function contentThemes($atts) {
 					'lang'=>'en',
 					'coursename'=>''), $atts));
 	$html = '';
-	$html .= '<div class="first-tab-page">';
+	$html .= '<div id="first-tab-page">';
     $html .= '<div class="about-cours">';
     $html .= '<div class="video-wrap">';
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
@@ -971,6 +971,7 @@ function dayThemes($day, $rows){
         $result .= '<div class="caption">';
         $result .= '<p class="lection-day">' . $day = strlen($day) > 1 ? '#' . $day : '#0' . $day . '</p>';
         $result .= '<span class="play"></span>';
+        $result .= '<a href="" class="lection-name"></a>';
         $result .= '</div>';
         $result .= '<ul>';
             foreach ($rows as $element) {
@@ -1227,7 +1228,7 @@ function courseLiterature($atts) {
 					'img' =>'',
 					'coursename'=>''), $atts));
 	$page = '';
-	$page .= '<div class="second-tab-page">';
+	$page .= '<div id="second-tab-page">';
 	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
     $page .= contentLiterature($atts['lang'], $atts['coursename']);
@@ -1534,7 +1535,7 @@ function htmlShortcodeTab()
     $html = '<!-- Begin Main-Tab -->
 	<div class="main-tab">
 		<ul class="tabs">
-			<li>
+			<li id="firstTab">
 				<a href="#"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 					<path d="M47.1,27.7C47.1,27.7,47.1,27.7,47.1,27.7c0-0.1,0-0.2,0-0.3V12.5c0-0.8-0.7-1.5-1.5-1.5H4.4
 						c-0.8,0-1.5,0.7-1.5,1.5v24.9c0,0.8,0.7,1.5,1.5,1.5h31.3c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.2,0
@@ -1544,7 +1545,7 @@ function htmlShortcodeTab()
 					<path d="M26.6,23.5H10.9c-0.8,0-1.5,0.7-1.5,1.5s0.7,1.5,1.5,1.5h15.7c0.8,0,1.5-0.7,1.5-1.5S27.4,23.5,26.6,23.5z"/>
 				</svg>
 					структура курсу</a></li>
-			<li>
+			<li id="secondTab">
 				<!--<span class="ico ico-second"></span> -->
 				<a href="#">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
@@ -1557,7 +1558,7 @@ function htmlShortcodeTab()
 					</svg>
 					література та ресурси</a>
 			</li>
-			<li>
+			<li id="thirdTab">
 				<!--<span class="ico ico-first"></span>-->
 				<a href="#">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
