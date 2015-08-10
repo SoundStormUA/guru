@@ -949,7 +949,7 @@ function contentLessons($lang, $name) {
 	}
     ksort($tmp);
     $page = '';
-    $page .='<div class="lections-block">';
+    $page .='<div class="lection-block">';
     $count = 0;
     foreach ($tmp as $day => $rows){
         $count++;
