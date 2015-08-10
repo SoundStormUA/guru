@@ -974,7 +974,7 @@ function dayThemes($day, $rows){
         $result .= '</div>';
         $result .= '<ul>';
             foreach ($rows as $element) {
-                $result .= '<li>' . $element . '</li>';
+                $result .= '<li>' . '<p>' . $element . '</p>' . '</li>';
             }
             $result .= '</ul></div>';
     return $result;
