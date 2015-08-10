@@ -1529,9 +1529,8 @@ function delete_lit()
 
 function htmlShortcode()
 {
-    $html =
-    '<div class="content">
-	<!-- Begin Main-Tab -->
+    $html = '
+    <!-- Begin Main-Tab -->
 	<div class="main-tab">
 		<ul class="tabs">
 			<li>
