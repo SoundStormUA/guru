@@ -3,14 +3,14 @@
  */
 (function(){
     //Tabs
-    var fistTab = $('#firstTab');
-    var secondTab = $('#secondTab');
-    var thirdTab = $('#thirdTab');
+    var firstTab = jQuery('#firstTab');
+    var secondTab = jQuery('#secondTab');
+    var thirdTab = jQuery('#thirdTab');
 
     //pages
-    var fPage = $('#first-tab-page');
-    var sPage = $('#second-tab-page');
-    var tPage = $('#third-tab-page');
+    var fPage = jQuery('#first-tab-page');
+    var sPage = jQuery('#second-tab-page');
+    var tPage = jQuery('#third-tab-page');
 
     firstTab.click(function(e){
         tPage.hide();

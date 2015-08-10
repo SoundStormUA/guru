@@ -49,10 +49,12 @@ if (!function_exists('guru_scripts_styles')) :
         $assets = array(
             'css' => '/css/guru.css',
             'js' => '/js/guru.js',
+            'own' => '/js/own.js',
         );
 
         wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
+        wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['own'], array('jquery'), $version, true);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
@@ -956,7 +958,7 @@ function contentLessons($lang, $name) {
         if ($count % 3 === 0){
             $page .= dayThemes($day, $rows);
             $page .= '</div>';
-            $page .= '<div class="lections-block">';
+            $page .= '<div class="lection-block">';
         } else {
             $page .= dayThemes($day, $rows);
         }
