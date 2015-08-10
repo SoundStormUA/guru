@@ -161,6 +161,14 @@
     transform: translateX(-100%);
   }
 }
+.clearfix {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
 .circle-default {
   background: #ffffff;
   border-radius: 50%;
@@ -267,6 +275,14 @@ body {
   background-image: url("../img/header_bg.jpg");
   background-size: cover;
 }
+#header:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  width: 0;
+  visibility: hidden;
+}
 #header #top-menu-container {
   position: fixed;
   background-color: rgba(255, 255, 255, 0.9);
@@ -310,6 +326,14 @@ body {
   width: 100%;
   float: left;
   background-color: #f6f7f8;
+}
+#content:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  width: 0;
+  visibility: hidden;
 }
 #sidebar {
   width: 23%;
@@ -1602,18 +1626,18 @@ th {
     margin: 30px 0 0 5.66666667%;
   }
 }
-@media (min-width: 992px) and (max-width: 1149px) {
+@media (min-width: 992px) and (max-width: 1139px) {
   .course-container {
     margin: 30px 0 0 6.25%;
   }
 }
-@media (min-width: 1150px) {
+@media (min-width: 1140px) {
   #top-menu-container {
-    width: calc(1150px - 14px);
+    width: calc(1140px - 14px);
   }
   #wrapper {
     width: 65%;
-    width: 1150px;
+    width: 1140px;
   }
   #masthead {
     position: fixed;
@@ -1655,26 +1679,26 @@ li {
 a {
   text-decoration: none;
 }
-.content {
-  width: 1150px;
-  overflow: hidden;
-  margin: 0 auto;
-}
 /*******First Tab******/
 .main-tab {
   width: 1005px;
   border: 4px solid #049acf;
   border-bottom: none;
   margin: 0 auto;
-  overflow: hidden;
+  margin-top: -68px;
+}
+.main-tab:after {
+  content: "";
+  display: block;
+  clear: both;
+  height: 0;
+  width: 0;
+  visibility: hidden;
 }
 .main-tab h2 {
   font-size: 35px;
   color: #049acf;
   margin-bottom: 60px;
-}
-.main-tab .first-tab-page {
-  display: none;
 }
 .tabs {
   text-align: center;
@@ -1757,7 +1781,7 @@ a {
 /****lections****/
 .lections {
   margin-top: 80px;
-  padding: 0 80px 0 50px;
+  padding: 0 40px 0 80px;
   overflow: hidden;
 }
 .lection-block {
@@ -1790,7 +1814,7 @@ a {
   background: url('../img/play.png') no-repeat;
   margin: 3px 0 0 5px;
 }
-.lection .caption .lection-name {
+.lection .caption .lection-day {
   color: #049acf;
   float: right;
   width: 72%;
@@ -1963,7 +1987,7 @@ a {
 }
 /***footer**/
 footer {
-  width: 1150px;
+  width: 1250px;
   margin: 0 auto;
   overflow: hidden;
   background-color: #0497CC;
@@ -1988,30 +2012,40 @@ footer .right {
 }
 footer .right .social-footer {
   overflow: hidden;
-  margin-bottom: 65px;
+  margin: 45px 0 70px;
+  display: inline-block;
 }
 footer .right .social-footer a {
   display: block;
-  width: 32px;
-  height: 32px;
+  width: 55px;
+  height: 50px;
   float: left;
-  margin-right: 10px;
+  margin-right: 57px;
   text-align: right;
 }
+footer .right .social-footer .social-ico {
+  background: url("../img/socials.png");
+}
 footer .right .social-footer .fb {
-  background-position: -96px 0;
+  background-position: 105px 0;
 }
 footer .right .social-footer .vk {
-  background-position: -32px 0;
+  background-position: -45px 0;
 }
 footer .right .social-footer .g {
-  background-position: 0  0;
+  background-position: 7px  0;
 }
 footer .right .social-footer .in {
-  background-position: -64px 0;
+  background-position: 150px 0;
 }
 footer .right .social-footer .skype {
-  background-position: 32px 0;
+  background-position: 51px 0;
+  margin-right: 0;
+}
+footer .right .info {
+  overflow: hidden;
+  display: inline-block;
+  margin-right: 85px;
 }
 footer .right .location,
 footer .right .contactInfo {
