@@ -182,22 +182,9 @@ function insert_registered_user()
                 '%s',
             )
         );
-
-        $response = array(
-            'has_errors' => false,
-            'message' => 'Дякуємо, регістрація завершена успішно'
-        );
-    } else {
-        $response = array(
-            'has_errors' => true,
-            'errors' => $errors
-        );
+        exit;
+        die;
     }
-
-    echo json_encode($response);
-
-    exit;
-    die;
 }
 
 ;
@@ -289,7 +276,7 @@ function courses($atts, $content = null)
         $ar = $needArray;
     }
 
-    $animation = (!empty($atts['img'])) ? ("<img src='" . $atts['animation'] . "' />") : '';
+    $animation = $atts['animation'];
 
     if ($ar['name_' . $atts['language']] == null){
         $ar['name_' . $atts['language']] = $ar['name_en'];
@@ -312,7 +299,8 @@ function courseName($atts)
     extract(shortcode_atts(
             array(
               'name' => '',
-              'language' => 'en'
+              'language' => 'en',
+              'choose' => ''
             ), $atts)
     );
 
@@ -329,13 +317,22 @@ function courseName($atts)
         $ar = $needArray;
     }
 
-    if ($ar['name_' . $atts['language']] == null){
+    if ($ar['name_' . $atts['language']] === null){
+        $atts['language'] = 'en';
+    }
+
+    if ($ar['info_' . $atts['language']] === null){
         $atts['language'] = 'en';
     }
 
     $name = $ar['name_' . $atts['language']];
+    $info = $ar['info_' . $atts['language']];
 
-    return $name;
+    if ($atts['choose'] === 'name'){
+        return $name;
+    } elseif ($atts['choose'] === 'info' ){
+        return $info;
+    }
 }
 
 add_shortcode('name_course', 'courseName');
@@ -951,7 +948,7 @@ function contentThemes($atts) {
     $html .= '<div class="about-cours">';
     $html .= '<div class="video-wrap">';
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
-    $html .= '<p class="vide-desc">' . '</p></div>';
+    $html .= '<p class="vide-desc">' . do_shortcode( '[name_course name="' . $atts['coursename'] . '" language="' . $atts['lang'] . '" choose="info"]' ) . '</p></div>';
     $html .= '</div>';
     $html .= '<div class="lections">';
     $html .= contentLessons($atts['lang'], $atts['coursename']);
@@ -1599,3 +1596,12 @@ function htmlShortcodeTab()
     return $html;
 }
 add_shortcode ('course-tabs', 'htmlShortcodeTab');
+
+/*function animathion($name)
+{
+    if ($name == 'qa'){
+
+    } elseif{
+
+    }
+}*/
