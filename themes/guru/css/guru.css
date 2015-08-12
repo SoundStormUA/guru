@@ -2058,3 +2058,6 @@ footer .right .contactInfo a {
 footer .right .location {
   margin-right: 100px;
 }
+.not_vissible {
+  display: none;
+}

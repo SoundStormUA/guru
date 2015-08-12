@@ -132,32 +132,72 @@ function insert_registered_user()
         'phone_number' => $_POST['phone_number'],
         'city' => $_POST['city'],
         'course_id' => $_POST['selectedCourse'],
-        'status_id' => 1,
-        'FILE' => $_FILES['addingFile']
+        'status_id' => 1
     );
 
+    if (isset($_FILES['addingFile'])) {
+
+        $upload_dir = WP_CONTENT_DIR . "/uploads/resume";
+        $upload_file_name = 'Resume' . '-' . uniqid() . rand(1000, 9999);
+        $upload_file_size = $_FILES['addingFile']['size'];
+        $tmp_name = $_FILES['addingFile']['tmp_name'];
+
+        $upload_max_size = 5242880;
+        $array_ext = array("docx", "doc", "odt");
+
+        $file_ext = pathinfo($_FILES['addingFile']['name'], PATHINFO_EXTENSION);
+        $upload_file_name .= '.' . $file_ext;
+        $data['resume_file'] = $upload_file_name;
+
+        if (!in_array($file_ext, $array_ext)) {
+            $errors['filename'] = 'Розширення файлу непідтримуєтся,завантажте файл формата - ' . implode(",", $array_ext);
+        } elseif ($upload_file_size > $upload_max_size) {
+            $errors['filename'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' . $uploud_max_size / 10024 . 'Мб';
+        } elseif (!is_writable($upload_dir)) {
+            $errors['filename'] = 'Папка для завантаження має захист від запису, вибачте за тимчасові незручності. Зверніться телефоном';
+        } elseif (empty($errors)) {
+            move_uploaded_file($tmp_name, "$upload_dir/$upload_file_name");
+        } elseif (!file_exists($upload_dir / $upload_file_name)) {
+            $errors['filename'] = 'Виникла помилка. файл не був завантаженний';
+        }
+    }
     //return "<script type='text/javascript'>alert($data));</script>";
 
-
     //echo (basename($_FILES['addingFile']['name']));
-    echo ($data['FIO']);
-
+    //echo ($data['FIO']);
 
     //echo( $data['FILE']['name'] );
 
-    $wpdb->insert(
-        $wpdb->prefix . 'registered_users',
-        $data,
-        array(
-            '%s',
-            '%s',
-            '%s',
-            '%s',
-            '%s',
-            '%d',
-            '%d'
-        )
-    );
+    if (empty($errors)) {
+        $wpdb->insert(
+            $wpdb->prefix . 'registered_users',
+            $data,
+            array(
+                '%s',
+                '%s',
+                '%s',
+                '%s',
+                '%d',
+                '%d',
+                '%s',
+            )
+        );
+
+        $response = array(
+            'has_errors' => false,
+            'message' => 'Дякуємо, регістрація завершена успішно'
+        );
+    } else {
+        $response = array(
+            'has_errors' => true,
+            'errors' => $errors
+        );
+    }
+
+    echo json_encode($response);
+
+    exit;
+    die;
 }
 
 ;
@@ -224,21 +264,6 @@ function renderPage($attr, $content)
 }
 
 ;
-
-/*function get_variables($name, $language)
-{
-    $caption = just_variable($name . '_' . $language, FALSE);
-
-    if (empty($caption)) {
-        $caption = (just_variable($name . '_en', FALSE)) ? just_variable($name . '_en', FALSE) : '';
-    };
-
-    $info = just_variable($name . 'Info_' . $language, FALSE) ? just_variable($name . 'Info_' . $language, FALSE) : '';
-
-    $result = array('caption' => $caption, 'info' => $info);
-
-    return $result;
-}*/
 
 function courses($atts, $content = null)
 {
@@ -722,7 +747,7 @@ function getTemplate()
     //header( "Content-Type: application/json" );
 
     echo $template;
-    die();
+    die;
     exit;
 }
 
