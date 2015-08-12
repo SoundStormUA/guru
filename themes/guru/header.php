@@ -15,4 +15,22 @@
             	            <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu', 'container' => false ) ); ?>
                         </nav>
                     </div>
+                    <div id="slide-course">
+                        <div class="logo-block">
+                            <p class="logo"><b>THINK</b>MOBILES</p>
+                        </div>
+                        <div class="slide">
+                            <h3>It School</h3>
+                            <div class="block-btn">
+                                <div class="slide-btn">
+                                    <span class="first">1&#47;6</span>
+                                     <a class="next" href="#"></a>
+                                     <a class="prev" href="#"></a>
+                                </div>
+                            </div>
+                            <div class="registration-block">
+                                <a class="btn-registration" href="#">Registration</a>
+                            </div>
+                        </div>
+                    </div>
                 </div>

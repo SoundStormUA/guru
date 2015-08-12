@@ -85,6 +85,39 @@
   font-style: normal;
 }
 
+@font-face{
+  font-family: 'Roboto-Bold-webfont';
+  src: url('../fonts/Roboto Bold/Roboto-Bold-webfont.eot');
+  src: url('../fonts/Roboto Bold/Roboto-Bold-webfont.eot?iefix') format('eot'),
+  url('../fonts/Roboto Bold/Roboto-Bold-webfont.woff') format('woff'),
+  url('../fonts/Roboto Bold/Roboto-Bold-webfont.ttf') format('truetype'),
+  url('../fonts/Roboto Bold/Roboto-Bold-webfont.svg#webfont') format('svg');
+}
+@font-face {
+  font-family: 'helveticaneuecyr-bold-webfont';
+  src: url('../fonts/Helvetica Bold/helveticaneuecyr-bold-webfont.eot');
+  src: url('../fonts/Helvetica Bold/helveticaneuecyr-bold-webfont.eot?iefix') format('eot'),
+  url('../fonts/Helvetica Bold/helveticaneuecyr-bold-webfont.woff') format('woff'),
+  url('../fonts/Helvetica Bold/helveticaneuecyr-bold-webfont.ttf') format('truetype'),
+  url('../fonts/Helvetica Bold/helveticaneuecyr-bold-webfont.svg#webfont') format('svg');
+}
+@font-face {
+  font-family: 'helveticaneuecyr-roman-webfont';
+  src: url('../fonts/Helvetica Roman/helveticaneuecyr-roman-webfont.eot');
+  src: url('../fonts/Helvetica Roman/helveticaneuecyr-roman-webfont.eot?iefix') format('eot'),
+  url('../fonts/Helvetica Roman/helveticaneuecyr-roman-webfont.woff') format('woff'),
+  url('../fonts/Helvetica Roman/helveticaneuecyr-roman-webfont.ttf') format('truetype'),
+  url('../fonts/Helvetica Roman/helveticaneuecyr-roman-webfont.svg#webfont') format('svg');
+}
+@font-face{
+  font-family: 'lato-bold-webfont';
+  src: url('../fonts/Lato Bold/lato-bold-webfont.eot');
+  src: url('../fonts/Lato Bold/lato-bold-webfont.eot?iefix') format('eot'),
+  url('../fonts/Lato Bold/lato-bold-webfont.woff') format('woff'),
+  url('../fonts/Lato Bold/lato-bold-webfont.ttf') format('truetype'),
+  url('../fonts/Lato Bold/lato-bold-webfont.svg#webfont') format('svg');
+}
+
 .fa {
   font-family: FontAwesome;
   text-rendering: auto;
@@ -193,6 +226,7 @@ body {
   width: 100%;
   background-image: url("../img/header_bg.jpg");
   background-size: cover;
+  padding: 1px;
   &:after {
     .clearfix;
   }
@@ -2091,3 +2125,105 @@ footer {
   }
 }
 
+/** End Tony**/
+
+/** Begin Vasya***/
+
+
+
+  #slide-course {
+      margin-top: 183px;
+      text-align: center;
+
+    .logo-block p {
+      color: ffffff;
+      text-align: center;
+      font-size: 30px ;
+      font-family: 'helveticaneuecyr-roman-webfont';
+  }
+    .slide {
+      display: inline-block;
+      h3 {
+        display: inline-block;
+        border: 8px solid #f2e607;
+        padding: 27px 63px 27px 63px;
+        margin-top: 16px;
+        text-transform: uppercase;
+        text-align: center;
+        font-size: 82px;
+        color: white;
+        font-family: 'helveticaneuecyr-bold-webfont';
+      }
+      .registration-block {
+        text-align: center;
+        margin-top:9px;
+      }
+      a.btn-registration {
+        color: #ffffff;
+        font-family: 'lato-bold-webfont';
+        font-size: 22px;
+        background: #5ee2ce;
+        width: 213px;
+        height: 69px;
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+        text-transform: uppercase;
+        line-height: 3.2;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 12px;
+        box-shadow: 0px 6px 3px #32c6b4;
+      }
+    }
+    .block-btn {
+      text-align: right;
+    }
+
+    .slide-btn a {
+      color: #ffffff;
+    }
+     .divider {
+      border-right: 1px solid #4bbedd;
+    }
+    span.first {
+      line-height: 29px;
+      padding: 0 10px;
+    }
+
+    .slide-btn {
+      color: #ffffff;
+      background: #00a8d6;
+      display: inline-block;
+      font-family: 'Roboto-Bold-webfont';
+      font-size: 1em;
+      margin-top: 10px;
+      span {
+        margin: 2px;
+        &.ultimate {
+          padding-right: 13px;
+        }
+      }
+      a{
+        width: 29px;
+        height: 29px;
+        display: block;
+        text-align: center;
+        float: right;
+        line-height: 29px;
+        &.next {
+          border-left: 1px solid #4bbedd;
+        }
+      }
+
+      .prev {
+        background: url("../img/arrow-prev.png") no-repeat 50%;
+      }
+      .next {
+        background: url("../img/arrow-next.png") no-repeat 50%;
+      }
+
+    }
+
+  }
+/*End Vasya**/
