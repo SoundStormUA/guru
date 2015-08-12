@@ -97,26 +97,26 @@ jQuery(document).click(function (event) {
 });
 
 jQuery(document).ready(function(){
-    jQuery('input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i, span.selectSpan').unbind().blur(function () {
+    jQuery('input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i, div.selectOptions').unbind().blur(function () {
 
         var id = jQuery(this).attr('id');
-        var span = jQuery(this).attr('class');
+        var div = jQuery(this).attr('class');
         var val = jQuery(this).val();
         var errors = [];
 
-        switch (id || span)
+        switch (id || div)
         {
             case 'contact_full_name_i':
 
                 var rev_name = /^[-a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
 
-                if (val === '' && val.length < 2) {
+                if (val === '') {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
-                    errors['contact_full_name'] = 'Це поле обов\'язкове!';
+                    errors['contact_full_name'] = 'Введіть будь ласка прізвище, ім\'я, по-батькові';
                     jQuery(this).next('#contact_full_name_p').html(errors['contact_full_name']);
-                } else if (!rev_name.test(val)) {
+                } else if (!rev_name.test(val) || val.length < 2) {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
-                    errors['contact_full_name'] = 'Введіть будь ласка корректні данні без цифр та символів, окрім "-"';
+                    errors['contact_full_name'] = 'Введіть будь ласка корректні данні!';
                     jQuery(this).next('#contact_full_name_p').html(errors['contact_full_name']);
                 } else {
                     jQuery("#contact_full_name_p").addClass('not_vissible');
@@ -129,11 +129,11 @@ jQuery(document).ready(function(){
 
                 if(val === ''){
                     jQuery("#email_p").removeClass('not_vissible');
-                    errors['email'] = 'Це поле обов\'язкове!';
+                    errors['email'] = 'Введіть будь ласка Email';
                     jQuery(this).next('#email_p').html(errors['email'])
                 } else if (!rev_email.test(val)){
                     jQuery("#email_p").removeClass('not_vissible');
-                    errors['email'] = 'Введіть корректний Email';
+                    errors['email'] = 'Введіть будь ласка корректний Email';
                     jQuery(this).next('#email_p').html(errors['email']);
                 } else {
                     jQuery("#email_p").addClass('not_vissible');
@@ -141,35 +141,34 @@ jQuery(document).ready(function(){
                 break;
 
             case 'phone_number_i':
-                var rev_phone = /^[a-zA_Z]+[\s]+[a-zA-Z]+$/;
+                var rev_phone = /^[-\+0-9()\s]+$/;
 
-                if(val !='' && rev_phone.test(val)){
-                    jQuery("#phone_number_p").addClass('not_vissible');
-                    jQuery(this).next("#phone_number_i").html('<span>Good</span>');
-                } else {
+                if(val ===''){
                     jQuery("#phone_number_p").removeClass('not_vissible');
-                    jQuery(this).next('#phone_number_p').html('<span>Bad</span>');
-                    errors['phone'] = 'erros phone_number';
+                    errors['phone'] = 'Введіть будь ласка контактний телефон';
+                    jQuery(this).next('#phone_number_p').html(errors['phone']);
+                } else if (!rev_phone.test(val)) {
+                    jQuery("#phone_number_p").removeClass('not_vissible');
+                    errors['phone'] = 'Введіть будь ласка корректний контактний телефон';
+                    jQuery(this).next('#phone_number_p').html(errors['phone']);
+                } else {
+                    jQuery("#phone_number_p").addClass('not_vissible');
                 }
                 break;
 
             case 'city_i':
-                var rev_city = /^[a-zA_Z]+[\s]+[a-zA-Z]+$/;
-
-                if(val !='' && rev_city.test(val)){
+                if(val !=''){
                     jQuery("#city_p").addClass('not_vissible');
-                    jQuery(this).next("#city_i").html('<span>Good</span>');
                 } else {
                     jQuery("#city_p").removeClass('not_vissible');
-                    jQuery(this).next('#city_p').html('<span>Bad</span>');
-                    errors['city'] = 'erros name-city';
+                    errors['city'] = 'Введіть будь ласка з якого ви міста';
+                    jQuery(this).next('#city_p').html(errors['city']);
                 }
                 break;
 
             case 'selectSpan':
                 if(val !='') {
                     jQuery("#selectedCourse_p").addClass('not_vissible');
-                    jQuery(this).next("#city_i").html('<span>Good</span>');
                 } else {
                     jQuery("#selectedCourse_p").removeClass('not_vissible');
                     jQuery(this).next('#selectedCourse_p').html('<span>Bad</span>');
