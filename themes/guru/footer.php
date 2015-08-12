@@ -10,7 +10,7 @@
 		</div>
 		<div class="info">
 			<div class="location">
-				<p>Location:</p>
+				<p class="marker">Location:</p>
 				<p>47, Shandora Petefi sq.</p>
 				<p>Uzhhorod, 88000, Ukraine</p>
 			</div>

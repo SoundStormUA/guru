@@ -117,6 +117,20 @@
   url('../fonts/Lato Bold/lato-bold-webfont.ttf') format('truetype'),
   url('../fonts/Lato Bold/lato-bold-webfont.svg#webfont') format('svg');
 }
+@font-face{
+  font-family: 'lato-regular-webfont';
+  src: url('../fonts/Lato Regular/lato-regular-webfont.eot');
+  src: url('../fonts/Lato Regular/lato-regular-webfont.eot?iefix') format('eot'),
+  url('../fonts/Lato Regular/lato-regular-webfont.woff') format('woff'),
+  url('../fonts/Lato Regular/lato-regular-webfont.ttf') format('truetype'),
+  url('../fonts/Lato Regular/lato-regular-webfont.svg#webfont') format('svg');
+}
+@img-path: "../img";
+
+.i(@name){
+  background-image: url("@{img-path}/@{name}");
+  background-repeat:no-repeat;
+}
 
 .fa {
   font-family: FontAwesome;
@@ -2055,7 +2069,6 @@ a {
 /***footer**/
 
 footer {
-  width: 1250px;
   margin: 0 auto;
   overflow: hidden;
   background-color: #0497CC;
@@ -2106,7 +2119,6 @@ footer {
       }
     }
     .info {
-      overflow: hidden;
       display: inline-block;
       margin-right: 85px;
     }
@@ -2114,12 +2126,20 @@ footer {
       float: left;
       text-align: left;
       p, a {
-        line-height: 20px;
+        line-height: 28px;
         font-size: 14px;
+        padding-left: 16px;
+        margin-left: -16px;
+        font-family: 'lato-regular-webfont';
       }
     }
     .location {
       margin-right: 100px;
+      .marker {
+        .i("marker.png");
+        background-position: left 50%;
+      }
+
     }
 
   }

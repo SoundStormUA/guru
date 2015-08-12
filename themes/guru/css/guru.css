@@ -219,6 +219,11 @@
   src: url('../fonts/Lato Bold/lato-bold-webfont.eot');
   src: url('../fonts/Lato Bold/lato-bold-webfont.eot?iefix') format('eot'), url('../fonts/Lato Bold/lato-bold-webfont.woff') format('woff'), url('../fonts/Lato Bold/lato-bold-webfont.ttf') format('truetype'), url('../fonts/Lato Bold/lato-bold-webfont.svg#webfont') format('svg');
 }
+@font-face {
+  font-family: 'lato-regular-webfont';
+  src: url('../fonts/Lato Regular/lato-regular-webfont.eot');
+  src: url('../fonts/Lato Regular/lato-regular-webfont.eot?iefix') format('eot'), url('../fonts/Lato Regular/lato-regular-webfont.woff') format('woff'), url('../fonts/Lato Regular/lato-regular-webfont.ttf') format('truetype'), url('../fonts/Lato Regular/lato-regular-webfont.svg#webfont') format('svg');
+}
 .fa {
   font-family: FontAwesome;
   text-rendering: auto;
@@ -2004,7 +2009,6 @@ a {
 }
 /***footer**/
 footer {
-  width: 1250px;
   margin: 0 auto;
   overflow: hidden;
   background-color: #0497CC;
@@ -2060,7 +2064,6 @@ footer .right .social-footer .skype {
   margin-right: 0;
 }
 footer .right .info {
-  overflow: hidden;
   display: inline-block;
   margin-right: 85px;
 }
@@ -2073,19 +2076,24 @@ footer .right .location p,
 footer .right .contactInfo p,
 footer .right .location a,
 footer .right .contactInfo a {
-  line-height: 20px;
+  line-height: 28px;
   font-size: 14px;
+  padding-left: 16px;
+  margin-left: -16px;
+  font-family: 'lato-regular-webfont';
 }
 footer .right .location {
   margin-right: 100px;
 }
-.not_vissible {
-  display: none;
+footer .right .location .marker {
+  background-image: url("../img/marker.png");
+  background-repeat: no-repeat;
+  background-position: left 50%;
 }
 /** End Tony**/
 /** Begin Vasya***/
 #slide-course {
-  margin-top: 170px;
+  margin-top: 183px;
   text-align: center;
 }
 #slide-course .logo-block p {
