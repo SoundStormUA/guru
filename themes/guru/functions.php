@@ -270,7 +270,7 @@ function courses($atts, $content = null)
     // Attributes
     extract(shortcode_atts(
             array(
-                'img' => '',
+                'animation' => '',
                 'name' => '',
                 'language' => 'en',
             ), $atts)
@@ -289,14 +289,14 @@ function courses($atts, $content = null)
         $ar = $needArray;
     }
 
-    $img = (!empty($atts['img'])) ? ("<img src='" . $atts['img'] . "' />") : '';
+    $animation = (!empty($atts['img'])) ? ("<img src='" . $atts['animation'] . "' />") : '';
 
     if ($ar['name_' . $atts['language']] == null){
         $ar['name_' . $atts['language']] = $ar['name_en'];
     }
 
     $content = "<div class='course-container course " . $atts['name'] . "'>";
-    $content .= "<div>" . $img . "</div>";
+    $content .= "<div>" . $animation . "</div>";
     $content .= "<header class='course-caption'>";
     $content .= "<span>" . $ar['name_' . $atts['language']]  . "</span></header>";
     $content .= "<p>" . $ar['info_' . $atts['language']] . "</p></div>";
