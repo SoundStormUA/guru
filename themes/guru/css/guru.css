@@ -1457,6 +1457,14 @@ th {
   width: 100%;
   padding: 10px;
 }
+.input_div .not_vissible,
+.select_div .not_vissible {
+  display: none;
+}
+.input_div .error,
+.select_div .error {
+  color: #f01136;
+}
 .input_div .selectOptions li span,
 .select_div .selectOptions li span {
   border: none;
@@ -2125,8 +2133,8 @@ footer .right .location .marker {
   font-family: 'lato-bold-webfont';
   font-size: 22px;
   background: #5ee2ce;
-  width: 213px;
-  height: 69px;
+  width: 209px;
+  height: 65px;
   display: block;
   text-align: center;
   margin: 0 auto;
