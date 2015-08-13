@@ -1596,12 +1596,3 @@ function htmlShortcodeTab()
     return $html;
 }
 add_shortcode ('course-tabs', 'htmlShortcodeTab');
-
-/*function animathion($name)
-{
-    if ($name == 'qa'){
-
-    } elseif{
-
-    }
-}*/
