@@ -357,3 +357,11 @@ function checkAnimation() {
 jQuery(window).scroll(function () {
     checkAnimation();
 });
+
+
+jQuery(document).ready(function($) {
+
+
+
+
+});

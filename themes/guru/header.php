@@ -20,7 +20,7 @@
                             <p class="logo"><b>THINK</b>MOBILES</p>
                         </div>
                         <div class="slide">
-                            <h3>It School</h3>
+                            <h1>It School</h1>
                             <div class="block-btn">
                                 <div class="slide-btn">
                                     <span class="first">1&#47;6</span>
