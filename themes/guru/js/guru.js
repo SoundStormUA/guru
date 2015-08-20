@@ -40,8 +40,7 @@ function checkElementIfCourse(element) {
     });
     if (result) {
         return result;
-    }
-    ;
+    };
     return false;
 };
 
@@ -91,23 +90,19 @@ jQuery(document).click(function (event) {
                 }
             });
         }
-        ;
         scrollTo("#course-wrapper", 1000);
     }
 });
 
 jQuery(document).ready(function(){
-    jQuery('input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i, div.selectOptions').unbind().blur(function () {
+    var errors = {};
 
+    jQuery('input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i').unbind().blur(function () {
         var id = jQuery(this).attr('id');
-        var div = jQuery(this).attr('class');
         var val = jQuery(this).val();
-        var errors = [];
 
-        switch (id || div)
-        {
+        switch (id) {
             case 'contact_full_name_i':
-
                 var rev_name = /^[-a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
 
                 if (val === '') {
@@ -120,30 +115,31 @@ jQuery(document).ready(function(){
                     jQuery(this).next('#contact_full_name_p').html(errors['contact_full_name']);
                 } else {
                     jQuery("#contact_full_name_p").addClass('not_vissible');
+                    delete errors.contact_full_name;
                 }
                 break;
 
             case 'email_i':
-
                 var rev_email = /^[-_.a-z0-9]+@[-_.a-z0-9]+\.[a-z]{2,6}$/i;
 
-                if(val === ''){
+                if (val === '') {
                     jQuery("#email_p").removeClass('not_vissible');
                     errors['email'] = 'Введіть будь ласка Email';
                     jQuery(this).next('#email_p').html(errors['email'])
-                } else if (!rev_email.test(val)){
+                } else if (!rev_email.test(val)) {
                     jQuery("#email_p").removeClass('not_vissible');
                     errors['email'] = 'Введіть будь ласка корректний Email';
                     jQuery(this).next('#email_p').html(errors['email']);
                 } else {
                     jQuery("#email_p").addClass('not_vissible');
+                    delete errors.email;
                 }
                 break;
 
             case 'phone_number_i':
                 var rev_phone = /^[-\+0-9()\s]+$/;
 
-                if(val ===''){
+                if (val === '') {
                     jQuery("#phone_number_p").removeClass('not_vissible');
                     errors['phone'] = 'Введіть будь ласка контактний телефон';
                     jQuery(this).next('#phone_number_p').html(errors['phone']);
@@ -153,56 +149,89 @@ jQuery(document).ready(function(){
                     jQuery(this).next('#phone_number_p').html(errors['phone']);
                 } else {
                     jQuery("#phone_number_p").addClass('not_vissible');
+                    delete errors.phone;
                 }
                 break;
 
             case 'city_i':
-                if(val !=''){
+
+                if (val != '') {
                     jQuery("#city_p").addClass('not_vissible');
+                    delete errors.city;
                 } else {
                     jQuery("#city_p").removeClass('not_vissible');
-                    errors['city'] = 'Введіть будь ласка з якого ви міста';
+                    errors['city'] = 'Введіть будь ласка назву міста';
                     jQuery(this).next('#city_p').html(errors['city']);
-                }
-                break;
-
-            case 'selectSpan':
-                if(val !='') {
-                    jQuery("#selectedCourse_p").addClass('not_vissible');
-                } else {
-                    jQuery("#selectedCourse_p").removeClass('not_vissible');
-                    jQuery(this).next('#selectedCourse_p').html('<span>Bad</span>');
-                    errors['selected'] = 'not selected';
                 }
                 break;
         }
     });
-});
 
-jQuery("#registrationForm").submit(function (event) {
-    event.preventDefault();
-    event.stopPropagation();
+    jQuery('#selectedCourse').unbind().click(function (){
 
-    var form = document.getElementById("registrationForm");
-    var formData = new FormData(form);
-
-    var oReq = new XMLHttpRequest();
-
-    formData.append('action', 'insert-user');
-
-    oReq.open("POST", WPAjax.ajaxurl, true);
-
-    oReq.onreadystatechange = function() {
-        if (oReq.readyState == 4 && oReq.status == 200) {
-            return alert(oReq.responseText);
+        if (jQuery('.select_input').val() === '') {
+            jQuery("#selectedCourse_p").removeClass('not_vissible');
+            errors['selected'] = 'Оберіть будь ласка потрібний курс!';
+            jQuery('#selectedCourse_p').html(errors['selected']);
+        } else {
+            jQuery("#selectedCourse_p").addClass('not_vissible');
+            delete errors.selected;
         }
-    };
-    oReq.send(formData);
+    });
+
+    drawAnimatedLines();
+
+    jQuery('#addFile').click(function() {
+        jQuery('#addFileInput').click();
+    });
+
+    jQuery('#addFileInput').on('change', prepareUpload);
+
+    function prepareUpload(event) {
+        files = event.target.files;
+        var file = files[0];
+
+        var div = jQuery('<div id="filename" class="falename">' + file.name + '</div>');
+
+        if (jQuery('#filename').text() === ''){
+            div.insertAfter(jQuery(this).parent());
+        } else {
+           var error = 'Можливе завантаження тількі одного файла!';
+            jQuery('#filename').append('<p class="error">' + error + '</p>');
+        }
+    }
+
+    jQuery("#registrationForm").submit(function (event) {
+        event.preventDefault();
+        event.stopPropagation();
+        delete errors.all;
+        if (Object.keys(errors) == 0 && jQuery('input').val()!= '') {
+
+            var form = document.getElementById("registrationForm");
+            var formData = new FormData(form);
+
+            var oReq = new XMLHttpRequest();
+
+            formData.append('action', 'insert-user');
+
+            oReq.open("POST", WPAjax.ajaxurl, true);
+
+            oReq.onreadystatechange = function() {
+                if (oReq.readyState == 4 && oReq.status == 200) {
+                    return alert(oReq.responseText);
+                }
+            };
+            oReq.send(formData);
+        } else if (jQuery('input').val() === '') {
+            errors['all'] = 'Заповніть будь ласка це поле';
+            jQuery('.error').removeClass('not_vissible').html(errors['all']);
+        }
+    });
 });
 
 function drawAnimatedLines() {
     var containerTop = jQuery(".equaliser");
-    var containerBottom = jQuery(".equaliser-bottom")
+    var containerBottom = jQuery(".equaliser-bottom");
     var headerElementWidth = jQuery("#header").width();
     var widthBettween = 23;
     var circleSize = 7;
@@ -293,23 +322,8 @@ jQuery('.selectOptions li').click(function () {
     displaySelector(this);
 });
 
-jQuery(document).ready(function($) {
+//jQuery(document).ready(function($) {
 
-    drawAnimatedLines();
-
-    $('#addFile').click(function() {
-        $('#addFileInput').click();
-    });
-
-    $('#addFileInput').on('change', prepareUpload);
-
-    function prepareUpload(event)
-    {
-        files = event.target.files;
-        var $div = jQuery('<div id="filename" class="input_div">' + files[0].name + '</div>');
-        $div.insertBefore(jQuery(this).parent());
-    }
-});
 
 jQuery(window).resize(function() {
     drawAnimatedLines();
