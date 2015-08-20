@@ -1531,6 +1531,8 @@ th {
     text-align: center;
     padding: 0 0 10px 0;
     cursor: pointer;
+    &.course{
+    }
 
     .course-caption {
       font-size: 32px;
@@ -1539,7 +1541,6 @@ th {
         margin: 0;
       }
     }
-
     p {
       padding: 0 10px 10px 10px;
       margin: 0;
@@ -1654,7 +1655,41 @@ th {
     }
   }
 }
-
+.course{
+  &.qa {
+    .head-bug {
+      .i("bug-02.png");
+      width: 35px;
+      height: 48px;
+      position: relative;
+      left: 7px;
+      z-index: 10;
+    }
+    .body-bug {
+      .i("bug-03.png");
+      width: 50px;
+      height: 55px;
+      position: relative;
+      bottom: 10px;
+      z-index: 1;
+    }
+    .left-arm {
+      .i("bug-04.png");
+      width: 40px;
+      height: 53px;
+      position: relative;
+      bottom: 57px;
+      right: 19px
+    }
+    .right-arm {
+      .i("bug-05.png");
+      width: 40px;
+      height: 53px;
+      position: relative;
+      bottom: 110px;
+      left: 28px;
+    }
+  }}
 @media (max-width: @screen-xs-max) {
   .ss2-align {
     display: none;
@@ -2169,10 +2204,10 @@ footer {
   }
     .slide {
       display: inline-block;
-      h3 {
+      h1 {
         display: inline-block;
         border: 8px solid #f2e607;
-        padding: 27px 63px 27px 63px;
+        padding: 27px 72px 27px 72px;
         margin-top: 16px;
         text-transform: uppercase;
         text-align: center;
@@ -2200,6 +2235,9 @@ footer {
         -moz-border-radius: 5px;
         border-radius: 12px;
         box-shadow: 0px 6px 3px #32c6b4;
+        &:active {
+          transform: scale(0.95);;
+        }
       }
     }
     .block-btn {
@@ -2252,4 +2290,59 @@ footer {
     }
 
   }
+  
+  .block_one {
+    width: 50%;
+    float: left;
+  }
+  
+  .block_two {
+    width: 50%;
+    float: right;
+    img {
+      height: 564px;
+    }
+  }
+
+  .block_three {
+    width: 25%;
+    display: inline-block;
+    float: left;
+
+  }
+
+  .block_four {
+    width: 25%;
+    display: inline-block;
+  }
+  
+  .block_five {
+    width: 50%;
+    float: left;
+    display: inline-block;
+  }
+
+  .block_six {
+    width: 50%;
+    display: inline-block;
+    img {
+      height: 563px;
+    }
+  }
+
+  .block_seven {
+    width: 50%;
+    display: inline-block;
+    float: right;
+  }
+
+  .block_eight {
+    width: 50%;
+    display: inline-block;
+  }
+  
+  
 /*End Vasya**/
+
+
+

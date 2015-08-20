@@ -1642,6 +1642,42 @@ th {
   width: 50%;
   margin-bottom: 30px;
 }
+.course.qa .head-bug {
+  background-image: url("../img/bug-02.png");
+  background-repeat: no-repeat;
+  width: 35px;
+  height: 48px;
+  position: relative;
+  left: 7px;
+  z-index: 10;
+}
+.course.qa .body-bug {
+  background-image: url("../img/bug-03.png");
+  background-repeat: no-repeat;
+  width: 50px;
+  height: 55px;
+  position: relative;
+  bottom: 10px;
+  z-index: 1;
+}
+.course.qa .left-arm {
+  background-image: url("../img/bug-04.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 53px;
+  position: relative;
+  bottom: 57px;
+  right: 19px;
+}
+.course.qa .right-arm {
+  background-image: url("../img/bug-05.png");
+  background-repeat: no-repeat;
+  width: 40px;
+  height: 53px;
+  position: relative;
+  bottom: 110px;
+  left: 28px;
+}
 @media (max-width: 767px) {
   .ss2-align {
     display: none;
@@ -2113,10 +2149,10 @@ footer .right .location .marker {
 #slide-course .slide {
   display: inline-block;
 }
-#slide-course .slide h3 {
+#slide-course .slide h1 {
   display: inline-block;
   border: 8px solid #f2e607;
-  padding: 27px 63px 27px 63px;
+  padding: 27px 72px 27px 72px;
   margin-top: 16px;
   text-transform: uppercase;
   text-align: center;
@@ -2144,6 +2180,9 @@ footer .right .location .marker {
   -moz-border-radius: 5px;
   border-radius: 12px;
   box-shadow: 0px 6px 3px #32c6b4;
+}
+#slide-course .slide a.btn-registration:active {
+  transform: scale(0.95);
 }
 #slide-course .block-btn {
   text-align: right;
@@ -2188,5 +2227,46 @@ footer .right .location .marker {
 }
 #slide-course .slide-btn .next {
   background: url("../img/arrow-next.png") no-repeat 50%;
+}
+.block_one {
+  width: 50%;
+  float: left;
+}
+.block_two {
+  width: 50%;
+  float: right;
+}
+.block_two img {
+  height: 564px;
+}
+.block_three {
+  width: 25%;
+  display: inline-block;
+  float: left;
+}
+.block_four {
+  width: 25%;
+  display: inline-block;
+}
+.block_five {
+  width: 50%;
+  float: left;
+  display: inline-block;
+}
+.block_six {
+  width: 50%;
+  display: inline-block;
+}
+.block_six img {
+  height: 563px;
+}
+.block_seven {
+  width: 50%;
+  display: inline-block;
+  float: right;
+}
+.block_eight {
+  width: 50%;
+  display: inline-block;
 }
 /*End Vasya**/
