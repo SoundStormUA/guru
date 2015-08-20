@@ -30,7 +30,8 @@ function checkElement(element, elementClass) {
     return false
 };
 
-function checkElementIfCourse(element) {
+
+/*function checkElementIfCourse(element) {
     var result;
     courses.forEach(function (course) {
         var elementResult = checkElement(element, course)
@@ -42,7 +43,8 @@ function checkElementIfCourse(element) {
         return result;
     };
     return false;
-};
+}
+;*/
 
 function scrollTo(element, time) {
     var offset = -100;
@@ -52,52 +54,99 @@ function scrollTo(element, time) {
     }, time);
 };
 
-jQuery(document).ready(function () {
-    jQuery("#course-wrapper").addClass('hidden');
-    getCourses();
-});
-
-jQuery(document).click(function (event) {
-    var curElement = event.target;
+jQuery(document).on('click', function (event) {
+   var curElement = event.target;
 
     if (checkElement(curElement, 'coursesLi')) {
         event.preventDefault()
         scrollTo("#courses", 1000);
     } else if (checkElement(curElement, 'planLi')) {
         event.preventDefault()
-        scrollTo("#plan", 1000);
-    } else if (checkElement(curElement, 'course')) {
-        var page_name;
-        var checkCourse;
-
-        event.preventDefault();
-        jQuery("#course-wrapper").removeClass('hidden');
-
-        checkCourse = checkElementIfCourse(curElement);
-
-        if (checkCourse) {
-            page_name = checkCourse;
-            jQuery.ajax({
-                url: WPAjax.ajaxurl,
-                type: 'POST',
-                data: {
-                    action: 'ajax-submit',
-                    name: page_name
-                },
-                success: function (html) {
-                    jQuery("#course-wrapper").empty();
-                    jQuery("#course-wrapper").append(html);
-                }
-            });
+        if (!jQuery('#plan').length) {
+            window.location.hash = '#home'
+            scrollTo("#plan", 1000);
+        } else {
+            scrollTo("#plan", 1000);
         }
-        scrollTo("#course-wrapper", 1000);
     }
 });
 
+jQuery(document).ready(function () {
+    jQuery("#course-wrapper").addClass('hidden');
+    getCourses();
+});
+
 jQuery(document).ready(function(){
+
+        function course_page(name) {
+            jQuery.ajax({
+                url: WPAjax.ajaxurl,
+                type: 'GET',
+                data: {
+                    action: 'course-page',
+                    name: name
+                },
+                success: function (html) {
+                    jQuery("#content").empty();
+                    jQuery('#content').append(html);
+                }
+            });
+        };
+
+        var hashSwitch = function () {
+            switch(window.location.hash )
+            {
+                case '#basic':
+                    course_page(window.location.hash.substr(1));
+                    jQuery('.equaliser').detach();
+                    break;
+                case '#js':
+                    course_page(window.location.hash.substr(1));
+                    jQuery('.equaliser').detach();
+                    break;
+                case '#android':
+                    course_page(window.location.hash.substr(1));
+                    jQuery('.equaliser').detach();
+                    break;
+                case '#ios':
+                    course_page(window.location.hash.substr(1));
+                    jQuery('.equaliser').detach();
+                    break;
+                case '#qa':
+                    course_page(window.location.hash.substr(1));
+                    jQuery('.equaliser').detach();
+                    break;
+                case '#home':
+                    window.location.href = '#home';
+                    course_page(window.location.hash.substr(1));
+                    break;
+            }
+        };
+
+    jQuery(hashSwitch);
+    jQuery(window).bind('hashchange', hashSwitch);
+
+    jQuery ('#content').on('click', '#firstTab',  function (){
+        jQuery('#first-tab-page').show();
+        jQuery('#second-tab-page').hide();
+        jQuery('#third-tab-page').hide();
+    });
+
+    jQuery ('#content').on('click', '#secondTab',  function (){
+        jQuery('#second-tab-page').show();
+        jQuery('#first-tab-page').hide();
+        jQuery('#third-tab-page').hide();
+    });
+
+    jQuery ('#content').on('click', '#thirdTab',  function (){
+        jQuery('#third-tab-page').show();
+        jQuery('#first-tab-page').hide();
+        jQuery('#second-tab-page').hide();
+    });
+
     var errors = {};
 
-    jQuery('input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i').unbind().blur(function () {
+    var validate = function () {
         var id = jQuery(this).attr('id');
         var val = jQuery(this).val();
 
@@ -120,7 +169,7 @@ jQuery(document).ready(function(){
                 break;
 
             case 'email_i':
-                var rev_email = /^[-_.a-z0-9]+@[-_.a-z0-9]+\.[a-z]{2,6}$/i;
+                var rev_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
                 if (val === '') {
                     jQuery("#email_p").removeClass('not_vissible');
@@ -165,10 +214,9 @@ jQuery(document).ready(function(){
                 }
                 break;
         }
-    });
+    };
 
-    jQuery('#selectedCourse').unbind().click(function (){
-
+    var validateSelect = function(){
         if (jQuery('.select_input').val() === '') {
             jQuery("#selectedCourse_p").removeClass('not_vissible');
             errors['selected'] = 'Оберіть будь ласка потрібний курс!';
@@ -177,34 +225,65 @@ jQuery(document).ready(function(){
             jQuery("#selectedCourse_p").addClass('not_vissible');
             delete errors.selected;
         }
-    });
+    };
+
+    var validateFile = function (file) {
+        var upload_max_size = 5242880;
+        var array_ext = ['doc', 'docx', 'odt'];
+        var file_ext = file.name.split('.').pop().toLowerCase();
+        var div = jQuery('<div id="filename" class="falename">' + file.name + '</div>');
+
+        delete errors.file;
+
+        if (files === undefined){
+            errors['file'] = 'Звантажте файл резюме формату - ' + array_ext.join(',');
+            jQuery('.buttonsHolder').append('<p class="error">' + errors['file'] + '</p>');
+        } else if (file === files[0]) {
+
+            if (file.size > upload_max_size) {
+                errors['file'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' + upload_max_size/100024 + ' Мб';
+                jQuery('.buttonsHolder').append('<p class="error">' + errors['file'] + '</p>');
+            } else if (jQuery.inArray(file_ext,array_ext)== -1) {
+                errors['file'] = 'Розширення файлу непідтримуєтся,завантажте файл формату - ' + array_ext.join(',');
+                jQuery('.buttonsHolder').append('<p class="error">' + errors['file'] + '</p>');
+            } else if (jQuery('#filename').text() === ''){
+                div.insertAfter(jQuery('.buttonsHolder'));
+                jQuery('.buttonsHolder').find('.error').empty();
+            } else if (jQuery('#filename').text() != '') {
+                jQuery('#filename').empty();
+                div.insertAfter(jQuery('.buttonsHolder'));
+            } else {
+                delete errors.file;
+            }
+        }
+    };
+
+    jQuery('#content').unbind().on('focusout', 'input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i', validate);
+    jQuery("#content").on("click", "#selectedCourse", validateSelect);
 
     drawAnimatedLines();
 
-    jQuery('#addFile').click(function() {
+    jQuery('#content').on('click', '#addFile', function() {
         jQuery('#addFileInput').click();
     });
 
-    jQuery('#addFileInput').on('change', prepareUpload);
+    jQuery("#content").on('change', '#addFileInput', prepareUpload);
 
     function prepareUpload(event) {
+        delete file;
         files = event.target.files;
         var file = files[0];
-
-        var div = jQuery('<div id="filename" class="falename">' + file.name + '</div>');
-
-        if (jQuery('#filename').text() === ''){
-            div.insertAfter(jQuery(this).parent());
-        } else {
-           var error = 'Можливе завантаження тількі одного файла!';
-            jQuery('#filename').append('<p class="error">' + error + '</p>');
-        }
+        jQuery(validateFile(file));
     }
 
-    jQuery("#registrationForm").submit(function (event) {
+    jQuery('#content').on('submit', "#registrationForm", function (event) {
+
         event.preventDefault();
         event.stopPropagation();
-        delete errors.all;
+
+        jQuery('input').each(validate);
+        jQuery(validateSelect);
+        jQuery(validateFile);
         if (Object.keys(errors) == 0 && jQuery('input').val()!= '') {
 
             var form = document.getElementById("registrationForm");
@@ -218,156 +297,159 @@ jQuery(document).ready(function(){
 
             oReq.onreadystatechange = function() {
                 if (oReq.readyState == 4 && oReq.status == 200) {
-                    return alert(oReq.responseText);
+                    jQuery('input', '#registrationForm').each(function() {
+                        var type = this.type;
+                        var tag = this.tagName.toLowerCase();
+
+                        jQuery('#filename').empty();
+                        delete jQuery('#select_input').text();
+                        if (type === 'text'){
+                            this.value = '';
+                        }
+                    });
                 }
             };
             oReq.send(formData);
-        } else if (jQuery('input').val() === '') {
-            errors['all'] = 'Заповніть будь ласка це поле';
-            jQuery('.error').removeClass('not_vissible').html(errors['all']);
         }
     });
-});
 
-function drawAnimatedLines() {
-    var containerTop = jQuery(".equaliser");
-    var containerBottom = jQuery(".equaliser-bottom");
-    var headerElementWidth = jQuery("#header").width();
-    var widthBettween = 23;
-    var circleSize = 7;
-    var count = ~~(headerElementWidth / widthBettween);
-    var firstLeft = (headerElementWidth - (count * widthBettween)) / 2;
+    jQuery("#content").on("click", ".selectPlaceholder", function () {
+        displaySelector(this);
+    });
 
-    if (firstLeft <= circleSize) {
-        count -= 1;
-    }
+    jQuery("#content").on('click', '.selectOptions li', function () {
+        var selectDiv = jQuery(this).closest('.select_div');
+        var input = selectDiv.find('.select_input');
 
-    containerTop.each(function (index, element) {
-        jQuery(element).empty();
-        jQuery(element).width((count * 23));
-        var left = 0;
+        input.val(jQuery(this).data('value'));
+        input.data('text', jQuery(this).text());
+        displaySelector(this);
+    });
 
-        for (var i = count; i >= 1; i--) {
-            if (i === count) {
-                left += circleSize;
-            } else {
-                left += widthBettween;
+    function drawAnimatedLines() {
+        var containerTop = jQuery(".equaliser");
+        var containerBottom = jQuery(".equaliser-bottom");
+        var headerElementWidth = jQuery("#header").width();
+        var widthBettween = 23;
+        var circleSize = 7;
+        var count = ~~(headerElementWidth / widthBettween);
+        var firstLeft = (headerElementWidth - (count * widthBettween)) / 2;
+
+        if (firstLeft <= circleSize) {
+            count -= 1;
+        }
+
+        containerTop.each(function (index, element) {
+            jQuery(element).empty();
+            jQuery(element).width((count * 23));
+            var left = 0;
+
+            for (var i = count; i >= 1; i--) {
+                if (i === count) {
+                    left += circleSize;
+                } else {
+                    left += widthBettween;
+                }
+                var divTop = '<div class="bar-top" style="left: ' + left + 'px"></div>';
+
+                jQuery(element).append(divTop);
             }
-            var divTop = '<div class="bar-top" style="left: ' + left + 'px"></div>';
+        });
 
-            jQuery(element).append(divTop);
-        }
-    });
+        containerBottom.each(function (index, element) {
+            jQuery(element).empty();
+            var left = 0;
 
-    containerBottom.each(function (index, element) {
-        jQuery(element).empty();
-        var left = 0;
+            for (var i = ~~count; i >= 1; i--) {
+                if (i === ~~count || i === 1) {
+                    left += firstLeft;
+                } else {
+                    left += 23;
+                }
+                //var left = 20 * i - firstLeft + 3;
+                var divBottom = '<div class="bar-bottom" style="left: ' + left + 'px"></div>';
 
-        for (var i = ~~count; i >= 1; i--) {
-            if (i === ~~count || i === 1) {
-                left += firstLeft;
-            } else {
-                left += 23;
+                jQuery(element).append(divBottom);
             }
-            //var left = 20 * i - firstLeft + 3;
-            var divBottom = '<div class="bar-bottom" style="left: ' + left + 'px"></div>';
+        });
+    };
 
-            jQuery(element).append(divBottom);
-        }
-    });
-};
+    function displaySelector(content) {
+        var selectDiv = jQuery(content).closest('.select_div');
+        var selectSpan = selectDiv.find('.selectSpan');
+        var input = selectDiv.find('.select_input');
+        var selectOptions = selectDiv.find('.selectOptions');
 
-function displaySelector(content) {
-    var selectDiv = jQuery(content).closest('.select_div');
-    var selectSpan = selectDiv.find('.selectSpan');
-    var input = selectDiv.find('.select_input');
-    var selectOptions = selectDiv.find('.selectOptions');
+        selectSpan.text(function(i, text) {
 
-    selectSpan.text(function(i, text) {
-
-        if (text === 'Choose your course') {
-            if (input.val()) {
-                selectSpan.removeClass('phSpan');
-                return input.data('text');
+            if (text === 'Choose your course') {
+                if (input.val()) {
+                    selectSpan.removeClass('phSpan');
+                    return input.data('text');
+                }
             }
-        }
 
-        selectSpan.addClass('phSpan');
-        return 'Choose your course';
-    });
+            selectSpan.addClass('phSpan');
+            return 'Choose your course';
+        });
 
-    if (selectDiv.hasClass('active')) {
-        selectDiv.toggleClass('active');
-        setTimeout(function() {
-            selectOptions.toggleClass('hidden');
-        }, 120);
-    } else {
-        selectOptions.toggleClass('hidden');
-        setTimeout(function() {
+        if (selectDiv.hasClass('active')) {
             selectDiv.toggleClass('active');
-        }, 20);
-    }
-};
-
-jQuery(".selectPlaceholder").click(function () {
-    displaySelector(this);
-});
-
-jQuery('.selectOptions li').click(function () {
-    var selectDiv = jQuery(this).closest('.select_div');
-    var input = selectDiv.find('.select_input');
-
-    input.val(jQuery(this).data('value'));
-    input.data('text', jQuery(this).text());
-    displaySelector(this);
-});
-
-//jQuery(document).ready(function($) {
-
-
-jQuery(window).resize(function() {
-    drawAnimatedLines();
-});
-
-function isElementInViewport(elem) {
-    var $elem = jQuery(elem);
-
-    // Get the scroll position of the page.
-    var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
-    var viewportTop = jQuery(scrollElem).scrollTop();
-    var viewportBottom = viewportTop + window.outerHeight;
-
-    // Get the position of the element on the page.
-    var elemTop = Math.round($elem.offset().top);
-    var elemBottom = elemTop + $elem.height();
-
-    return ((elemBottom + 200 < viewportBottom) && (elemTop < viewportBottom));
-}
-
-
-function checkAnimation() {
-    var $elemHolder = jQuery('#testimonialsHolder');
-    var $elem = $elemHolder.find('.testimonial');
-
-    $elem.each(function (index, element) {
-        var $elem = jQuery(element);
-
-        if (isElementInViewport($elem)) {
-            // Start the animation
-            if (!$elem.hasClass('show')) {
-                $elem.addClass('show');
-                $elem.removeClass('hide');
-            }
+            setTimeout(function() {
+                selectOptions.toggleClass('hidden');
+            }, 120);
         } else {
-            if ($elem.hasClass('show')) {
-                $elem.removeClass('show');
-                $elem.addClass('hide');
-            }
+            selectOptions.toggleClass('hidden');
+            setTimeout(function() {
+                selectDiv.toggleClass('active');
+            }, 20);
         }
+    };
+
+    jQuery(window).resize(function() {
+        drawAnimatedLines();
     });
 
-}
+    function isElementInViewport(elem) {
+        var $elem = jQuery(elem);
 
-jQuery(window).scroll(function () {
-    checkAnimation();
+        // Get the scroll position of the page.
+        var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
+        var viewportTop = jQuery(scrollElem).scrollTop();
+        var viewportBottom = viewportTop + window.outerHeight;
+
+        // Get the position of the element on the page.
+        var elemTop = Math.round($elem.offset().top);
+        var elemBottom = elemTop + $elem.height();
+
+        return ((elemBottom + 200 < viewportBottom) && (elemTop < viewportBottom));
+    }
+
+
+    function checkAnimation() {
+        var $elemHolder = jQuery('#testimonialsHolder');
+        var $elem = $elemHolder.find('.testimonial');
+
+        $elem.each(function (index, element) {
+            var $elem = jQuery(element);
+
+            if (isElementInViewport($elem)) {
+                // Start the animation
+                if (!$elem.hasClass('show')) {
+                    $elem.addClass('show');
+                    $elem.removeClass('hide');
+                }
+            } else {
+                if ($elem.hasClass('show')) {
+                    $elem.removeClass('show');
+                    $elem.addClass('hide');
+                }
+            }
+        });
+
+    }
+
+    jQuery(window).on('scroll', function () {
+        checkAnimation();
+    });
 });

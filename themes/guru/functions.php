@@ -143,31 +143,25 @@ function insert_registered_user()
         $tmp_name = $_FILES['addingFile']['tmp_name'];
 
         $upload_max_size = 5242880;
-        $array_ext = array("docx", "doc", "odt");
+        $array_ext = array('docx', 'doc', 'odt');
 
         $file_ext = pathinfo($_FILES['addingFile']['name'], PATHINFO_EXTENSION);
         $upload_file_name .= '.' . $file_ext;
         $data['resume_file'] = $upload_file_name;
 
         if (!in_array($file_ext, $array_ext)) {
-            $errors['filename'] = 'Розширення файлу непідтримуєтся,завантажте файл формата - ' . implode(",", $array_ext);
+            $errors['filename'] = 'The file extension is not supported, download file formats - ' . implode(",", $array_ext);
         } elseif ($upload_file_size > $upload_max_size) {
-            $errors['filename'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' . $uploud_max_size / 10024 . 'Мб';
+            $errors['filename'] = 'Exceeding maximum file size. upload files up to -' . $uploud_max_size / 10024 . ' Mb';
         } elseif (!is_writable($upload_dir)) {
-            $errors['filename'] = 'Папка для завантаження має захист від запису, вибачте за тимчасові незручності. Зверніться телефоном';
+            $errors['filename'] = 'Folder to download a write protection sorry for the inconvenience';
         } elseif (empty($errors)) {
             move_uploaded_file($tmp_name, "$upload_dir/$upload_file_name");
         } elseif (!file_exists($upload_dir / $upload_file_name)) {
-            $errors['filename'] = 'Виникла помилка. файл не був завантаженний';
+            echo $errors['filename'] = 'Error file has not been uploaded to the server';
         }
     }
-    //return "<script type='text/javascript'>alert($data));</script>";
-
-    //echo (basename($_FILES['addingFile']['name']));
     //echo ($data['FIO']);
-
-    //echo( $data['FILE']['name'] );
-
     if (empty($errors)) {
         $wpdb->insert(
             $wpdb->prefix . 'registered_users',
@@ -184,6 +178,8 @@ function insert_registered_user()
         );
         exit;
         die;
+    } else {
+        echo $errors;
     }
 }
 
@@ -276,7 +272,26 @@ function courses($atts, $content = null)
         $ar = $needArray;
     }
 
-    $animation = $atts['animation'];
+    $animationName = $atts['animation'];
+
+    switch ($animationName)
+    {
+        case 'basic':
+            $animation = '';
+            break;
+        case 'js':
+            $animation = '';
+            break;
+        case 'android':
+            $animation = '';
+            break;
+        case 'ios':
+            $animation = '';
+            break;
+        case 'qa':
+            $animation = '';
+            break;
+    }
 
     if ($ar['name_' . $atts['language']] == null){
         $ar['name_' . $atts['language']] = $ar['name_en'];
@@ -388,9 +403,49 @@ function contact_form($atts, $content = null)
 
 add_shortcode('contact_form', 'contact_form');
 
-function input_shortcode($atts, $content = null)
+function contact_form_course($atts, $content = null)
 {
 
+    extract(shortcode_atts(
+            array(
+                'coursename' => '',
+                'language' => 'en',
+            ), $atts)
+    );
+
+    $id = caseCourse($atts{'coursename'});
+
+    if ('name_' . $atts['language'] == null){
+        $atts['language'] = 'en';
+    }
+
+    $form = "<div id='registrationForm'>";
+    $form .= "<header class='sectionTitleCourse'><span>Реєстрація</span></header>";
+    $form .= "<form id='registrationFormCourse' class='contact_form' method='POST' novalidate='novalidate'>";
+    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name_course' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input name_i='email_course' id='email' required class='marked' type='text']Email:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input id='phone_number' name_i='phone_number_course' required class='marked' type='text']Контактний телефон:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input id='city_course' name_i='city_course' required class='marked' type='text']Місто:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" language="' . $atts['language'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" value = "' . $id . '"></div>';
+    $form .= '<div class="clearboth"></div>';
+    $form .= '<div class="buttonsHolder">';
+    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
+    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
+    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+    $form .= "</form></div>";
+
+    return $form;
+}
+
+add_shortcode('course_form','contact_form_course');
+
+function input_shortcode($atts, $content = null)
+{
     // Attributes
     extract(shortcode_atts(
             array(
@@ -1250,7 +1305,7 @@ function courseLiterature($atts) {
 					'img' =>'',
 					'coursename'=>''), $atts));
 	$page = '';
-	$page .= '<div id="second-tab-page">';
+	$page .= '<div id="second-tab-page" style="display:none;">';
 	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
     $page .= contentLiterature($atts['lang'], $atts['coursename']);
@@ -1349,7 +1404,7 @@ function my_literature_page()
 ;
 
 add_action('wp_ajax_render-literature', 'renderLitTable');
-add_action('wp_ajax_nopriv_render-literature', 'renderLitTable');
+
 function renderLitTable($returned)
 {
     $coursesSelectList = get_data_for_select('courses', 'name_en');
@@ -1554,11 +1609,11 @@ function delete_lit()
 
 function htmlShortcodeTab()
 {
-    $html = '<!-- Begin Main-Tab -->
+    $html = '
 	<div class="main-tab">
 		<ul class="tabs">
 			<li id="firstTab">
-				<a href="#"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+				<a href="#first"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 					<path d="M47.1,27.7C47.1,27.7,47.1,27.7,47.1,27.7c0-0.1,0-0.2,0-0.3V12.5c0-0.8-0.7-1.5-1.5-1.5H4.4
 						c-0.8,0-1.5,0.7-1.5,1.5v24.9c0,0.8,0.7,1.5,1.5,1.5h31.3c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.2,0
 						c0,0,0.1,0,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1-0.1,0.2-0.1,0.2-0.2l10-10c0.1-0.1,0.2-0.2,0.2-0.3c0,0,0-0.1,0-0.1
@@ -1568,8 +1623,7 @@ function htmlShortcodeTab()
 				</svg>
 					структура курсу</a></li>
 			<li id="secondTab">
-				<!--<span class="ico ico-second"></span> -->
-				<a href="#">
+				<a href="#second">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 						<path  d="M46.8,19c-0.5-4.2-5.4-7.3-11.6-7.3c-4.4,0-8.2,1.6-10.2,4c-2-2.4-5.8-4-10.2-4c-6.2,0-11.2,3.1-11.6,7.3
 						c0,0.1,0,0.2,0,0.3v17.2c0,1,0.8,1.8,1.8,1.8c0.6,0,1.1-0.3,1.5-0.8c0.9-1.3,4.1-2.7,8.5-2.7c4.4,0,7.6,1.4,8.5,2.7
@@ -1581,8 +1635,7 @@ function htmlShortcodeTab()
 					література та ресурси</a>
 			</li>
 			<li id="thirdTab">
-				<!--<span class="ico ico-first"></span>-->
-				<a href="#">
+				<a href="#third">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 						<path d="M38.2,39.7H11.8c-0.8,0-1.5-0.7-1.5-1.5V11.8c0-0.8,0.7-1.5,1.5-1.5h26.4c0.8,0,1.5,0.7,1.5,1.5v26.4
 							C39.7,39,39,39.7,38.2,39.7z M13.3,36.7h23.4V13.3H13.3V36.7z"/>
@@ -1592,7 +1645,17 @@ function htmlShortcodeTab()
 				вимоги</a>
 			</li>
 		</ul>';
-
     return $html;
 }
 add_shortcode ('course-tabs', 'htmlShortcodeTab');
+
+add_action('wp_ajax_nopriv_course-page', 'course_page');
+add_action('wp_ajax_course-page', 'course_page');
+
+function course_page($name)
+{
+    $name = $_GET['name'];
+    $html = do_shortcode("[insert page='" . $name . "' display='content']");
+    echo $html;
+    exit;
+}
