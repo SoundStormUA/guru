@@ -1,8 +1,0 @@
-.clearfix {
-  content: "";
-  display: block;
-  clear: both;
-  height: 0;
-  width: 0;
-  visibility: hidden;
-}

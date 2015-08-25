@@ -7,8 +7,8 @@
         <?php wp_head(); ?>
     </head>
     <body>
-        <div id="wrapper">
-            <div id="wrap-bg">
+        <div id="wrapper" class="wrap">
+            <div id="wrap-bg" class="page">
                 <div id="header">
                     <div id="top-menu-container">
                         <nav id="site-navigation" class="navigation main-navigation" role="navigation">

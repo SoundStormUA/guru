@@ -1604,7 +1604,7 @@ function htmlShortcodeTab()
     $html = '
 	<div class="main-tab">
 		<ul class="tabs">
-			<li id="firstTab">
+			<li id="firstTab" class="active">
 				<a href="#first"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 					<path d="M47.1,27.7C47.1,27.7,47.1,27.7,47.1,27.7c0-0.1,0-0.2,0-0.3V12.5c0-0.8-0.7-1.5-1.5-1.5H4.4
 						c-0.8,0-1.5,0.7-1.5,1.5v24.9c0,0.8,0.7,1.5,1.5,1.5h31.3c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.2,0

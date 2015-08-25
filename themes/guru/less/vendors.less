@@ -30,11 +30,13 @@
   filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=@IEdeg);
 }
 
-.clearfix {
-    content:"";
-    display:block;
-    clear:both;
-    height: 0;
-    width: 0;
-    visibility: hidden;
+.clearfix() {
+  &:before,
+  &:after {
+    content: " ";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
 }

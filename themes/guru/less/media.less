@@ -1,0 +1,66 @@
+@media (max-width: @screen-xs-max) {
+  .ss2-align {
+    display: none;
+  }
+
+  .course-container {
+    margin: 30px 0 0 4.33333333%;
+    width: 91.66666667%;
+  }
+}
+
+@media (min-width: @screen-sm) and (max-width: @screen-sm-max) {
+  .course-container {
+    margin: 30px 0 0 5.66666667%;
+  }
+}
+
+@media (min-width: @screen-md) and (max-width: @screen-md-max) {
+  .course-container {
+    margin: 30px 0 0 6.25%;
+  }
+}
+
+@media (min-width: @screen-lg) {
+  #top-menu-container {
+    width: ~"calc(1140px - 14px)";
+  }
+  //#wrapper {
+  //  width: @wrapperXSWidth;
+  //  width: 1140px;
+  //}
+
+  #masthead {
+    position: fixed;
+  }
+
+  .course-container {
+    height: 350px;
+    width: 21%;
+    margin: 30px 39.5% 0 39.5%;
+    &:nth-child(1) {
+      .course-caption {
+        &:after {
+          left: ~"calc(50% - 50px)";
+        }
+      }
+    }
+    &:not(:nth-child(1)) {
+      margin: 30px 14% 0 14%;
+      &:nth-child(odd) {
+        .course-caption {
+          &:after {
+            left: ~"calc(23.5% - 50px)";
+          }
+        }
+      }
+      &:nth-child(even) {
+        .course-caption {
+          &:after {
+            right: ~"calc(23.5% - 50px)";
+          }
+        }
+      }
+    }
+  }
+}
