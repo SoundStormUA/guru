@@ -9,5 +9,4 @@
     </div>
     <div id="delimiter">
     </div>
-    <li class="equaliser"></li>
     <?php get_footer(); ?>

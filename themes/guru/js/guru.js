@@ -1,8 +1,10 @@
 /**
  * Created by soundstorm on 05.06.15.
  */
+var errors = {};
 var courses = [];
 var files;
+var innerSection = jQuery("#content");
 
 function getCourses() {
     jQuery.ajax({
@@ -20,131 +22,161 @@ function getCourses() {
     });
 };
 
-function checkElement(element, elementClass) {
-    var parentSize = jQuery(element).parent('.' + elementClass).size();
-    var elementClasses = (jQuery(element).attr("class") !== undefined) ? jQuery(element).attr("class").indexOf(elementClass) : -1;
+jQuery(document).ready(function(){
+    var hash_array = [];
 
-    if (parentSize > 0 || elementClasses > -1) {
-        return elementClass;
-    }
-    return false
-};
+    jQuery('#site-navigation a').each(function(ind, elem){
+        hash_array.push(jQuery(elem).attr('href'));
+    });
 
+    hash_array.splice(hash_array.length-1,1);
 
-/*function checkElementIfCourse(element) {
-    var result;
-    courses.forEach(function (course) {
-        var elementResult = checkElement(element, course)
-        if (elementResult) {
-            result = elementResult;
+    jQuery('#arrow-next').attr('href',hash_array[1]);
+    jQuery('#arrow-prev').attr('href',hash_array[hash_array.length-1]);
+
+    function scrollTo(element, time) {
+        var offset = -100;
+
+        jQuery('html, body').animate({
+            scrollTop: jQuery(element).offset().top + offset
+        }, time);
+    };
+
+    jQuery(document).on('click', function (event) {
+        var curElement = event.target;
+
+        if (checkElement(curElement, 'planLi')) {
+            event.preventDefault()
+            if (!jQuery('#plan').length) {
+                window.location.hash = '#shedule';
+            } else {
+                scrollTo("#plan", 1000);
+            }
+        } else if (checkElement(curElement, 'register')) {
+            if (!jQuery("#registrationFormDiv").length) {
+                scrollTo("#registrationFormCourse", 1000);
+            } else {
+                scrollTo("#registrationFormDiv", 1000);
+            }
         }
     });
-    if (result) {
-        return result;
-    };
-    return false;
-}
-;*/
 
-function scrollTo(element, time) {
-    var offset = -100;
+    function checkElement(element, elementClass) {
+        var parentSize = jQuery(element).parent('.' + elementClass).size();
+        var elementClasses = (jQuery(element).attr("class") !== undefined) ? jQuery(element).attr("class").indexOf(elementClass) : -1;
 
-    jQuery('html, body').animate({
-        scrollTop: jQuery(element).offset().top + offset
-    }, time);
-};
-
-jQuery(document).on('click', function (event) {
-   var curElement = event.target;
-
-    if (checkElement(curElement, 'coursesLi')) {
-        event.preventDefault()
-        scrollTo("#courses", 1000);
-    } else if (checkElement(curElement, 'planLi')) {
-        event.preventDefault()
-        if (!jQuery('#plan').length) {
-            window.location.hash = '#home'
-            scrollTo("#plan", 1000);
-        } else {
-            scrollTo("#plan", 1000);
+        if (parentSize > 0 || elementClasses > -1) {
+            return elementClass;
         }
-    }
-});
+        return false
+    };
 
-jQuery(document).ready(function () {
-    jQuery("#course-wrapper").addClass('hidden');
-    getCourses();
-});
+    function ajax_page(name) {
+            if(window.location.hash === '#shedule') {
+                name = 'home';
 
-jQuery(document).ready(function(){
-
-        function course_page(name) {
-            jQuery.ajax({
-                url: WPAjax.ajaxurl,
-                type: 'GET',
-                data: {
-                    action: 'course-page',
-                    name: name
-                },
-                success: function (html) {
+                var succesShudele = function (html) {
                     jQuery("#content").empty();
                     jQuery('#content').append(html);
+                    scrollTo("#plan", 1000);
+                    drawAnimatedLines();
+                };
+
+                jQuery.ajax({
+                    url: WPAjax.ajaxurl,
+                    type: 'GET',
+                    data: {
+                        action: 'course-page',
+                        name: name
+                    },
+                    success: succesShudele
+                });
+            } else {
+                jQuery.ajax({
+                    url: WPAjax.ajaxurl,
+                    type: 'GET',
+                    data: {
+                        action: 'course-page',
+                        name: name
+                    },
+                    success: function (html) {
+                        jQuery("#content").empty();
+                        jQuery('#content').append(html);
+                        drawAnimatedLines();
+                        innerSection.on('click', '#firstTab',  function (){
+                            jQuery('#first-tab-page').show();
+                            jQuery('#second-tab-page').hide();
+                            jQuery('#third-tab-page').hide();
+                        });
+
+                        innerSection.on('click', '#secondTab',  function (){
+                            jQuery('#second-tab-page').show();
+                            jQuery('#first-tab-page').hide();
+                            jQuery('#third-tab-page').hide();
+                        });
+
+                        innerSection.on('click', '#thirdTab',  function (){
+                            jQuery('#third-tab-page').show();
+                            jQuery('#first-tab-page').hide();
+                            jQuery('#second-tab-page').hide();
+                        });
+                    }
+                });
+            }
+            var next_hash = "";
+            var prev_hash = "";
+
+            next_hash = prev_hash;
+            for(i=0; i< hash_array.length; i++){
+                if(hash_array[i] == "#"+name){
+                    if(i==hash_array.length-1){
+                        next_hash = hash_array[0];
+                    } else {
+                        next_hash = hash_array[i+1];
+                    }
+                    if(i==0){
+                        prev_hash = hash_array[hash_array.length-1];
+                    } else {
+                        prev_hash = hash_array[i-1];
+                    }
+
                 }
-            });
+            }
+            jQuery('#arrow-next').attr('href',next_hash);
+            jQuery('#arrow-prev').attr('href',prev_hash);
         };
 
         var hashSwitch = function () {
             switch(window.location.hash )
             {
+                case '#shedule':
+                    ajax_page();
+                    break;
                 case '#basic':
-                    course_page(window.location.hash.substr(1));
-                    jQuery('.equaliser').detach();
+                    ajax_page(window.location.hash.substr(1));
                     break;
                 case '#js':
-                    course_page(window.location.hash.substr(1));
-                    jQuery('.equaliser').detach();
+                    ajax_page(window.location.hash.substr(1));
                     break;
                 case '#android':
-                    course_page(window.location.hash.substr(1));
-                    jQuery('.equaliser').detach();
+                    ajax_page(window.location.hash.substr(1));
                     break;
                 case '#ios':
-                    course_page(window.location.hash.substr(1));
-                    jQuery('.equaliser').detach();
+                    ajax_page(window.location.hash.substr(1));
                     break;
                 case '#qa':
-                    course_page(window.location.hash.substr(1));
-                    jQuery('.equaliser').detach();
+                    ajax_page(window.location.hash.substr(1));
                     break;
                 case '#home':
                     window.location.href = '#home';
-                    course_page(window.location.hash.substr(1));
+                    ajax_page(window.location.hash.substr(1));
                     break;
             }
+            setHeaders();
         };
 
     jQuery(hashSwitch);
     jQuery(window).bind('hashchange', hashSwitch);
-
-    jQuery ('#content').on('click', '#firstTab',  function (){
-        jQuery('#first-tab-page').show();
-        jQuery('#second-tab-page').hide();
-        jQuery('#third-tab-page').hide();
-    });
-
-    jQuery ('#content').on('click', '#secondTab',  function (){
-        jQuery('#second-tab-page').show();
-        jQuery('#first-tab-page').hide();
-        jQuery('#third-tab-page').hide();
-    });
-
-    jQuery ('#content').on('click', '#thirdTab',  function (){
-        jQuery('#third-tab-page').show();
-        jQuery('#first-tab-page').hide();
-        jQuery('#second-tab-page').hide();
-    });
-
-    var errors = {};
 
     var validate = function () {
         var id = jQuery(this).attr('id');
@@ -217,57 +249,59 @@ jQuery(document).ready(function(){
     };
 
     var validateSelect = function(){
+        var selectedCourse = jQuery("#selectedCourse_p");
+
         if (jQuery('.select_input').val() === '') {
-            jQuery("#selectedCourse_p").removeClass('not_vissible');
+            selectrdCourse.removeClass('not_vissible');
             errors['selected'] = 'Оберіть будь ласка потрібний курс!';
-            jQuery('#selectedCourse_p').html(errors['selected']);
+            selectedCourse.html(errors['selected']);
         } else {
-            jQuery("#selectedCourse_p").addClass('not_vissible');
+            selectedCourse.addClass('not_vissible');
             delete errors.selected;
         }
     };
 
     var validateFile = function (file) {
+        var buttonHolder = jQuery('.buttonsHolder');
         var upload_max_size = 5242880;
         var array_ext = ['doc', 'docx', 'odt'];
         var file_ext = file.name.split('.').pop().toLowerCase();
-        var div = jQuery('<div id="filename" class="falename">' + file.name + '</div>');
+        var div = jQuery('<div id="filename" class="filename">' + file.name + '</div>');
 
         delete errors.file;
 
         if (files === undefined){
             errors['file'] = 'Звантажте файл резюме формату - ' + array_ext.join(',');
-            jQuery('.buttonsHolder').append('<p class="error">' + errors['file'] + '</p>');
+            buttonHolder.append('<p class="error">' + errors['file'] + '</p>');
         } else if (file === files[0]) {
 
             if (file.size > upload_max_size) {
-                errors['file'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' + upload_max_size/100024 + ' Мб';
-                jQuery('.buttonsHolder').append('<p class="error">' + errors['file'] + '</p>');
+                errors['file'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' + upload_max_size/10024 + ' Мб';
+                buttonHolder.append('<p class="error">' + errors['file'] + '</p>');
             } else if (jQuery.inArray(file_ext,array_ext)== -1) {
                 errors['file'] = 'Розширення файлу непідтримуєтся,завантажте файл формату - ' + array_ext.join(',');
-                jQuery('.buttonsHolder').append('<p class="error">' + errors['file'] + '</p>');
+                buttonHolder.append('<p class="error">' + errors['file'] + '</p>');
             } else if (jQuery('#filename').text() === ''){
-                div.insertAfter(jQuery('.buttonsHolder'));
-                jQuery('.buttonsHolder').find('.error').empty();
+                div.insertAfter(buttonHolder);
+                buttonHolder.find('.error').empty();
             } else if (jQuery('#filename').text() != '') {
                 jQuery('#filename').empty();
-                div.insertAfter(jQuery('.buttonsHolder'));
+                div.insertAfter(buttonHolder);
             } else {
                 delete errors.file;
             }
         }
     };
 
-    jQuery('#content').unbind().on('focusout', 'input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i', validate);
-    jQuery("#content").on("click", "#selectedCourse", validateSelect);
+    innerSection.unbind().on('focusout', 'input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i', validate);
+    innerSection.on("click", "#selectedCourse", validateSelect);
 
-    drawAnimatedLines();
 
-    jQuery('#content').on('click', '#addFile', function() {
+    innerSection.on('click', '#addFile', function() {
         jQuery('#addFileInput').click();
     });
 
-    jQuery("#content").on('change', '#addFileInput', prepareUpload);
+    innerSection.on('change', '#addFileInput', prepareUpload);
 
     function prepareUpload(event) {
         delete file;
@@ -276,15 +310,15 @@ jQuery(document).ready(function(){
         jQuery(validateFile(file));
     }
 
-    jQuery('#content').on('submit', "#registrationForm", function (event) {
-
+    innerSection.on('submit', "#registrationForm", function (event) {
+       var input =  jQuery("input");
         event.preventDefault();
         event.stopPropagation();
 
-        jQuery('input').each(validate);
+        input.each(validate);
         jQuery(validateSelect);
         jQuery(validateFile);
-        if (Object.keys(errors) == 0 && jQuery('input').val()!= '') {
+        if (Object.keys(errors) == 0 && input.val()!= '') {
 
             var form = document.getElementById("registrationForm");
             var formData = new FormData(form);
@@ -299,12 +333,12 @@ jQuery(document).ready(function(){
                 if (oReq.readyState == 4 && oReq.status == 200) {
                     jQuery('input', '#registrationForm').each(function() {
                         var type = this.type;
-                        var tag = this.tagName.toLowerCase();
 
-                        jQuery('#filename').empty();
-                        delete jQuery('#select_input').text();
                         if (type === 'text'){
                             this.value = '';
+                        } else if (type === 'file') {
+                            delete files[0];
+                            jQuery(".filename").text('');
                         }
                     });
                 }
@@ -313,11 +347,11 @@ jQuery(document).ready(function(){
         }
     });
 
-    jQuery("#content").on("click", ".selectPlaceholder", function () {
+    innerSection.on("click", ".selectPlaceholder", function () {
         displaySelector(this);
     });
 
-    jQuery("#content").on('click', '.selectOptions li', function () {
+    innerSection.on('click', '.selectOptions li', function () {
         var selectDiv = jQuery(this).closest('.select_div');
         var input = selectDiv.find('.select_input');
 
@@ -374,6 +408,12 @@ jQuery(document).ready(function(){
         });
     };
 
+    drawAnimatedLines();
+
+    jQuery(window).resize(function() {
+        drawAnimatedLines();
+    });
+
     function displaySelector(content) {
         var selectDiv = jQuery(content).closest('.select_div');
         var selectSpan = selectDiv.find('.selectSpan');
@@ -405,10 +445,6 @@ jQuery(document).ready(function(){
             }, 20);
         }
     };
-
-    jQuery(window).resize(function() {
-        drawAnimatedLines();
-    });
 
     function isElementInViewport(elem) {
         var $elem = jQuery(elem);

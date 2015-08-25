@@ -138,7 +138,7 @@ function insert_registered_user()
     if (isset($_FILES['addingFile'])) {
 
         $upload_dir = WP_CONTENT_DIR . "/uploads/resume";
-        $upload_file_name = 'Resume' . '-' . uniqid() . rand(1000, 9999);
+        $upload_file_name = 'Resume' . '_' . uniqid() . rand(1000, 9999);
         $upload_file_size = $_FILES['addingFile']['size'];
         $tmp_name = $_FILES['addingFile']['tmp_name'];
 
@@ -149,19 +149,13 @@ function insert_registered_user()
         $upload_file_name .= '.' . $file_ext;
         $data['resume_file'] = $upload_file_name;
 
-        if (!in_array($file_ext, $array_ext)) {
-            $errors['filename'] = 'The file extension is not supported, download file formats - ' . implode(",", $array_ext);
-        } elseif ($upload_file_size > $upload_max_size) {
-            $errors['filename'] = 'Exceeding maximum file size. upload files up to -' . $uploud_max_size / 10024 . ' Mb';
-        } elseif (!is_writable($upload_dir)) {
-            $errors['filename'] = 'Folder to download a write protection sorry for the inconvenience';
-        } elseif (empty($errors)) {
+        if (in_array($file_ext, $array_ext) && $upload_file_size < $upload_max_size && is_writable($upload_dir)) {
             move_uploaded_file($tmp_name, "$upload_dir/$upload_file_name");
         } elseif (!file_exists($upload_dir / $upload_file_name)) {
-            echo $errors['filename'] = 'Error file has not been uploaded to the server';
+            $errors['filename'] = 'Error file has not been uploaded to the server';
         }
     }
-    //echo ($data['FIO']);
+
     if (empty($errors)) {
         $wpdb->insert(
             $wpdb->prefix . 'registered_users',
@@ -178,8 +172,6 @@ function insert_registered_user()
         );
         exit;
         die;
-    } else {
-        echo $errors;
     }
 }
 
@@ -419,18 +411,18 @@ function contact_form_course($atts, $content = null)
         $atts['language'] = 'en';
     }
 
-    $form = "<div id='registrationForm'>";
+    $form = "<div id='registrationFormCourse'>";
     $form .= "<header class='sectionTitleCourse'><span>Реєстрація</span></header>";
-    $form .= "<form id='registrationFormCourse' class='contact_form' method='POST' novalidate='novalidate'>";
-    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name_course' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
+    $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
+    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input name_i='email_course' id='email' required class='marked' type='text']Email:[/input]");
+    $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='phone_number' name_i='phone_number_course' required class='marked' type='text']Контактний телефон:[/input]");
+    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='city_course' name_i='city_course' required class='marked' type='text']Місто:[/input]");
+    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" language="' . $atts['language'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" value = "' . $id . '"></div>';
+    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" language="' . $atts['language'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" type="hidden" value = "' . $id . '"></div><p id="selectedCourse_p" class="error not_vissible"></p>';
     $form .= '<div class="clearboth"></div>';
     $form .= '<div class="buttonsHolder">';
     $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
@@ -1658,4 +1650,19 @@ function course_page($name)
     $html = do_shortcode("[insert page='" . $name . "' display='content']");
     echo $html;
     exit;
+}
+
+function header_content($name_page = 'home',$language = 'ua')
+{
+    $table = get_table('courses');
+    $result_string ='';
+    foreach($table as $row){
+        if($row['name_' . $language] === null || ''){
+            $result_string.=$row['hash'].":'".$row['name_en']."',";
+        } else {
+            $result_string .= $row['hash'] . ":'" . $row['name_' . $language] . "',";
+        }
+    }
+    $result_string = substr($result_string,0,strlen($result_string)-1);
+    return $result_string;
 }

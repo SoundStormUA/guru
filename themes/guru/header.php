@@ -20,16 +20,16 @@
                             <p class="logo"><b>THINK</b>MOBILES</p>
                         </div>
                         <div class="slide">
-                            <h1>It School</h1>
+                            <h1>It school</h1>
                             <div class="block-btn">
                                 <div class="slide-btn">
                                     <span class="first">1&#47;6</span>
-                                     <a class="next" href="#"></a>
-                                     <a class="prev" href="#"></a>
+                                    <a class="next" id="arrow-prev" href="#"></a>
+                                    <a class="prev" id="arrow-next" href="#"></a>
                                 </div>
                             </div>
                             <div class="registration-block">
-                                <a class="btn-registration" href="#">Реєстрація</a>
+                                <a class="btn-registration  register" href="#">Реєстрація</a>
                             </div>
                         </div>
                     </div>
