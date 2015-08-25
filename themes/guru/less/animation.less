@@ -27,6 +27,7 @@
 @keyframes new-item-animation {
   from {
     opacity: 0;
+    -moz-transform: translateY(-400px);
     -webkit-transform: translateY(-400px);
     -ms-transform: translateY(-400px);
     -o-transform: translateY(-400px);
@@ -40,9 +41,11 @@
 }
 
 .updated-item {
+  -moz-animation: updated-item 0.3s ease-out forwards;
   -webkit-animation: updated-item 0.3s ease-out forwards;
   -o-animation: updated-item 0.3s ease-out forwards;
   animation: updated-item 0.3s ease-out forwards;
+  -moz-transform-origin: 50% 50%;
   -webkit-transform-origin: 50% 50%;
   -ms-transform-origin: 50% 50%;
   -o-transform-origin: 50% 50%;
@@ -52,6 +55,7 @@
 @keyframes updated-item {
   0% {
     opacity: 1;
+    -moz-transform: scale(1.2);
     -webkit-transform: scale(1.2);
     -ms-transform: scale(1.2);
     -o-transform: scale(1.2);
@@ -60,6 +64,7 @@
 
   100% {
     opacity: 1;
+    -moz-transform: scale(1);
     -webkit-transform: scale(1);
     -ms-transform: scale(1);
     -o-transform: scale(1);
@@ -96,6 +101,7 @@
 }
 
 .removed-item {
+  -moz-animation: removed-item-animation 1.2s cubic-bezier(.65, -0.02, .72, .29);
   -webkit-animation: removed-item-animation 1.2s cubic-bezier(.65, -0.02, .72, .29);
   -o-animation: removed-item-animation 1.2s cubic-bezier(.65, -0.02, .72, .29);
   animation: removed-item-animation 1.2s cubic-bezier(.65, -0.02, .72, .29)
@@ -104,6 +110,7 @@
 @keyframes removed-item-animation {
   0% {
     opacity: 1;
+    -moz-transform: translateX(0);
     -webkit-transform: translateX(0);
     -ms-transform: translateX(0);
     -o-transform: translateX(0);
@@ -112,6 +119,7 @@
 
   30% {
     opacity: 1;
+    -moz-transform: translateX(50px);
     -webkit-transform: translateX(50px);
     -ms-transform: translateX(50px);
     -o-transform: translateX(50px);
@@ -120,6 +128,7 @@
 
   80% {
     opacity: 1;
+    -moz-transform: translateX(-100%);
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
     -o-transform: translateX(-100%);
@@ -128,6 +137,7 @@
 
   100% {
     opacity: 0;
+    -moz-transform: translateX(-100%);
     -webkit-transform: translateX(-100%);
     -ms-transform: translateX(-100%);
     -o-transform: translateX(-100%);
