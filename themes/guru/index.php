@@ -7,6 +7,5 @@
             <p><?php _e('Sorry, no posts matched your criteria.'); ?></p><?php endif; ?>
         </div>
     </div>
-    <div id="delimiter">
-    </div>
-    <?php get_footer(); ?>
+    <div id="delimiter"></div>
+<?php get_footer(); ?>
