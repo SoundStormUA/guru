@@ -2,25 +2,51 @@
  * Created by soundstorm on 05.06.15.
  */
 var errors = {};
-var courses = [];
 var files;
 var innerSection = jQuery("#content");
 
-function getCourses() {
-    jQuery.ajax({
-        url: WPAjax.ajaxurl,
-        type: 'POST',
-        data: {
-            action: 'ajax-get-table',
-            tableName: 'courses'
-        },
-        success: function (response) {
-            response.forEach(function (row) {
-                courses.push(row.name);
-            });
+function isElementInViewport(elem) {
+    var $elem = jQuery(elem);
+
+    // Get the scroll position of the page.
+    var scrollElem = 'body'; //((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
+    var viewportTop = jQuery(scrollElem).scrollTop();
+    var viewportBottom = viewportTop + window.outerHeight;
+
+    // Get the position of the element on the page.
+    var elemTop = Math.round($elem.offset().top);
+    var elemBottom = elemTop + $elem.height();
+
+    return ((elemBottom + 200 < viewportBottom) && (elemTop < viewportBottom));
+}
+
+
+function checkAnimation() {
+    var $elemHolder = jQuery('#testimonialsHolder');
+    var $elem = $elemHolder.find('.testimonial');
+
+    $elem.each(function (index, element) {
+        var $elem = jQuery(element);
+
+        if (isElementInViewport($elem)) {
+            // Start the animation
+            if (!$elem.hasClass('show')) {
+                $elem.addClass('show');
+                $elem.removeClass('hide');
+            }
+        } else {
+            if ($elem.hasClass('show')) {
+                $elem.removeClass('show');
+                $elem.addClass('hide');
+            }
         }
     });
-};
+
+}
+
+jQuery(window).on("scroll", function () {
+    checkAnimation();
+});
 
 jQuery(document).ready(function(){
     var hash_array = [];
@@ -34,33 +60,6 @@ jQuery(document).ready(function(){
     jQuery('#arrow-next').attr('href',hash_array[1]);
     jQuery('#arrow-prev').attr('href',hash_array[hash_array.length-1]);
 
-    function scrollTo(element, time) {
-        var offset = -100;
-
-        jQuery('html, body').animate({
-            scrollTop: jQuery(element).offset().top + offset
-        }, time);
-    };
-
-    jQuery(document).on('click', function (event) {
-        var curElement = event.target;
-
-        if (checkElement(curElement, 'planLi')) {
-            event.preventDefault()
-            if (!jQuery('#plan').length) {
-                window.location.hash = '#shedule';
-            } else {
-                scrollTo("#plan", 1000);
-            }
-        } else if (checkElement(curElement, 'register')) {
-            if (!jQuery("#registrationFormDiv").length) {
-                scrollTo("#registrationFormCourse", 1000);
-            } else {
-                scrollTo("#registrationFormDiv", 1000);
-            }
-        }
-    });
-
     function checkElement(element, elementClass) {
         var parentSize = jQuery(element).parent('.' + elementClass).size();
         var elementClasses = (jQuery(element).attr("class") !== undefined) ? jQuery(element).attr("class").indexOf(elementClass) : -1;
@@ -71,13 +70,92 @@ jQuery(document).ready(function(){
         return false
     };
 
+    function scrollTo(element, time) {
+        var offset = -100;
+
+        jQuery('html, body').animate({
+            scrollTop: jQuery(element).offset().top + offset
+        }, time);
+    };
+
+    jQuery("#top-menu-container").on('click', function (event) {
+        var curElement = event.target;
+
+        if (checkElement(curElement, 'planLi')) {
+            event.preventDefault();
+
+            if (!jQuery('#plan').length) {
+                window.location.hash = '#shedule';
+            } else {
+                scrollTo("#plan", 1000);
+            }
+        }
+    });
+
+    var scrollRegister = function(event) {
+        var curElement = event.target;
+
+        if (checkElement(curElement, 'register')) {
+            event.preventDefault();
+
+            if (!jQuery("#registrationFormDiv").length) {
+                scrollTo("#registrationFormCourse", 1000);
+            } else {
+                scrollTo("#registrationFormDiv", 1000);
+            }
+        }
+    };
+
+    innerSection.on('click', '#plan', scrollRegister);
+    jQuery("#header, #plan" ).on('click', scrollRegister);
+
+    var switchTabs = function () {
+        var first = jQuery('#firstTab');
+        var second = jQuery('#secondTab');
+        var third = jQuery('#thirdTab');
+        var firstPage = jQuery('#first-tab-page');
+        var secondPage = jQuery('#second-tab-page');
+        var thirdPage = jQuery('#third-tab-page');
+
+        innerSection.on('click', '#firstTab', function (event) {
+            event.preventDefault();
+
+            first.addClass('active');
+            second.removeClass('active');
+            third.removeClass('active');
+            firstPage.show();
+            secondPage.hide();
+            thirdPage.hide();
+        });
+        innerSection.on('click', '#secondTab', function (event) {
+            event.preventDefault();
+
+            first.removeClass('active');
+            second.addClass('active');
+            third.removeClass('active');
+            secondPage.show();
+            firstPage.hide();
+            thirdPage.hide();
+        });
+        innerSection.on('click', '#thirdTab', function (event) {
+            event.preventDefault();
+
+            first.removeClass('active');
+            second.removeClass('active');
+            third.addClass('active');
+            thirdPage.show();
+            firstPage.hide();
+            secondPage.hide();
+        });
+    };
+
     function ajax_page(name) {
             if(window.location.hash === '#shedule') {
                 name = 'home';
 
                 var succesShudele = function (html) {
-                    jQuery("#content").empty();
-                    jQuery('#content').append(html);
+                    innerSection.text('');
+                    innerSection.append(html);
                     scrollTo("#plan", 1000);
                     drawAnimatedLines();
                 };
@@ -100,33 +178,17 @@ jQuery(document).ready(function(){
                         name: name
                     },
                     success: function (html) {
-                        jQuery("#content").empty();
-                        jQuery('#content').append(html);
+                        innerSection.text('');
+                        innerSection.append(html);
                         drawAnimatedLines();
-                        innerSection.on('click', '#firstTab',  function (){
-                            jQuery('#first-tab-page').show();
-                            jQuery('#second-tab-page').hide();
-                            jQuery('#third-tab-page').hide();
-                        });
-
-                        innerSection.on('click', '#secondTab',  function (){
-                            jQuery('#second-tab-page').show();
-                            jQuery('#first-tab-page').hide();
-                            jQuery('#third-tab-page').hide();
-                        });
-
-                        innerSection.on('click', '#thirdTab',  function (){
-                            jQuery('#third-tab-page').show();
-                            jQuery('#first-tab-page').hide();
-                            jQuery('#second-tab-page').hide();
-                        });
+                        switchTabs();
+                        innerSection.on('click', '#plan', scrollRegister)
                     }
                 });
             }
             var next_hash = "";
             var prev_hash = "";
 
-            next_hash = prev_hash;
             for(i=0; i< hash_array.length; i++){
                 if(hash_array[i] == "#"+name){
                     if(i==hash_array.length-1){
@@ -139,7 +201,6 @@ jQuery(document).ready(function(){
                     } else {
                         prev_hash = hash_array[i-1];
                     }
-
                 }
             }
             jQuery('#arrow-next').attr('href',next_hash);
@@ -147,29 +208,36 @@ jQuery(document).ready(function(){
         };
 
         var hashSwitch = function () {
+            var num = jQuery('.first');
             switch(window.location.hash )
             {
                 case '#shedule':
                     ajax_page();
+                    num.text('1/6');
                     break;
                 case '#basic':
                     ajax_page(window.location.hash.substr(1));
+                    num.text('2/6');
                     break;
                 case '#js':
                     ajax_page(window.location.hash.substr(1));
+                    num.text('3/6');
                     break;
                 case '#android':
                     ajax_page(window.location.hash.substr(1));
+                    num.text('4/6');
                     break;
                 case '#ios':
                     ajax_page(window.location.hash.substr(1));
+                    num.text('5/6');
                     break;
                 case '#qa':
                     ajax_page(window.location.hash.substr(1));
+                    num.text('6/6');
                     break;
                 case '#home':
-                    window.location.href = '#home';
                     ajax_page(window.location.hash.substr(1));
+                    num.text('1/6');
                     break;
             }
             setHeaders();
@@ -252,7 +320,7 @@ jQuery(document).ready(function(){
         var selectedCourse = jQuery("#selectedCourse_p");
 
         if (jQuery('.select_input').val() === '') {
-            selectrdCourse.removeClass('not_vissible');
+            selectedCourse.removeClass('not_vissible');
             errors['selected'] = 'Оберіть будь ласка потрібний курс!';
             selectedCourse.html(errors['selected']);
         } else {
@@ -276,7 +344,7 @@ jQuery(document).ready(function(){
         } else if (file === files[0]) {
 
             if (file.size > upload_max_size) {
-                errors['file'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' + upload_max_size/10024 + ' Мб';
+                errors['file'] = 'Перевищенно максимальний розмір файла. завантажуйте файл розміром до - ' + upload_max_size/1000024+ ' Мб';
                 buttonHolder.append('<p class="error">' + errors['file'] + '</p>');
             } else if (jQuery.inArray(file_ext,array_ext)== -1) {
                 errors['file'] = 'Розширення файлу непідтримуєтся,завантажте файл формату - ' + array_ext.join(',');
@@ -445,47 +513,4 @@ jQuery(document).ready(function(){
             }, 20);
         }
     };
-
-    function isElementInViewport(elem) {
-        var $elem = jQuery(elem);
-
-        // Get the scroll position of the page.
-        var scrollElem = ((navigator.userAgent.toLowerCase().indexOf('webkit') != -1) ? 'body' : 'html');
-        var viewportTop = jQuery(scrollElem).scrollTop();
-        var viewportBottom = viewportTop + window.outerHeight;
-
-        // Get the position of the element on the page.
-        var elemTop = Math.round($elem.offset().top);
-        var elemBottom = elemTop + $elem.height();
-
-        return ((elemBottom + 200 < viewportBottom) && (elemTop < viewportBottom));
-    }
-
-
-    function checkAnimation() {
-        var $elemHolder = jQuery('#testimonialsHolder');
-        var $elem = $elemHolder.find('.testimonial');
-
-        $elem.each(function (index, element) {
-            var $elem = jQuery(element);
-
-            if (isElementInViewport($elem)) {
-                // Start the animation
-                if (!$elem.hasClass('show')) {
-                    $elem.addClass('show');
-                    $elem.removeClass('hide');
-                }
-            } else {
-                if ($elem.hasClass('show')) {
-                    $elem.removeClass('show');
-                    $elem.addClass('hide');
-                }
-            }
-        });
-
-    }
-
-    jQuery(window).on('scroll', function () {
-        checkAnimation();
-    });
 });

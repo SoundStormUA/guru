@@ -364,78 +364,6 @@ function get_data_for_select($table, $field)
 }
 
 ;
-
-function contact_form($atts, $content = null)
-{
-
-    $selectList = get_data_for_select('courses', 'name_en');
-
-    $form = "<div id='registrationFormDiv'>";
-    $form .= "<header class='sectionTitle'><span>Реєстрація</span></header>";
-    $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
-    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= '<div class="buttonsHolder">';
-    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
-    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
-    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
-    $form .= "</form></div>";
-
-    return $form;
-}
-
-add_shortcode('contact_form', 'contact_form');
-
-function contact_form_course($atts, $content = null)
-{
-
-    extract(shortcode_atts(
-            array(
-                'coursename' => '',
-                'language' => 'en',
-            ), $atts)
-    );
-
-    $id = caseCourse($atts{'coursename'});
-
-    if ('name_' . $atts['language'] == null){
-        $atts['language'] = 'en';
-    }
-
-    $form = "<div id='registrationFormCourse'>";
-    $form .= "<header class='sectionTitleCourse'><span>Реєстрація</span></header>";
-    $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
-    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" language="' . $atts['language'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" type="hidden" value = "' . $id . '"></div><p id="selectedCourse_p" class="error not_vissible"></p>';
-    $form .= '<div class="clearboth"></div>';
-    $form .= '<div class="buttonsHolder">';
-    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
-    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
-    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
-    $form .= "</form></div>";
-
-    return $form;
-}
-
-add_shortcode('course_form','contact_form_course');
-
 function input_shortcode($atts, $content = null)
 {
     // Attributes
@@ -493,7 +421,6 @@ function select_shortcode($atts, $content = null)
                 'selected' => 1,
             ), $atts)
     );
-
 
     if ($atts['tooltip']) {
         $input_label = "<label class='input_header'>" . do_shortcode($content) . "</label><div TITLE='{$atts['tooltip']}' class='tooltip'><i class='mk-icon-question-circle'></i></div>";
@@ -632,6 +559,77 @@ function select_shortcode_ul($atts, $content = null)
 }
 
 add_shortcode('select_ul', 'select_shortcode_ul');
+
+function contact_form($atts, $content = null)
+{
+
+    $selectList = get_data_for_select('courses', 'name_en');
+
+    $form = "<div id='registrationFormDiv'>";
+    $form .= "<header class='sectionTitle'><span>Реєстрація</span></header>";
+    $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
+    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= '<div class="buttonsHolder">';
+    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
+    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
+    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+    $form .= "</form></div>";
+
+    return $form;
+}
+
+add_shortcode('contact_form', 'contact_form');
+
+function contact_form_course($atts, $content = null)
+{
+
+    extract(shortcode_atts(
+            array(
+                'coursename' => '',
+                'language' => 'en',
+            ), $atts)
+    );
+
+    $id = caseCourse($atts{'coursename'});
+
+    if ('name_' . $atts['language'] == null){
+        $atts['language'] = 'en';
+    }
+
+    $form = "<div id='registrationFormCourse'>";
+    $form .= "<header class='sectionTitleCourse'><span>Реєстрація</span></header>";
+    $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
+    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
+    $form .= '<div class="clearboth"></div>';
+    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" language="' . $atts['language'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" type="hidden" value = "' . $id . '"></div><p id="selectedCourse_p" class="error not_vissible"></p>';
+    $form .= '<div class="clearboth"></div>';
+    $form .= '<div class="buttonsHolder">';
+    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
+    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
+    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+    $form .= "</form></div>";
+
+    return $form;
+}
+
+add_shortcode('course_form','contact_form_course');
 
 function add_equaliser()
 {
@@ -918,50 +916,31 @@ function send_message()
     die();
 }
 
-function drawTestimonial($content)
-{
-    $testimonial = '<div class="testimonial hide">';
-    $testimonial .= '<div class="testimonial-img">';
-    $testimonial .= '<div class="img-background"></div>';
-    $testimonial .= '<div class="circle-img"></div>';
-    $testimonial .= '</div>';
-    $testimonial .= '<div class="testimonialDescription">';
-    $testimonial .= '<span class="tPerson">Софія Найда</span>';
-    $testimonial .= '<span class="tDepartment">business analytic</span>';
-    $testimonial .= '<span class="tText">Etiam habebis sem dicantur magna mollis euismod. Pellentesque habitant morbi tristique senectus et netus</span>';
-    $testimonial .= '</div>';
-    $testimonial .= '</div>';
-    $result .= '<div class="clear"></div>';
-
-    return $testimonial;
-}
-
-function drawTestimonials($atts, $content = null)
+function drawTestimonials($atts)
 {
     extract(shortcode_atts(
             array(
-                'count' => 1,
+                'name' => '',
+                'image' => '',
+                'department' => '',
+                'text' => ''
             ), $atts)
     );
 
-    if ($atts['count']) {
-        $count = $atts['count'];
-    } else {
-        $count = 1;
-    }
+    $testimonial = '<div class="testimonial hide">';
+    $testimonial .= '<div class="testimonial-img">';
+    $testimonial .= '<div class="img-background"><img src="' . $atts['image'] . '"></div>';
+    $testimonial .= '<div class="circle-img"></div>';
+    $testimonial .= '</div>';
+    $testimonial .= '<div class="testimonialDescription">';
+    $testimonial .= '<span class="tPerson">' . $atts['name'] . '</span>';
+    $testimonial .= '<span class="tDepartment">' . $atts['department'] . '</span>';
+    $testimonial .= '<span class="tText">' . $atts['text'] . '</span>';
+    $testimonial .= '</div>';
+    $testimonial .= '</div>';
 
-    $result = '<div id="testimonialsHolder">';
-
-    for ($i = 1; $i <= $count; $i++) {
-        $result .= drawTestimonial($i);
-    }
-
-    $result .= '</div>';
-    $result .= '<div class="clear"></div>';
-
-    return $result;
+    return $testimonial;
 }
-
 
 add_shortcode('testimonials', 'drawTestimonials');
 
@@ -1665,4 +1644,30 @@ function header_content($name_page = 'home',$language = 'ua')
     }
     $result_string = substr($result_string,0,strlen($result_string)-1);
     return $result_string;
+}
+
+function contact_fields()
+{
+    $facebook = get_post_meta (531, 'facebook', true);
+    $vk = get_post_meta (531, 'vk', true);
+    $gplus = get_post_meta (531, 'gplus', true);
+    $in = get_post_meta (531, 'linkedin', true);
+    $skype = get_post_meta (531, 'skype', true);
+    $location = get_post_meta (531, 'location', true);
+    $contactinfo = get_post_meta (531, 'contactinfo', true);
+
+    $contentFooter = '
+    <div class="social-footer">
+    <a href="' . $facebook . '" class="social-ico fb"></a>
+    <a href="' . $vk . '" class="social-ico vk"></a>
+    <a href="' . $gplus  . '" class="social-ico g"></a>
+    <a href="' . $in .'" class="social-ico in"></a>
+    <a href="' . $skype  . '" class="social-ico skype"></a>
+    </div>
+    <div class="info">
+            <div class="location">' . $location . '</div>
+            <div class="contactInfo">' . $contactinfo . '</div>
+    </div>';
+
+    return $contentFooter;
 }
