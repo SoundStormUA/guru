@@ -1239,27 +1239,29 @@ th {
     .img-background {
       width: 100%;
       height: 100%;
-      //background-color: #ffffff;
-
-      background-image: url("http://localhost/wp_projects/guru/wordpress/wp-content/uploads/2015/06/denis.png");
-      background-size: cover;
+      background-color: #ffffff;
 
       overflow: hidden;
       border-radius: 100%;
       -moz-border-radius: 100%;
       -webkit-border-radius: 100%;
-      border: 0px solid #ffffff;
+      //border: 3px solid #049ACF;
 
-      box-shadow: inset 0 0 0 3px @main-blue;
-      -webkit-box-shadow: inset 0 0 0 3px @main-blue;
-      -moz-box-shadow: inset 0 0 0 3px @main-blue;
-      -o-box-shadow: inset 0 0 0 3px @main-blue;
+      box-shadow: 0 0 0 3px @main-blue;
+      -webkit-box-shadow: 0 0 0 3px @main-blue;
+      -moz-box-shadow: 0 0 0 3px @main-blue;
+      -o-box-shadow: 0 0 0 3px @main-blue;
 
       box-sizing: border-box;
       -moz-box-sizing: border-box;
       -webkit-box-sizing: content-box;
       -o-box-sizing: border-box;
       -ms-box-sizing: border-box;
+
+      img {
+        max-width: 100%;
+        display: block;
+      }
     }
 
     .circle-img {
@@ -1279,7 +1281,7 @@ th {
         position: absolute;
         content: '';
         left: 25%;
-        bottom: 3px;
+        bottom: -1px;
       }
 
       &:after {
@@ -1287,7 +1289,7 @@ th {
         height: @big-circle-size;
         width: @big-circle-size;
         right: 25%;
-        top: -3px;
+        top: -6px;
       }
 
       &:hover,
