@@ -29,7 +29,7 @@
                                 </div>
                             </div>
                             <div class="registration-block">
-                                <a class="btn-registration  register" href="#">Реєстрація</a>
+                                <a class="btn-registration  register" href="#">Реєструйся</a>
                             </div>
                         </div>
                     </div>

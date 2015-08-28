@@ -60,6 +60,10 @@ jQuery(document).ready(function(){
     jQuery('#arrow-next').attr('href',hash_array[1]);
     jQuery('#arrow-prev').attr('href',hash_array[hash_array.length-1]);
 
+    jQuery("#menu-main_one").on('clik', ".lang_en", function () {
+
+    });
+
     function checkElement(element, elementClass) {
         var parentSize = jQuery(element).parent('.' + elementClass).size();
         var elementClasses = (jQuery(element).attr("class") !== undefined) ? jQuery(element).attr("class").indexOf(elementClass) : -1;
@@ -182,7 +186,7 @@ jQuery(document).ready(function(){
                         innerSection.append(html);
                         drawAnimatedLines();
                         switchTabs();
-                        innerSection.on('click', '#plan', scrollRegister)
+                        innerSection.on('click', '#plan', scrollRegister);
                     }
                 });
             }

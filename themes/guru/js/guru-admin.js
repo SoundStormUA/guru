@@ -2,6 +2,14 @@
  * Created by soundstorm on 10.06.15.
  */
 
+function scrollTo(element, time) {
+    var offset = -100;
+
+    jQuery('html, body').animate({
+        scrollTop: jQuery(element).offset().top + offset
+    }, time);
+};
+
 function eventsLoad(element) {
     jQuery(element).find(".controlDiv").hover(function () {
         jQuery(this).children(".settingsIcons").toggleClass("display");
@@ -207,14 +215,16 @@ function newRow() {
     var title = jQuery("h1").text();
 
     if (title.indexOf("themes")> -1){
-        var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
+        var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-delete"></div></div></div></div>';
     } else {
-        var html = '<div class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ua"></div><div class="cell"><input name="author_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon delete fa fa-delete"></div><div class="settingsIcon save fa fa-save"></div></div></div>';
+        var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ua"></div><div class="cell"><input name="author_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon delete fa fa-delete"></div><div class="settingsIcon save fa fa-save"></div></div></div>';
     }
 
     var div = jQuery('<div>' + html + '</div>');
+
     eventsLoad(div);
     jQuery("#tableBody").append(div.children());
+    scrollTo('#newRow');
     jQuery("#theme-table, #literature-table").find(".row").each(function() {
         if (!jQuery(this).hasClass("addRow")) {
             var rowEl = jQuery(this);
