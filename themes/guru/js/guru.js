@@ -4,6 +4,23 @@
 var errors = {};
 var files;
 var innerSection = jQuery("#content");
+var menuContainer = jQuery("#top-menu-container");
+var select_language = jQuery('select.language');
+var current_language = jQuery.cookie('language');
+
+var setLanguage = function (language){
+    switch(language){
+        case 'ua':
+            jQuery.cookie('language','ua');
+            break;
+        case 'en':
+            jQuery.cookie('language','en');
+            break;
+        case 'ru':
+            jQuery.cookie('language','ru');
+            break;
+    }
+};
 
 function isElementInViewport(elem) {
     var $elem = jQuery(elem);
@@ -60,10 +77,6 @@ jQuery(document).ready(function(){
     jQuery('#arrow-next').attr('href',hash_array[1]);
     jQuery('#arrow-prev').attr('href',hash_array[hash_array.length-1]);
 
-    jQuery("#menu-main_one").on('clik', ".lang_en", function () {
-
-    });
-
     function checkElement(element, elementClass) {
         var parentSize = jQuery(element).parent('.' + elementClass).size();
         var elementClasses = (jQuery(element).attr("class") !== undefined) ? jQuery(element).attr("class").indexOf(elementClass) : -1;
@@ -82,7 +95,7 @@ jQuery(document).ready(function(){
         }, time);
     };
 
-    jQuery("#top-menu-container").on('click', function (event) {
+    menuContainer.on('click', function (event) {
         var curElement = event.target;
 
         if (checkElement(curElement, 'planLi')) {
@@ -109,6 +122,12 @@ jQuery(document).ready(function(){
             }
         }
     };
+
+    select_language.on('click',  function (event) {
+        event.preventDefault();
+        setLanguage(select_language.val());
+        ajax_page(window.location.hash ? window.location.hash.substr(1) : 'home');
+    });
 
     innerSection.on('click', '#plan', scrollRegister);
     jQuery("#header, #plan" ).on('click', scrollRegister);

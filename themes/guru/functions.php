@@ -6,6 +6,7 @@
  *
  * @package Guru
  */
+$language = $_COOKIE['language'];
 
 if (!isset($content_width)) {
     $content_width = 2000;
@@ -49,10 +50,12 @@ if (!function_exists('guru_scripts_styles')) :
         $assets = array(
             'css' => '/css/guru.css',
             'js' => '/js/guru.js',
+            'cookie' => '/js/jquery.cookie.js',
         );
 
         wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
+        wp_enqueue_script('guru-cookie', get_template_directory_uri() . $assets['cookie'], array('jquery'), $version);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
@@ -247,7 +250,6 @@ function courses($atts, $content = null)
             array(
                 'animation' => '',
                 'name' => '',
-                'language' => 'en',
             ), $atts)
     );
 
@@ -285,15 +287,17 @@ function courses($atts, $content = null)
             break;
     }
 
-    if ($ar['name_' . $atts['language']] == null){
-        $ar['name_' . $atts['language']] = $ar['name_en'];
+    if ($ar['name_' . $GLOBALS['language']] == null){
+        $ar['name_' . $GLOBALS['language']] = $ar['name_en'];
     }
-
+    if ($ar['info_' . $GLOBALS['language']] == null){
+        $ar['info_' . $GLOBALS['language']] = $ar['name_en'];
+    }
     $content = "<div class='course-container course " . $atts['name'] . "'>";
     $content .= "<div>" . $animation . "</div>";
     $content .= "<header class='course-caption'>";
-    $content .= "<span>" . $ar['name_' . $atts['language']]  . "</span></header>";
-    $content .= "<p>" . $ar['info_' . $atts['language']] . "</p></div>";
+    $content .= "<span>" . $ar['name_' . $GLOBALS['language']]  . "</span></header>";
+    $content .= "<p>" . $ar['info_' . $GLOBALS['language']] . "</p></div>";
 
     return $content;
 };
@@ -306,7 +310,6 @@ function courseName($atts)
     extract(shortcode_atts(
             array(
               'name' => '',
-              'language' => 'en',
               'choose' => ''
             ), $atts)
     );
@@ -324,16 +327,16 @@ function courseName($atts)
         $ar = $needArray;
     }
 
-    if ($ar['name_' . $atts['language']] === null){
-        $atts['language'] = 'en';
+    $name = $ar['name_' . $GLOBALS['language']];
+    $info = $ar['info_' . $GLOBALS['language']];
+    if ($ar['name_' . $GLOBALS['language']] === null){
+        $name = $ar['name_en'];
     }
 
-    if ($ar['info_' . $atts['language']] === null){
-        $atts['language'] = 'en';
+    if ($ar['info_' . $GLOBALS['language']] === null){
+        $info = $ar['info_en'];
     }
 
-    $name = $ar['name_' . $atts['language']];
-    $info = $ar['info_' . $atts['language']];
 
     if ($atts['choose'] === 'name'){
         return $name;
@@ -565,26 +568,67 @@ function contact_form($atts, $content = null)
 
     $selectList = get_data_for_select('courses', 'name_en');
 
-    $form = "<div id='registrationFormDiv'>";
-    $form .= "<header class='sectionTitle'><span>Реєстрація</span></header>";
-    $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
-    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
-    $form .= '<div class="clearboth"></div>';
-    $form .= '<div class="buttonsHolder">';
-    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
-    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
-    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
-    $form .= "</form></div>";
-
+    if ($GLOBALS['language'] === 'ua') {
+        $form = "<div id='registrationFormDiv'>";
+        $form .= "<header class='sectionTitle'><span class='title-reg-form'>Реєстрація</span></header>";
+        $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
+        $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= '<div class="buttonsHolder">';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
+        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
+        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+        $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+        $form .= "</form></div>";
+    } elseif ($GLOBALS['language'] === 'en'){
+        $form = "<div id='registrationFormDiv'>";
+        $form .= "<header class='sectionTitle'><span class='title-reg-form'>Register</span></header>";
+        $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
+        $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Full Name:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Phone:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']City:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Select the desired rate:[/select_ul]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= '<div class="buttonsHolder">';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Sign up</button>';
+        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ CV" />';
+        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+        $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+        $form .= "</form></div>";
+    } elseif ($GLOBALS['language'] === 'ru'){
+        $form = "<div id='registrationFormDiv'>";
+        $form .= "<header class='sectionTitle'><span class='title-reg-form'>Регистрация</span></header>";
+        $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
+        $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Full Name:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Phone:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']City:[/input]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Select the desired rate:[/select_ul]");
+        $form .= '<div class="clearboth"></div>';
+        $form .= '<div class="buttonsHolder">';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Sign up</button>';
+        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ CV" />';
+        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+        $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+        $form .= "</form></div>";
+    }
     return $form;
 }
 
@@ -650,6 +694,7 @@ function register_my_menu_page()
     add_submenu_page('my_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
     add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_theme_page');
     add_submenu_page('my_menu', 'Manage literature', 'Manage literature', 'manage_options', 'literapage', 'my_literature_page');
+    add_submenu_page('my_menu', 'Translation string', 'Translation string', 'manage_options', 'translationpage', 'translation_page');
 }
 
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
@@ -1670,4 +1715,153 @@ function contact_fields()
     </div>';
 
     return $contentFooter;
+}
+
+add_action('wp_ajax_page-dictionary', 'translation_page');
+function translation_page()
+{
+    global $title;
+
+    $page = '<div class="wrap">';
+    $page .= '<h1>' . $title . '</h1>';
+    $page .= '<section id="langList">';
+    $page .= '<div id="lang-table" class="table" cellspacing="0" cellpadding="0">';
+    $page .= '<div class="col layer"></div>';
+    $page .= '<div class="col checkCol"></div>';
+    $page .= '<div class="col select"></div>';
+    $page .= '<div class="col langCol"></div>';
+    $page .= '<div class="col langCol"></div>';
+    $page .= '<div class="col langCol"></div>';
+    $page .= '<div class="headerContainer">';
+    $page .= '<div id="sortRow" class="sort row">';
+    $page .= '<div class="layer"></div>';
+    $page .= '<div class="col checkCol"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"></div>';
+    $page .= '<div class="cell"></div>';
+
+    $page .= '<div class="cell addIcon fa fa-plus"></div>';
+    $page .= '</div>';
+    $page .= '</div>';
+    $page .= '<div class="row header">';
+    $page .= '<div class="layer"></div>';
+    $page .= '<div class="cell check"><input type="checkbox" id="selectAll"></input></div>';
+    $page .= '<div class="cell">Select Class</div>';
+    $page .= '<div class="cell">lang_ua</div>';
+    $page .= '<div class="cell">lang_en</div>';
+    $page .= '<div class="cell">lang_ru</div>';
+    $page .= '<div class="cell settings"></div>';
+    $page .= '</div>';
+    $page .= '<div id="tableBody" class="bodyContainer">';
+    $page .=  render_dict('true');
+    $page .= '</div>';
+    $page .= '</div>';
+    $page .= '</section>';
+    $page .= '</div>';
+
+    echo $page;
+}
+
+add_action('wp_ajax_page-dictionary', 'render_dict');
+function render_dict($returned)
+{
+    $dictionary = get_table('dictionary');
+    $rows = '';
+
+    foreach ($dictionary as $dic_item) {
+
+        $rows .= '<div class="row">';
+        $rows .= '<div class="layer"></div>';
+        $rows .= '<div class="cell check"><input name="dic_id"  type="checkbox" data-id="' . $dic_item['id'] . '"></input></div>';
+        $rows .= '<div class="cell"><input name="select_class" readonly value="' . $dic_item['select'] . '"></input></div>';
+        $rows .= '<div class="cell"><input name="lang_ua" readonly value="' . $dic_item['lang_ua'] . '"></input></div>';
+        $rows .= '<div class="cell"><input name="lang_en" readonly value="' . $dic_item['lang_en'] . '"></input></div>';
+        $rows .= '<div class="cell"><input name="lang_ru" readonly value="' . $dic_item['lang_ru'] . '"></input></div>';
+        $rows .= '<div class="cell controlDiv fa fa-settings">';
+        $rows .= '<div class="settingsIcons">';
+        $rows .= '<div class="settingsIcon close fa fa-close"></div>';
+        $rows .= '<div class="settingsIcon delete fa fa-trash"></div>';
+        $rows .= '<div class="settingsIcon save fa fa-save"></div>';
+        $rows .= '<div class="settingsIcon edit fa fa-edit"></div>';
+        $rows .= '</div>';
+        $rows .= '</div>';
+        $rows .= '</div>';
+    }
+
+    if ($returned) {
+        return $rows;
+    }
+
+    echo $rows;
+    die();
+    exit;
+}
+
+add_action('wp_ajax_update-translation', 'updateDictionary');
+function updateDictionary()
+{
+    global $wpdb;
+
+    $id = $_POST['dic_id'];
+
+    $data = array(
+        'select' => $_POST['select_class'],
+        'lang_ua' => $_POST['lang_ua'],
+        'lang_en' => $_POST['lang_en'],
+        'lang_ru' => $_POST['lang_ru']
+    );
+
+    $wpdb->update(
+        $wpdb->prefix . 'dictionary',
+        $data,
+        array('ID' => $id),
+        array(
+            '%s',
+            '%s',
+            '%s',
+            '%s'
+        ),
+        array('%d')
+    );
+}
+
+add_action('wp_ajax_create-translation', 'insertDictionaryTable');
+function insertDictionaryTable()
+{
+    global $wpdb;
+
+    $wpdb->insert(
+        $wpdb->prefix .'dictionary',
+        array(
+            'select' => $_POST['select_class'],
+            'lang_ua' => $_POST['lang_ua'],
+            'lang_en' => $_POST['lang_en'],
+            'lang_ru' => $_POST['lang_ru']
+        ),
+        array(
+            '%s',
+            '%s',
+            '%s',
+            '%s'
+        ));
+
+    echo $wpdb->insert_id;
+    die;
+    exit;
+}
+
+add_action('wp_ajax_delete-translation', 'delete_dictionary');
+function delete_dictionary()
+{
+    global $wpdb;
+
+    $id = $_POST['dic_id'];
+
+    $wpdb->delete(
+        $wpdb->prefix . 'dictionary',
+        array('ID' => $id),
+        array('%d')
+    );
 }
