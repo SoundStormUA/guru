@@ -205,7 +205,7 @@ jQuery(document).ready(function(){
                         innerSection.append(html);
                         drawAnimatedLines();
                         switchTabs();
-                        innerSection.on('click', '#plan', scrollRegister);
+                        innerSection.on('click', '#plan', scrollRegister)
                     }
                 });
             }

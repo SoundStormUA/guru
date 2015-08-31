@@ -898,7 +898,7 @@ function renderUsersTable($returned)
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
-        $resultHtml .= '<div class="settingsIcon delete fa fa-trash"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
         $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
         $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
         $resultHtml .= '</div>';
@@ -1226,7 +1226,7 @@ function renderThemeTable($returned)
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
-        $resultHtml .= '<div class="settingsIcon delete fa fa-trash"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
         $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
         $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
         $resultHtml .= '</div>';
@@ -1463,7 +1463,7 @@ function renderLitTable($returned)
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
-        $resultHtml .= '<div class="settingsIcon delete fa fa-trash"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
         $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
         $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
         $resultHtml .= '</div>';
@@ -1693,21 +1693,21 @@ function header_content($name_page = 'home',$language = 'ua')
 
 function contact_fields()
 {
-    $facebook = get_post_meta(531, 'facebook', true);
-    $vk = get_post_meta(531, 'vk', true);
-    $gplus = get_post_meta(531, 'gplus', true);
-    $in = get_post_meta(531, 'linkedin', true);
-    $skype = get_post_meta(531, 'skype', true);
-    $location = get_post_meta(531, 'location', true);
-    $contactinfo = get_post_meta(531, 'contactinfo', true);
+    $facebook = get_post_meta (531, 'facebook', true);
+    $vk = get_post_meta (531, 'vk', true);
+    $gplus = get_post_meta (531, 'gplus', true);
+    $in = get_post_meta (531, 'linkedin', true);
+    $skype = get_post_meta (531, 'skype', true);
+    $location = get_post_meta (531, 'location', true);
+    $contactinfo = get_post_meta (531, 'contactinfo', true);
 
     $contentFooter = '
     <div class="social-footer">
     <a href="' . $facebook . '" class="social-ico fb"></a>
     <a href="' . $vk . '" class="social-ico vk"></a>
-    <a href="' . $gplus . '" class="social-ico g"></a>
-    <a href="' . $in . '" class="social-ico in"></a>
-    <a href="' . $skype . '" class="social-ico skype"></a>
+    <a href="' . $gplus  . '" class="social-ico g"></a>
+    <a href="' . $in .'" class="social-ico in"></a>
+    <a href="' . $skype  . '" class="social-ico skype"></a>
     </div>
     <div class="info">
             <div class="location">' . $location . '</div>
