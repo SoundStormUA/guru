@@ -122,11 +122,12 @@ jQuery(document).ready(function(){
             }
         }
     };
-
+    select_language.val( current_language);
     select_language.on('click',  function (event) {
         event.preventDefault();
         setLanguage(select_language.val());
         ajax_page(window.location.hash ? window.location.hash.substr(1) : 'home');
+        header_ajax();
     });
 
     innerSection.on('click', '#plan', scrollRegister);
@@ -171,6 +172,25 @@ jQuery(document).ready(function(){
             secondPage.hide();
         });
     };
+    function header_ajax() {
+        jQuery.ajax({
+            url: WPAjax.ajaxurl,
+            type: 'GET',
+            data: {
+                action: 'header-page'
+            },
+            success: function (string) {
+                var str = jQuery.parseJSON(string);
+                if (location.hash && location.hash != '#home' && location.hash != '#shedule') {
+                    var key = location.hash;
+                    key = key.substring(1, key.length);
+                    jQuery('#slide-course h1').text(str[key]);
+                } else {
+                    jQuery('#slide-course h1').text('IT School');
+                }
+            }
+        });
+    }
 
     function ajax_page(name) {
             if(window.location.hash === '#shedule') {
@@ -187,7 +207,7 @@ jQuery(document).ready(function(){
                     url: WPAjax.ajaxurl,
                     type: 'GET',
                     data: {
-                        action: 'course-page',
+                        action: 'ajax-page',
                         name: name
                     },
                     success: succesShudele
@@ -197,7 +217,7 @@ jQuery(document).ready(function(){
                     url: WPAjax.ajaxurl,
                     type: 'GET',
                     data: {
-                        action: 'course-page',
+                        action: 'ajax-page',
                         name: name
                     },
                     success: function (html) {
@@ -231,7 +251,7 @@ jQuery(document).ready(function(){
         };
 
         var hashSwitch = function () {
-            var num = jQuery('.first');
+            var num = jQuery('.number');
             switch(window.location.hash )
             {
                 case '#shedule':
@@ -263,7 +283,7 @@ jQuery(document).ready(function(){
                     num.text('1/6');
                     break;
             }
-            setHeaders();
+            header_ajax();
         };
 
     jQuery(hashSwitch);
@@ -277,7 +297,7 @@ jQuery(document).ready(function(){
             case 'contact_full_name_i':
                 var rev_name = /^[-a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
 
-                if (val === '') {
+                if (!val) {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
                     errors['contact_full_name'] = 'Введіть будь ласка прізвище, ім\'я, по-батькові';
                     jQuery(this).next('#contact_full_name_p').html(errors['contact_full_name']);
@@ -294,7 +314,7 @@ jQuery(document).ready(function(){
             case 'email_i':
                 var rev_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-                if (val === '') {
+                if (!val) {
                     jQuery("#email_p").removeClass('not_vissible');
                     errors['email'] = 'Введіть будь ласка Email';
                     jQuery(this).next('#email_p').html(errors['email'])
@@ -311,7 +331,7 @@ jQuery(document).ready(function(){
             case 'phone_number_i':
                 var rev_phone = /^[-\+0-9()\s]+$/;
 
-                if (val === '') {
+                if (!val) {
                     jQuery("#phone_number_p").removeClass('not_vissible');
                     errors['phone'] = 'Введіть будь ласка контактний телефон';
                     jQuery(this).next('#phone_number_p').html(errors['phone']);
@@ -327,7 +347,7 @@ jQuery(document).ready(function(){
 
             case 'city_i':
 
-                if (val != '') {
+                if (val) {
                     jQuery("#city_p").addClass('not_vissible');
                     delete errors.city;
                 } else {
@@ -342,7 +362,7 @@ jQuery(document).ready(function(){
     var validateSelect = function(){
         var selectedCourse = jQuery("#selectedCourse_p");
 
-        if (jQuery('.select_input').val() === '') {
+        if (!jQuery('.select_input').val()) {
             selectedCourse.removeClass('not_vissible');
             errors['selected'] = 'Оберіть будь ласка потрібний курс!';
             selectedCourse.html(errors['selected']);

@@ -13,7 +13,7 @@
                     <div id="top-menu-container">
                         <nav id="site-navigation" class="navigation main-navigation" role="navigation">
                             <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu', 'container' => false ) ) ?>
-                            <select class="language" name="set-language"><option value="ua"></option><option value="en"></option><option value="ru"></option></select>
+                            <select class="language" name="set-language"><option value="ua">UA</option><option value="en">EN</option><option value="ru">RU</option></select>
                         </nav>
                     </div>
                     <div id="slide-course">
@@ -21,10 +21,10 @@
                             <p class="logo"><b>THINK</b>MOBILES</p>
                         </div>
                         <div class="slide">
-                            <h1>It school</h1>
+                            <h1></h1>
                             <div class="block-btn">
                                 <div class="slide-btn">
-                                    <span class="first">1&#47;6</span>
+                                    <span class="number">1&#47;6</span>
                                     <a class="next" id="arrow-prev" href="#"></a>
                                     <a class="prev" id="arrow-next" href="#"></a>
                                 </div>

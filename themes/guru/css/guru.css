@@ -404,7 +404,7 @@ body {
 #slide-course .divider {
   border-right: 1px solid #4bbedd;
 }
-#slide-course span.first {
+#slide-course span.number {
   line-height: 29px;
   padding: 0 10px;
 }

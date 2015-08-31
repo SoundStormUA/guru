@@ -612,19 +612,19 @@ function contact_form($atts, $content = null)
         $form = "<div id='registrationFormDiv'>";
         $form .= "<header class='sectionTitle'><span class='title-reg-form'>Регистрация</span></header>";
         $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
-        $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Full Name:[/input]");
+        $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Фамилия, Имя, Отчество:[/input]");
         $form .= '<div class="clearboth"></div>';
         $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
         $form .= '<div class="clearboth"></div>';
-        $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Phone:[/input]");
+        $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактный телефон:[/input]");
         $form .= '<div class="clearboth"></div>';
-        $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']City:[/input]");
+        $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Город:[/input]");
         $form .= '<div class="clearboth"></div>';
-        $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Select the desired rate:[/select_ul]");
+        $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Выберите желаемый курс:[/select_ul]");
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
-        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Sign up</button>';
-        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ CV" />';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Отправить</button>';
+        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
         $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
         $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
         $form .= "</form></div>";
@@ -640,32 +640,56 @@ function contact_form_course($atts, $content = null)
     extract(shortcode_atts(
             array(
                 'coursename' => '',
-                'language' => 'en',
             ), $atts)
     );
 
     $id = caseCourse($atts{'coursename'});
 
-    if ('name_' . $atts['language'] == null){
-        $atts['language'] = 'en';
+    switch ($GLOBALS['language'])
+    {
+        case 'ua':
+            $title = 'Реєстрація';
+            $fullName = 'Прізвище, ім’я, по-батькові:';
+            $phone = 'Контактний телефон:';
+            $city = 'Місто:';
+            $sign_up = 'Надіслати';
+            $cv = '+ резюме';
+            break;
+        case 'en':
+            $title = 'REGISTER:';
+            $fullName = 'Full Name:';
+            $phone = 'Phone:';
+            $city = 'City:';
+            $sign_up = 'Sign up';
+            $cv = '+ CV';
+            break;
+        case 'ru':
+            $title = 'РЕГИСТРАЦИЯ';
+            $fullName = 'Фамилия, Имя, Отчество:';
+            $phone = 'Контактный телефон:';
+            $city = 'Город:';
+            $sign_up = 'Отправить';
+            $cv = '+ резюме';
+            break;
     }
 
+
     $form = "<div id='registrationFormCourse'>";
-    $form .= "<header class='sectionTitleCourse'><span>Реєстрація</span></header>";
+    $form .= "<header class='sectionTitleCourse'><span> $title </span></header>";
     $form .= "<form id='registrationForm' class='contact_form' method='POST' novalidate='novalidate'>";
-    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text']Прізвище, ім’я, по-батькові:[/input]");
+    $form .= do_shortcode("[input id='contact_full_name' name_i='contact_full_name' required class='marked' type='text'] $fullName [/input]");
     $form .= '<div class="clearboth"></div>';
     $form .= do_shortcode("[input name_i='email' id='email' required class='marked' type='text']Email:[/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text']Контактний телефон:[/input]");
+    $form .= do_shortcode("[input id='phone_number' name_i='phone_number' required class='marked' type='text'] $phone [/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text']Місто:[/input]");
+    $form .= do_shortcode("[input id='city' name_i='city' required class='marked' type='text'] $city [/input]");
     $form .= '<div class="clearboth"></div>';
-    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" language="' . $atts['language'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" type="hidden" value = "' . $id . '"></div><p id="selectedCourse_p" class="error not_vissible"></p>';
+    $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" type="hidden" value = "' . $id . '"></div><p id="selectedCourse_p" class="error not_vissible"></p>';
     $form .= '<div class="clearboth"></div>';
     $form .= '<div class="buttonsHolder">';
-    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
+    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">' . $sign_up . '</button>';
+    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="' . $cv . '" />';
     $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
     $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
     $form .= "</form></div>";
@@ -690,11 +714,11 @@ add_action('admin_menu', 'register_my_menu_page');
 
 function register_my_menu_page()
 {
-    add_menu_page('Manage tables', 'Manage tables', 'manage_options', 'my_menu', 'my_menu_output');
-    add_submenu_page('my_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
-    add_submenu_page('my_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_theme_page');
-    add_submenu_page('my_menu', 'Manage literature', 'Manage literature', 'manage_options', 'literapage', 'my_literature_page');
-    add_submenu_page('my_menu', 'Translation string', 'Translation string', 'manage_options', 'translationpage', 'translation_page');
+    add_menu_page('Manage tables', 'Manage tables', 'manage_options', 'manage_menu', 'my_manage_output');
+    add_submenu_page('manage_menu', 'Manage registered users', 'Manage registered users', 'manage_options', 'userpage', 'my_menu_page');
+    add_submenu_page('manage_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_theme_page');
+    add_submenu_page('manage_menu', 'Manage literature', 'Manage literature', 'manage_options', 'literapage', 'my_literature_page');
+    add_submenu_page('manage_menu', 'Translation string', 'Translation string', 'manage_options', 'translationpage', 'translation_page');
 }
 
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
@@ -898,7 +922,7 @@ function renderUsersTable($returned)
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
-        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-trash"></div>';
         $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
         $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
         $resultHtml .= '</div>';
@@ -968,9 +992,15 @@ function drawTestimonials($atts)
                 'name' => '',
                 'image' => '',
                 'department' => '',
-                'text' => ''
+                'text_ua' => '',
+                'text_en' => '',
+                'text_ru' => ''
             ), $atts)
     );
+
+    if(!$atts['text_' . $GLOBALS['language']]){
+        $atts['text_en'];
+    };
 
     $testimonial = '<div class="testimonial hide">';
     $testimonial .= '<div class="testimonial-img">';
@@ -980,7 +1010,7 @@ function drawTestimonials($atts)
     $testimonial .= '<div class="testimonialDescription">';
     $testimonial .= '<span class="tPerson">' . $atts['name'] . '</span>';
     $testimonial .= '<span class="tDepartment">' . $atts['department'] . '</span>';
-    $testimonial .= '<span class="tText">' . $atts['text'] . '</span>';
+    $testimonial .= '<span class="tText">' . $atts['text_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '</div>';
     $testimonial .= '</div>';
 
@@ -1012,32 +1042,32 @@ function caseCourse($courses) {
 //[content-themes]
 function contentThemes($atts) {
 	extract( shortcode_atts(array(
-					'lang'=>'en',
 					'coursename'=>''), $atts));
+
 	$html = '';
 	$html .= '<div id="first-tab-page">';
     $html .= '<div class="about-cours">';
     $html .= '<div class="video-wrap">';
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
-    $html .= '<p class="vide-desc">' . do_shortcode( '[name_course name="' . $atts['coursename'] . '" language="' . $atts['lang'] . '" choose="info"]' ) . '</p></div>';
+    $html .= '<p class="vide-desc"></p></div>';
     $html .= '</div>';
     $html .= '<div class="lections">';
-    $html .= contentLessons($atts['lang'], $atts['coursename']);
+    $html .= contentLessons($GLOBALS['language'], $atts['coursename']);
     $html .= '</div>' . '</div>';
     return $html;
 }
 add_shortcode( 'content-themes', 'contentThemes' );
 
-function contentLessons($lang, $name) {
+function contentLessons($language, $name) {
 	$rows = get_table('themes');
 
     $id = caseCourse($name);
 
-	$tmp=array();
+	$tmp = array();
 
 	foreach ($rows as $row) {
         if ($row['course_id'] == $id) {
-		    $tmp[$row['day']][] = $row['theme_' . $lang];
+		    $tmp[$row['day']][] = !$row['theme_' . $language] ? $row['theme_en'] : $row['theme_' . $language];
 	    }
 	}
     ksort($tmp);
@@ -1317,20 +1347,19 @@ function delete_themes()
 //[course-literature]
 function courseLiterature($atts) {
 	extract( shortcode_atts(array(
-					'lang'=>'en',
 					'img' =>'',
 					'coursename'=>''), $atts));
 	$page = '';
 	$page .= '<div id="second-tab-page" style="display:none;">';
 	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
-    $page .= contentLiterature($atts['lang'], $atts['coursename']);
+    $page .= contentLiterature($GLOBALS['language'], $atts['coursename']);
     $page .= '</div>' . '</div>';
     return $page;
 }
 add_shortcode( 'course-literature', 'courseLiterature' );
 
-function contentLiterature($lang, $name) {
+function contentLiterature($language, $name) {
 	$result = '';
 	$litTable = get_table('literature');
 
@@ -1340,7 +1369,7 @@ function contentLiterature($lang, $name) {
 
 	foreach ($litTable as $row) {
         if ($row['course_id'] == $id) {
-		    $tmp[$row['author_' . $lang]][] = $row['title_' . $lang];
+		    $tmp[!$row['author_' . $language] ? $row['author_en'] : $row['author_' . $language] ][] = !$row['title_' . $language] ? $row['title_en'] : $row['title_' . $language];
 	    }
 	}
 	foreach ($tmp as $author => $title){
@@ -1629,7 +1658,7 @@ function htmlShortcodeTab()
 	<div class="main-tab">
 		<ul class="tabs">
 			<li id="firstTab" class="active">
-				<a href="#first"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+				<a href="#first" class="first"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 					<path d="M47.1,27.7C47.1,27.7,47.1,27.7,47.1,27.7c0-0.1,0-0.2,0-0.3V12.5c0-0.8-0.7-1.5-1.5-1.5H4.4
 						c-0.8,0-1.5,0.7-1.5,1.5v24.9c0,0.8,0.7,1.5,1.5,1.5h31.3c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.2,0
 						c0,0,0.1,0,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1-0.1,0.2-0.1,0.2-0.2l10-10c0.1-0.1,0.2-0.2,0.2-0.3c0,0,0-0.1,0-0.1
@@ -1639,7 +1668,7 @@ function htmlShortcodeTab()
 				</svg>
 					структура курсу</a></li>
 			<li id="secondTab">
-				<a href="#second">
+				<a href="#second" class="second">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 						<path  d="M46.8,19c-0.5-4.2-5.4-7.3-11.6-7.3c-4.4,0-8.2,1.6-10.2,4c-2-2.4-5.8-4-10.2-4c-6.2,0-11.2,3.1-11.6,7.3
 						c0,0.1,0,0.2,0,0.3v17.2c0,1,0.8,1.8,1.8,1.8c0.6,0,1.1-0.3,1.5-0.8c0.9-1.3,4.1-2.7,8.5-2.7c4.4,0,7.6,1.4,8.5,2.7
@@ -1651,7 +1680,7 @@ function htmlShortcodeTab()
 					література та ресурси</a>
 			</li>
 			<li id="thirdTab">
-				<a href="#third">
+				<a href="#third" class="third">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 						<path d="M38.2,39.7H11.8c-0.8,0-1.5-0.7-1.5-1.5V11.8c0-0.8,0.7-1.5,1.5-1.5h26.4c0.8,0,1.5,0.7,1.5,1.5v26.4
 							C39.7,39,39,39.7,38.2,39.7z M13.3,36.7h23.4V13.3H13.3V36.7z"/>
@@ -1665,30 +1694,32 @@ function htmlShortcodeTab()
 }
 add_shortcode ('course-tabs', 'htmlShortcodeTab');
 
-add_action('wp_ajax_nopriv_course-page', 'course_page');
-add_action('wp_ajax_course-page', 'course_page');
+add_action('wp_ajax_nopriv_header-page', 'headerContent');
+add_action('wp_ajax_header-page', 'headerContent');
+function headerContent()
+{
+    $language = $GLOBALS['language'];
+    $table = get_table('courses');
+    $result_string ='';
+    foreach($table as $row){
+        if($row['name_' . $language] === null || ''){
+            $result_string[$row['hash']][] = $row['name_en'];
+        } else {
+            $result_string[$row['hash']][] = $row['name_' . $language];
+        }
+    }
+    echo  json_encode($result_string);
+    exit;
+}
 
-function course_page($name)
+add_action('wp_ajax_nopriv_ajax-page', 'ajaxPage');
+add_action('wp_ajax_ajax-page', 'ajaxPage');
+function ajaxPage($name)
 {
     $name = $_GET['name'];
     $html = do_shortcode("[insert page='" . $name . "' display='content']");
     echo $html;
     exit;
-}
-
-function header_content($name_page = 'home',$language = 'ua')
-{
-    $table = get_table('courses');
-    $result_string ='';
-    foreach($table as $row){
-        if($row['name_' . $language] === null || ''){
-            $result_string.=$row['hash'].":'".$row['name_en']."',";
-        } else {
-            $result_string .= $row['hash'] . ":'" . $row['name_' . $language] . "',";
-        }
-    }
-    $result_string = substr($result_string,0,strlen($result_string)-1);
-    return $result_string;
 }
 
 function contact_fields()
@@ -1864,4 +1895,15 @@ function delete_dictionary()
         array('ID' => $id),
         array('%d')
     );
+}
+
+function translation_string()
+{
+    $dictionary = get_table('dictionary');
+    $string = array();
+
+    foreach ($dictionary as $dic_item){
+        $string[$dic_item['select']][] = $dic_item['lang_' . $GLOBALS['language']];
+    }
+    return json_encode($string);
 }
