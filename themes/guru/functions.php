@@ -271,19 +271,19 @@ function courses($atts, $content = null)
     switch ($animationName)
     {
         case 'basic':
-            $animation = '';
+            $animation = 'basic';
             break;
         case 'js':
-            $animation = '';
+            $animation = 'js';
             break;
         case 'android':
-            $animation = '';
+            $animation = 'android';
             break;
         case 'ios':
-            $animation = '';
+            $animation = 'ios';
             break;
         case 'qa':
-            $animation = '';
+            $animation = 'qa';
             break;
     }
 
@@ -294,7 +294,7 @@ function courses($atts, $content = null)
         $ar['info_' . $GLOBALS['language']] = $ar['name_en'];
     }
     $content = "<div class='course-container course " . $atts['name'] . "'>";
-    $content .= "<div>" . $animation . "</div>";
+    $content .= "<div class=" . $animation . "></div>";
     $content .= "<header class='course-caption'>";
     $content .= "<span>" . $ar['name_' . $GLOBALS['language']]  . "</span></header>";
     $content .= "<p>" . $ar['info_' . $GLOBALS['language']] . "</p></div>";
@@ -1694,21 +1694,34 @@ function htmlShortcodeTab()
 }
 add_shortcode ('course-tabs', 'htmlShortcodeTab');
 
-add_action('wp_ajax_nopriv_header-page', 'headerContent');
-add_action('wp_ajax_header-page', 'headerContent');
-function headerContent()
+add_action('wp_ajax_nopriv_translation-page', 'translationContent');
+add_action('wp_ajax_translation-page', 'translationContent');
+function translationContent()
 {
+
     $language = $GLOBALS['language'];
-    $table = get_table('courses');
-    $result_string ='';
-    foreach($table as $row){
+    $header = get_table('courses');
+    $dictionary = get_table('dictionary');
+    $header_array ='';
+    $translation_array ='';
+
+    foreach($header as $row){
         if($row['name_' . $language] === null || ''){
-            $result_string[$row['hash']][] = $row['name_en'];
+            $header_array[$row['hash']][] = $row['name_en'];
         } else {
-            $result_string[$row['hash']][] = $row['name_' . $language];
+            $header_array[$row['hash']][] = $row['name_' . $language];
         }
     }
-    echo  json_encode($result_string);
+
+    foreach ($dictionary as $row) {
+        if($row['lang_' . $language] === null || '') {
+            $translation_array[$row['select']][] = $row['lang_en'];
+        } else {
+            $translation_array[$row['select']][] = $row['lang_' . $language];
+        }
+    }
+
+    echo  json_encode($header_array+$translation_array);
     exit;
 }
 

@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
         event.preventDefault();
         setLanguage(select_language.val());
         ajax_page(window.location.hash ? window.location.hash.substr(1) : 'home');
-        header_ajax();
+        translation_ajax();;
     });
 
     innerSection.on('click', '#plan', scrollRegister);
@@ -172,21 +172,23 @@ jQuery(document).ready(function(){
             secondPage.hide();
         });
     };
-    function header_ajax() {
+
+    function translation_ajax() {
         jQuery.ajax({
             url: WPAjax.ajaxurl,
             type: 'GET',
             data: {
-                action: 'header-page'
+                action: 'translation-page'
             },
-            success: function (string) {
-                var str = jQuery.parseJSON(string);
+            success: function (object) {
+                var headh1 =  jQuery('#slide-course h1');
+                var str = jQuery.parseJSON(object);
                 if (location.hash && location.hash != '#home' && location.hash != '#shedule') {
                     var key = location.hash;
                     key = key.substring(1, key.length);
-                    jQuery('#slide-course h1').text(str[key]);
+                    headh1.text(str[key]);
                 } else {
-                    jQuery('#slide-course h1').text('IT School');
+                    headh1.text('IT School');
                 }
             }
         });
@@ -283,7 +285,7 @@ jQuery(document).ready(function(){
                     num.text('1/6');
                     break;
             }
-            header_ajax();
+            translation_ajax();
         };
 
     jQuery(hashSwitch);
