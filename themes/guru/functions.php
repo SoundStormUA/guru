@@ -509,7 +509,7 @@ function select_shortcode_ul($atts, $content = null)
 
     $input_label = "<div class='selectPlaceholder'>";
     $input_label .= "<input class='select_input hidden' name='{$name_i}'></input>";
-    $input_label .= "<span class='selectSpan phSpan'>Choose your course</span></div>";
+    $input_label .= "<span class='selectSpan phSpan'>Choose your course:</span></div>";
 
     if ($atts['id']) {
         $id = "id='{$atts['id']}'";
@@ -587,8 +587,8 @@ function contact_form($atts, $content = null)
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
         $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
-        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+        $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
+        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden" /></div>';
         $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
         $form .= "</form></div>";
     } elseif ($GLOBALS['language'] === 'en'){
@@ -607,7 +607,7 @@ function contact_form($atts, $content = null)
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
         $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Sign up</button>';
-        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ CV" />';
+        $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ CV</button>';
         $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
         $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
         $form .= "</form></div>";
@@ -627,7 +627,7 @@ function contact_form($atts, $content = null)
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
         $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Отправить</button>';
-        $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="+ резюме" />';
+        $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
         $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
         $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
         $form .= "</form></div>";
@@ -692,7 +692,7 @@ function contact_form_course($atts, $content = null)
     $form .= '<div class="clearboth"></div>';
     $form .= '<div class="buttonsHolder">';
     $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">' . $sign_up . '</button>';
-    $form .= '<input id="addFile" type="button" class="addFile" data-style="move-up" value="' . $cv . '" />';
+    $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>' . $cv .'</button>';
     $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
     $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
     $form .= "</form></div>";
@@ -1691,7 +1691,7 @@ function htmlShortcodeTab()
 					<span class="second">література та ресурси</span></a>
 			</li>
 			<li id="thirdTab">
-				<a href="#third" class="third">
+				<a href="#third">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 						<path d="M38.2,39.7H11.8c-0.8,0-1.5-0.7-1.5-1.5V11.8c0-0.8,0.7-1.5,1.5-1.5h26.4c0.8,0,1.5,0.7,1.5,1.5v26.4
 							C39.7,39,39,39.7,38.2,39.7z M13.3,36.7h23.4V13.3H13.3V36.7z"/>

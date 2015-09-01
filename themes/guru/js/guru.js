@@ -66,6 +66,7 @@ jQuery(window).on("scroll", function () {
 });
 
 jQuery(document).ready(function(){
+    translation_ajax();
     var hash_array = [];
 
     jQuery('#site-navigation a').each(function(ind, elem){
@@ -128,11 +129,11 @@ jQuery(document).ready(function(){
     }
 
     select_language.val( current_language);
-    select_language.on('click',  function (event) {
+    select_language.on('change',  function (event) {
         event.preventDefault();
         setLanguage(select_language.val());
         ajax_page(window.location.hash ? window.location.hash.substr(1) : 'home');
-        translation_ajax();;
+        translation_ajax();
     });
 
     innerSection.on('click', '#plan', scrollRegister);
@@ -212,9 +213,9 @@ jQuery(document).ready(function(){
                 var succesShudele = function (html) {
                     innerSection.text('');
                     innerSection.append(html);
+                    translation_ajax();
                     scrollTo("#plan", 1000);
                     drawAnimatedLines();
-                    translation_ajax();
                 };
 
                 jQuery.ajax({
@@ -237,10 +238,10 @@ jQuery(document).ready(function(){
                     success: function (html) {
                         innerSection.text('');
                         innerSection.append(html);
+                        translation_ajax();
                         drawAnimatedLines();
                         switchTabs();
                         innerSection.on('click', '#plan', scrollRegister);
-                        translation_ajax();
                     }
                 });
             }
@@ -298,7 +299,6 @@ jQuery(document).ready(function(){
                     num.text('1/6');
                     break;
             }
-            translation_ajax();
         };
 
     jQuery(hashSwitch);
@@ -315,7 +315,7 @@ jQuery(document).ready(function(){
                 if (!val) {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
                     errors['contact_full_name'] = 'Введіть будь ласка прізвище, ім\'я, по-батькові';
-                    jQuery(this).next('#contact_full_name_p').html(errors['contact_full_name']);
+                    jQuery(this).next('#contact_full_name_p').html('<span class="fullName">' + errors['contact_full_name'] + '</span>');
                 } else if (!rev_name.test(val) || val.length < 2) {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
                     errors['contact_full_name'] = 'Введіть будь ласка корректні данні!';
