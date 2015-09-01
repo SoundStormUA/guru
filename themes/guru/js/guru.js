@@ -122,6 +122,11 @@ jQuery(document).ready(function(){
             }
         }
     };
+
+    if(!current_language){
+        setLanguage('ua')
+    }
+
     select_language.val( current_language);
     select_language.on('click',  function (event) {
         event.preventDefault();
@@ -183,10 +188,16 @@ jQuery(document).ready(function(){
             success: function (object) {
                 var headh1 =  jQuery('#slide-course h1');
                 var str = jQuery.parseJSON(object);
+                var translationClass = Object.keys(str['string']);
+
+                for (var i = 0; i <= translationClass.length; i++){
+                    jQuery('.' + translationClass[i]).text(str['string'][translationClass[i]]);
+                }
+
                 if (location.hash && location.hash != '#home' && location.hash != '#shedule') {
                     var key = location.hash;
                     key = key.substring(1, key.length);
-                    headh1.text(str[key]);
+                    headh1.text(str['header'][key]);
                 } else {
                     headh1.text('IT School');
                 }
@@ -203,6 +214,7 @@ jQuery(document).ready(function(){
                     innerSection.append(html);
                     scrollTo("#plan", 1000);
                     drawAnimatedLines();
+                    translation_ajax();
                 };
 
                 jQuery.ajax({
@@ -227,7 +239,8 @@ jQuery(document).ready(function(){
                         innerSection.append(html);
                         drawAnimatedLines();
                         switchTabs();
-                        innerSection.on('click', '#plan', scrollRegister)
+                        innerSection.on('click', '#plan', scrollRegister);
+                        translation_ajax();
                     }
                 });
             }
@@ -533,17 +546,14 @@ jQuery(document).ready(function(){
         var input = selectDiv.find('.select_input');
         var selectOptions = selectDiv.find('.selectOptions');
 
-        selectSpan.text(function(i, text) {
+        selectSpan.text(function() {
 
-            if (text === 'Choose your course') {
                 if (input.val()) {
                     selectSpan.removeClass('phSpan');
                     return input.data('text');
-                }
+                } else {
+                selectSpan.addClass('phSpan');
             }
-
-            selectSpan.addClass('phSpan');
-            return 'Choose your course';
         });
 
         if (selectDiv.hasClass('active')) {

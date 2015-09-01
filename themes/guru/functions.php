@@ -290,14 +290,17 @@ function courses($atts, $content = null)
     if ($ar['name_' . $GLOBALS['language']] == null){
         $ar['name_' . $GLOBALS['language']] = $ar['name_en'];
     }
+
     if ($ar['info_' . $GLOBALS['language']] == null){
         $ar['info_' . $GLOBALS['language']] = $ar['name_en'];
     }
+
     $content = "<div class='course-container course " . $atts['name'] . "'>";
-    $content .= '<div class="icons icon-' . $animation . '"></div>';
+    $content .= '<a href="' . '#' . $atts['name'] . '">';
+    $content .= '<div class="icons icon-' . $animation . '"><div class="image"></div><div class="circles"></div><div class="linear"></div></div>';
     $content .= "<header class='course-caption'>";
     $content .= "<span>" . $ar['name_' . $GLOBALS['language']]  . "</span></header>";
-    $content .= "<p>" . $ar['info_' . $GLOBALS['language']] . "</p></div>";
+    $content .= "<p>" . $ar['info_' . $GLOBALS['language']] . "</p></a></div>";
 
     return $content;
 };
@@ -989,7 +992,9 @@ function drawTestimonials($atts)
 {
     extract(shortcode_atts(
             array(
-                'name' => '',
+                'name_ua' => '',
+                'name_en' =>'',
+                'name_ru' =>'',
                 'image' => '',
                 'department' => '',
                 'text_ua' => '',
@@ -1000,6 +1005,8 @@ function drawTestimonials($atts)
 
     if(!$atts['text_' . $GLOBALS['language']]){
         $atts['text_en'];
+    } else if(!$atts['name_' . $GLOBALS['language']]){
+        $atts['name_en'];
     };
 
     $testimonial = '<div class="testimonial hide">';
@@ -1008,7 +1015,7 @@ function drawTestimonials($atts)
     $testimonial .= '<div class="circle-img"></div>';
     $testimonial .= '</div>';
     $testimonial .= '<div class="testimonialDescription">';
-    $testimonial .= '<span class="tPerson">' . $atts['name'] . '</span>';
+    $testimonial .= '<span class="tPerson">' . $atts['name_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '<span class="tDepartment">' . $atts['department'] . '</span>';
     $testimonial .= '<span class="tText">' . $atts['text_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '</div>';
@@ -1661,7 +1668,8 @@ function htmlShortcodeTab()
 	<div class="main-tab">
 		<ul class="tabs">
 			<li id="firstTab" class="active">
-				<a href="#first" class="first"><svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
+				<a href="#first">
+				<svg  class="ico"x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 					<path d="M47.1,27.7C47.1,27.7,47.1,27.7,47.1,27.7c0-0.1,0-0.2,0-0.3V12.5c0-0.8-0.7-1.5-1.5-1.5H4.4
 						c-0.8,0-1.5,0.7-1.5,1.5v24.9c0,0.8,0.7,1.5,1.5,1.5h31.3c0,0,0,0,0,0c0.1,0,0.2,0,0.3,0c0,0,0.1,0,0.1,0c0.1,0,0.1,0,0.2,0
 						c0,0,0.1,0,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1-0.1,0.2-0.1,0.2-0.2l10-10c0.1-0.1,0.2-0.2,0.2-0.3c0,0,0-0.1,0-0.1
@@ -1669,9 +1677,9 @@ function htmlShortcodeTab()
 					<path d="M10.9,21.1h15.7c0.8,0,1.5-0.7,1.5-1.5s-0.7-1.5-1.5-1.5H10.9c-0.8,0-1.5,0.7-1.5,1.5S10.1,21.1,10.9,21.1z"/>
 					<path d="M26.6,23.5H10.9c-0.8,0-1.5,0.7-1.5,1.5s0.7,1.5,1.5,1.5h15.7c0.8,0,1.5-0.7,1.5-1.5S27.4,23.5,26.6,23.5z"/>
 				</svg>
-					структура курсу</a></li>
+					<span class="first">структура курсу</span></a></li>
 			<li id="secondTab">
-				<a href="#second" class="second">
+				<a href="#second">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
 						<path  d="M46.8,19c-0.5-4.2-5.4-7.3-11.6-7.3c-4.4,0-8.2,1.6-10.2,4c-2-2.4-5.8-4-10.2-4c-6.2,0-11.2,3.1-11.6,7.3
 						c0,0.1,0,0.2,0,0.3v17.2c0,1,0.8,1.8,1.8,1.8c0.6,0,1.1-0.3,1.5-0.8c0.9-1.3,4.1-2.7,8.5-2.7c4.4,0,7.6,1.4,8.5,2.7
@@ -1680,7 +1688,7 @@ function htmlShortcodeTab()
 						M14.8,31.8c-3.4,0-6.5,0.7-8.7,2V19.5c0,0,0-0.1,0-0.1c0.2-2.6,4.2-4.8,8.7-4.8s8.5,2.2,8.7,4.8c0,0,0,0.1,0,0.1v14.3
 						C21.4,32.6,18.3,31.8,14.8,31.8z M43.9,33.8c-2.1-1.3-5.2-2-8.7-2c-3.4,0-6.5,0.7-8.7,2V19.5c0,0,0-0.1,0-0.1c0.2-2.6,4.2-4.8,8.7-4.8s8.5,2.2,8.7,4.8c0,0,0,0.1,0,0.1V33.8z"/>
 					</svg>
-					література та ресурси</a>
+					<span class="second">література та ресурси</span></a>
 			</li>
 			<li id="thirdTab">
 				<a href="#third" class="third">
@@ -1690,7 +1698,7 @@ function htmlShortcodeTab()
 						<path d="M24.3,31.3c-0.3,0-0.7-0.1-0.9-0.3l-6-4.9c-0.6-0.5-0.7-1.5-0.2-2.1c0.5-0.6,1.5-0.7,2.1-0.2l4.8,3.9
 							l6.8-9.6c0.5-0.7,1.4-0.8,2.1-0.4c0.7,0.5,0.8,1.4,0.4,2.1l-7.8,10.9c-0.2,0.3-0.6,0.6-1,0.6C24.4,31.3,24.3,31.3,24.3,31.3z"/>
 					</svg>
-				вимоги</a>
+				<span class="third">вимоги</span></a>
 			</li>
 		</ul>';
     return $html;
@@ -1710,21 +1718,20 @@ function translationContent()
 
     foreach($header as $row){
         if($row['name_' . $language] === null || ''){
-            $header_array[$row['hash']][] = $row['name_en'];
+            $header_array['header'][$row['hash']][] = $row['name_en'];
         } else {
-            $header_array[$row['hash']][] = $row['name_' . $language];
+            $header_array['header'][$row['hash']][] = $row['name_' . $language];
         }
     }
 
     foreach ($dictionary as $row) {
         if($row['lang_' . $language] === null || '') {
-            $translation_array[$row['select']][] = $row['lang_en'];
+            $translation_array['string'][$row['select']][] = $row['lang_en'];
         } else {
-            $translation_array[$row['select']][] = $row['lang_' . $language];
+            $translation_array['string'][$row['select']][] = $row['lang_' . $language];
         }
     }
-
-    echo  json_encode($header_array+$translation_array);
+    echo  json_encode($header_array + $translation_array);
     exit;
 }
 
@@ -1911,15 +1918,4 @@ function delete_dictionary()
         array('ID' => $id),
         array('%d')
     );
-}
-
-function translation_string()
-{
-    $dictionary = get_table('dictionary');
-    $string = array();
-
-    foreach ($dictionary as $dic_item){
-        $string[$dic_item['select']][] = $dic_item['lang_' . $GLOBALS['language']];
-    }
-    return json_encode($string);
 }
