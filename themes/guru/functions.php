@@ -1351,10 +1351,10 @@ function courseLiterature($atts) {
 					'coursename'=>''), $atts));
 	$page = '';
 	$page .= '<div id="second-tab-page" style="display:none;">';
-	$page .= '<div class="icon">' . '<img src=' . "$atts[img]" . '>' . '</div>';
 	$page .= '<div class="literature">';
     $page .= contentLiterature($GLOBALS['language'], $atts['coursename']);
     $page .= '</div>' . '</div>';
+
     return $page;
 }
 add_shortcode( 'course-literature', 'courseLiterature' );
@@ -1373,10 +1373,12 @@ function contentLiterature($language, $name) {
 	    }
 	}
 	foreach ($tmp as $author => $title){
+        $result = '<div class="source">';
 	    foreach($title as $key => $value){
 	        $result .= '<span class="title">' . $value . '</span>';
 	    }
 	    $result .= '<span class="author">' . $author . '</span>';
+        $result .= '</div>';
 	}
 	return $result;
 }
