@@ -210,7 +210,8 @@ body {
     font-size: 1em;
     margin-top: 10px;
     span {
-      margin: 2px;
+      margin: 5px 0px 5px 5px;
+      display: inline-block;
       &.ultimate {
         padding-right: 13px;
       }
@@ -2083,7 +2084,53 @@ a {
 }
 
 /*******Second Tab******/
+#second-tab-page {
+  padding: 0 80px 90px;
 
+  .literature {
+    h2 {
+      margin: 85px 0 90px;
+      font-family: "Lato Light", sans-serif;
+      font-size: 36px;
+      color: #40c3f0;
+    }
+
+    .source {
+      padding-left: 90px;
+      margin-bottom: 30px;
+      position: relative;
+
+      &:before {
+        position: absolute;
+        content: '';
+        background: url('../img/ico-sprites.png') no-repeat 0 -30px;
+        width: 48px;
+        height: 32px;
+        left: 0;
+        top: 5px;
+      }
+
+      &:last-child {
+        margin: 0;
+      }
+
+      span {
+        display: block;
+        font-size: 18px;
+
+        &.title {
+          font-family: "Lato Regular";
+          font-weight: 400;
+        }
+
+        &.author {
+          font-family: "Lato Light";
+          font-weight: 100;
+        }
+      }
+    }
+  }
+}
 .knowledge {
   margin: 95px 0;
   padding: 0 80px;
@@ -2133,9 +2180,9 @@ a {
         left: -30px;
       }
       p {
-        font-size: 13px;
+        font-size: 18px;
         line-height: 20px;
-        font-family: "Lato Light";
+        font-family: "Lato Regular";
       }
     }
   }
@@ -2307,7 +2354,7 @@ footer {
   background-image: url('../img/photo-02.jpg');
   background-position: top center;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-color: rgba(4,151,204, 0.5);
   background-blend-mode: soft-light;
 
@@ -2335,9 +2382,11 @@ footer {
     margin: 0 auto;
     color: #ffffff;
 
-    input[type='text'], input[type='email']  {
+    input[type='text'], input[type='email'], .courseName  {
       background: transparent;
+      display: block;
       font-family: "Lato Light", sans-serif;
+      font-size: 20px;
       border-color: #fff;
       border: 2px solid;
       border-radius: 3px;
@@ -2346,21 +2395,27 @@ footer {
       margin-top: 30px;
       font-weight: 400;
 
-      &::-webkit-input-placeholder {
+      ::-webkit-input-placeholder {
         color:#ffffff;
       }
 
-      &::-moz-placeholder {
+      ::-moz-placeholder {
         color:#ffffff;
       }
 
-      &:-moz-placeholder {
+      :-moz-placeholder {
         color:#ffffff;
       }
 
-      &:-ms-input-placeholder {
+      :-ms-input-placeholder {
         color:#ffffff;
       }
+    }
+
+    .courseName  {
+      font-family: "Lato Bold", sans-serif;
+      font-size: 24px;
+      margin-bottom: 90px;
     }
 
 

@@ -418,7 +418,8 @@ body {
   margin-top: 10px;
 }
 #slide-course .slide-btn span {
-  margin: 2px;
+  margin: 5px 0px 5px 5px;
+  display: inline-block;
 }
 #slide-course .slide-btn span.ultimate {
   padding-right: 13px;
@@ -2190,6 +2191,44 @@ a {
   margin-right: 3.55%;
 }
 /*******Second Tab******/
+#second-tab-page {
+  padding: 0 80px 90px;
+}
+#second-tab-page .literature h2 {
+  margin: 85px 0 90px;
+  font-family: "Lato Light", sans-serif;
+  font-size: 36px;
+  color: #40c3f0;
+}
+#second-tab-page .literature .source {
+  padding-left: 90px;
+  margin-bottom: 30px;
+  position: relative;
+}
+#second-tab-page .literature .source:before {
+  position: absolute;
+  content: '';
+  background: url('../img/ico-sprites.png') no-repeat 0 -30px;
+  width: 48px;
+  height: 32px;
+  left: 0;
+  top: 5px;
+}
+#second-tab-page .literature .source:last-child {
+  margin: 0;
+}
+#second-tab-page .literature .source span {
+  display: block;
+  font-size: 18px;
+}
+#second-tab-page .literature .source span.title {
+  font-family: "Lato Regular";
+  font-weight: 400;
+}
+#second-tab-page .literature .source span.author {
+  font-family: "Lato Light";
+  font-weight: 100;
+}
 .knowledge {
   margin: 95px 0;
   padding: 0 80px;
@@ -2236,9 +2275,9 @@ a {
   left: -30px;
 }
 .require ul li p {
-  font-size: 13px;
+  font-size: 18px;
   line-height: 20px;
-  font-family: "Lato Light";
+  font-family: "Lato Regular";
 }
 /***footer**/
 footer {
@@ -2407,7 +2446,7 @@ footer:after {
   background-image: url('../img/photo-02.jpg');
   background-position: top center;
   background-repeat: no-repeat;
-  background-size: 100% auto;
+  background-size: 100% 100%;
   background-color: rgba(4, 151, 204, 0.5);
   background-blend-mode: soft-light;
 }
@@ -2433,9 +2472,12 @@ footer:after {
   color: #ffffff;
 }
 #registrationFormCourse form input[type='text'],
-#registrationFormCourse form input[type='email'] {
+#registrationFormCourse form input[type='email'],
+#registrationFormCourse form .courseName {
   background: transparent;
+  display: block;
   font-family: "Lato Light", sans-serif;
+  font-size: 20px;
   border-color: #fff;
   border: 2px solid;
   border-radius: 3px;
@@ -2444,21 +2486,30 @@ footer:after {
   margin-top: 30px;
   font-weight: 400;
 }
-#registrationFormCourse form input[type='text']::-webkit-input-placeholder,
-#registrationFormCourse form input[type='email']::-webkit-input-placeholder {
+#registrationFormCourse form input[type='text'] ::-webkit-input-placeholder,
+#registrationFormCourse form input[type='email'] ::-webkit-input-placeholder,
+#registrationFormCourse form .courseName ::-webkit-input-placeholder {
   color: #ffffff;
 }
-#registrationFormCourse form input[type='text']::-moz-placeholder,
-#registrationFormCourse form input[type='email']::-moz-placeholder {
+#registrationFormCourse form input[type='text'] ::-moz-placeholder,
+#registrationFormCourse form input[type='email'] ::-moz-placeholder,
+#registrationFormCourse form .courseName ::-moz-placeholder {
   color: #ffffff;
 }
-#registrationFormCourse form input[type='text']:-moz-placeholder,
-#registrationFormCourse form input[type='email']:-moz-placeholder {
+#registrationFormCourse form input[type='text'] :-moz-placeholder,
+#registrationFormCourse form input[type='email'] :-moz-placeholder,
+#registrationFormCourse form .courseName :-moz-placeholder {
   color: #ffffff;
 }
-#registrationFormCourse form input[type='text']:-ms-input-placeholder,
-#registrationFormCourse form input[type='email']:-ms-input-placeholder {
+#registrationFormCourse form input[type='text'] :-ms-input-placeholder,
+#registrationFormCourse form input[type='email'] :-ms-input-placeholder,
+#registrationFormCourse form .courseName :-ms-input-placeholder {
   color: #ffffff;
+}
+#registrationFormCourse form .courseName {
+  font-family: "Lato Bold", sans-serif;
+  font-size: 24px;
+  margin-bottom: 90px;
 }
 #registrationFormCourse form .input_div .error,
 #registrationFormCourse form .select_div .error {
