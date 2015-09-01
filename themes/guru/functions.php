@@ -294,7 +294,7 @@ function courses($atts, $content = null)
         $ar['info_' . $GLOBALS['language']] = $ar['name_en'];
     }
     $content = "<div class='course-container course " . $atts['name'] . "'>";
-    $content .= "<div class=" . $animation . "></div>";
+    $content .= '<div class="icons icon-' . $animation . '"></div>';
     $content .= "<header class='course-caption'>";
     $content .= "<span>" . $ar['name_' . $GLOBALS['language']]  . "</span></header>";
     $content .= "<p>" . $ar['info_' . $GLOBALS['language']] . "</p></div>";
