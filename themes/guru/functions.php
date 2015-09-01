@@ -1352,6 +1352,7 @@ function courseLiterature($atts) {
 	$page = '';
 	$page .= '<div id="second-tab-page" style="display:none;">';
 	$page .= '<div class="literature">';
+    $page .= '<h2>Загальні знання</h2>';
     $page .= contentLiterature($GLOBALS['language'], $atts['coursename']);
     $page .= '</div>' . '</div>';
 
