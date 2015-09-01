@@ -1249,24 +1249,70 @@ th {
       &:hover,
       &:active,
       &:focus {
-        -webkit-animation: turning_cw 1s infinite;
-        -moz-animation: turning_cw 1s infinite;
+        //-webkit-animation: turning_cw 1s infinite;
+        //-moz-animation: turning_cw 1s infinite;
+        //
+        //@keyframes turning_cw {
+        //  0% {
+        //    -webkit-transform: rotate(0deg);
+        //    -moz-transform: rotate(0deg);
+        //    transform: rotate(0deg);
+        //  }
+        //  50% {
+        //    -webkit-transform: rotate(10deg);
+        //    -moz-transform: rotate(10deg);
+        //    transform: rotate(10deg);
+        //  }
+        //  100% {
+        //    -webkit-transform: rotate(0deg);
+        //    -moz-transform: rotate(0deg);
+        //    transform: rotate(0deg);
+        //  }
+        //}
 
-        @keyframes turning_cw {
-          0% {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            transform: rotate(0deg);
+        &:before {
+          -webkit-animation: turning_cw 1s infinite;
+          -moz-animation: turning_cw 1s infinite;
+
+          @keyframes turning_cw {
+            0% {
+              width: 14px;
+              height: 14px;
+              bottom: -1px;
+            }
+            50% {
+              width: 22px;
+              height: 22px;
+              bottom: -6px;
+            }
+            100% {
+              width: 14px;
+              height: 14px;
+              bottom: -1px;
+            }
           }
-          50% {
-            -webkit-transform: rotate(10deg);
-            -moz-transform: rotate(10deg);
-            transform: rotate(10deg);
-          }
-          100% {
-            -webkit-transform: rotate(0deg);
-            -moz-transform: rotate(0deg);
-            transform: rotate(0deg);
+        }
+
+        &:after {
+          -webkit-animation: turning_w 1s infinite;
+          -moz-animation: turning_w 1s infinite;
+
+          @keyframes turning_w {
+            0% {
+              width: 22px;
+              height: 22px;
+              top: -6px;
+            }
+            50% {
+              width: 14px;
+              height: 14px;
+              top: -1px;
+            }
+            100% {
+              width: 22px;
+              height: 22px;
+              top: -6px;
+            }
           }
         }
       }
@@ -1578,8 +1624,9 @@ th {
       display: block;
       background-position: top center;
       background-repeat: no-repeat;
-      width: 100%;
-      height: 120px;
+      //width: 100%;
+      margin: 0 auto;
+      min-height: 172px;
     }
 
     .icon-basic {
@@ -1587,18 +1634,9 @@ th {
       background-image: url('../img/icon-basic.png');
     }
 
-    .icon-js {
-      background-image: url('../img/icon-js.png');
-    }
-
     .icon-android {
       background-image: url('../img/icon-android.png');
     }
-
-    .icon-ios {
-      background-image: url('../img/icon-ios.png');
-    }
-
     .icon-qa {
       background-image: url('../img/icon-qa.png');
     }
@@ -1622,7 +1660,7 @@ th {
           .circle-default();
           width: @little-circle-size;
           height: @little-circle-size;
-          margin-top: -60px;
+          margin-top: -88px;
         }
       }
 
@@ -1630,7 +1668,7 @@ th {
         content: '';
         width: 100px;
         height: 3px;
-        margin-top: 76px;
+        margin-top: 100px;
         background: @main-blue;
         position: absolute;
       }

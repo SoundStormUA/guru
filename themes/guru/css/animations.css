@@ -1,0 +1,267 @@
+.circle-default {
+  background: #ffffff;
+  border-radius: 50%;
+  border: 3px solid #0596cb;
+  position: absolute;
+  content: '';
+}
+.icons {
+  display: block;
+}
+.icons .image {
+  background-position: center center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+.icon-js .image {
+  width: 120px;
+  height: 171px;
+  background-image: url('../img/icons_js.png');
+}
+.icon-js .image:before {
+  position: absolute;
+  content: '';
+  background: url('../img/icons_javascript.png');
+  width: 44px;
+  height: 51px;
+  top: 54px;
+  left: 54px;
+}
+.icon-js .linear {
+  position: relative;
+}
+.icon-js .linear:before {
+  position: absolute;
+  content: '';
+  width: 70px;
+  height: 4px;
+  background: url('../img/icon-linear-y.png') no-repeat 0 0;
+  top: -80px;
+  left: -15px;
+}
+.icon-js .linear:after {
+  position: absolute;
+  content: '';
+  width: 44px;
+  height: 4px;
+  background: url('../img/icon-linear-b.png') no-repeat 0 0;
+  top: -95px;
+  left: -30px;
+}
+.icon-js:hover .image:before,
+.icon-js:active .image:before,
+.icon-js:focus .image:before {
+  -webkit-animation-name: spinner;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 1.5s;
+  animation-name: spinner;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1.5s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotateY(0deg);
+  }
+  50% {
+    -webkit-transform: rotateY(-360deg);
+  }
+  100% {
+    -webkit-transform: rotateY(0deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
+  50% {
+    -moz-transform: rotateY(-360deg);
+    -ms-transform: rotateY(-360deg);
+    transform: rotateY(-360deg);
+  }
+  100% {
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
+}
+.icon-js:hover .linear:before,
+.icon-js:active .linear:before,
+.icon-js:focus .linear:before {
+  -webkit-animation: linear_y 1.5s infinite;
+  -moz-animation: linear_y 1.5s infinite;
+}
+@keyframes linear_y {
+  0% {
+    left: -15px;
+  }
+  50% {
+    left: -30px;
+  }
+  100% {
+    left: -15px;
+  }
+}
+.icon-js:hover .linear:after,
+.icon-js:active .linear:after,
+.icon-js:focus .linear:after {
+  -webkit-animation: linear_b 1.5s infinite;
+  -moz-animation: linear_b 1.5s infinite;
+}
+@keyframes linear_b {
+  0% {
+    left: -30px;
+  }
+  50% {
+    left: -15px;
+  }
+  100% {
+    left: -30px;
+  }
+}
+.icon-ios .image {
+  width: 160px;
+  height: 160px;
+  background-image: url('../img/icons_ios.png');
+}
+.icon-ios .image:before {
+  position: absolute;
+  content: '';
+  background: url('../img/icons_apple.png');
+  width: 30px;
+  height: 37px;
+  top: 50%;
+  left: 50%;
+  margin: -18px 0 0 -15px;
+}
+.icon-ios .circles {
+  display: block;
+  position: relative;
+  border-radius: 100%;
+  width: 160px;
+  height: 160px;
+  margin-top: -160px;
+  -webkit-box-shadow: 0 0 0 3px #0596cb;
+  -moz-box-shadow: 0 0 0 3px #0596cb;
+  -o-box-shadow: 0 0 0 3px #0596cb;
+  box-shadow: 0 0 0 3px #0596cb;
+}
+.icon-ios .circles:before {
+  background: #ffffff;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 3px solid #0596cb;
+  position: absolute;
+  content: '';
+  left: 25%;
+  bottom: -4px;
+}
+.icon-ios .circles:after {
+  background: #ffffff;
+  border-radius: 50%;
+  border: 3px solid #0596cb;
+  position: absolute;
+  content: '';
+  height: 20px;
+  width: 20px;
+  right: 25%;
+  top: -8px;
+}
+.icon-ios:hover .image:before,
+.icon-ios:active .image:before,
+.icon-ios:focus .image:before {
+  -webkit-animation-name: spinner;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-duration: 1.5s;
+  animation-name: spinner;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 1.5s;
+  -webkit-transform-style: preserve-3d;
+  -moz-transform-style: preserve-3d;
+  -ms-transform-style: preserve-3d;
+  transform-style: preserve-3d;
+}
+@-webkit-keyframes spinner {
+  0% {
+    -webkit-transform: rotateY(0deg);
+  }
+  50% {
+    -webkit-transform: rotateY(-360deg);
+  }
+  100% {
+    -webkit-transform: rotateY(0deg);
+  }
+}
+@keyframes spinner {
+  0% {
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
+  50% {
+    -moz-transform: rotateY(-360deg);
+    -ms-transform: rotateY(-360deg);
+    transform: rotateY(-360deg);
+  }
+  100% {
+    -moz-transform: rotateY(0deg);
+    -ms-transform: rotateY(0deg);
+    transform: rotateY(0deg);
+  }
+}
+.icon-ios:hover .circles:before,
+.icon-ios:active .circles:before,
+.icon-ios:focus .circles:before {
+  -webkit-animation: circles_cw 1s infinite;
+  -moz-animation: circles_cw 1s infinite;
+}
+@keyframes circles_cw {
+  0% {
+    width: 14px;
+    height: 14px;
+    bottom: -4px;
+  }
+  50% {
+    width: 20px;
+    height: 20px;
+    bottom: -8px;
+  }
+  100% {
+    width: 14px;
+    height: 14px;
+    bottom: -4px;
+  }
+}
+.icon-ios:hover .circles:after,
+.icon-ios:active .circles:after,
+.icon-ios:focus .circles:after {
+  -webkit-animation: circles_w 1s infinite;
+  -moz-animation: circles_w 1s infinite;
+}
+@keyframes circles_w {
+  0% {
+    width: 20px;
+    height: 20px;
+    top: -8px;
+  }
+  50% {
+    width: 14px;
+    height: 14px;
+    top: -4px;
+  }
+  100% {
+    width: 20px;
+    height: 20px;
+    top: -8px;
+  }
+}
