@@ -96,79 +96,6 @@
       background: url('../img/icons_basic2.png') no-repeat 0 0;
     }
   }
-
-  &:hover, &:active, &:focus {
-
-    .image:before {
-      //-webkit-animation: basic_1 1.5s;
-      //-moz-animation: basic_1 1.5s;
-
-      animation-name: basic_1;
-      animation-duration: 1s;
-      animation-timing-function: linear;
-      animation-delay: 1s;
-      animation-iteration-count: 1;
-      animation-fill-mode: backwards;
-
-
-      @keyframes basic_1 {
-        0% {
-          top: 0;
-        }
-        50% {
-          top: -5px;
-        }
-        100% {
-          top: 0;
-        }
-      }
-    }
-    .circles:before {
-      //-webkit-animation: basic_2 1.5s infinite;
-      //-moz-animation: basic_2 1.5s infinite;
-
-      animation-name: basic_2;
-      animation-duration: 1s;
-      animation-timing-function: linear;
-      animation-iteration-count: 1;
-      animation-fill-mode: backwards;
-
-      @keyframes basic_2 {
-        0% {
-          top: 40px;
-        }
-        50% {
-          top: 35px;
-        }
-        100% {
-          top: 40px;
-        }
-      }
-    }
-    .linear:before {
-      //-webkit-animation: basic_3 4.5s infinite;
-      //-moz-animation: basic_3 4.5s infinite;
-
-      animation-name: basic_3;
-      animation-duration: 1s;
-      animation-timing-function: linear;
-      animation-delay: 2s;
-      animation-iteration-count: 1;
-      animation-fill-mode: backwards;
-
-      @keyframes basic_3 {
-        0% {
-          top: 60px;
-        }
-        50% {
-          top: 55px;
-        }
-        100% {
-          top: 60px;
-        }
-      }
-    }
-  }
 }
 
 .icon-js {
@@ -212,92 +139,6 @@
       background: url('../img/icon-linear-b.png') no-repeat 0 0;
       top: -95px;
       left: -30px;
-    }
-  }
-
-  &:hover, &:active, &:focus {
-    .image:before {
-      -webkit-animation-name: spinner;
-      -webkit-animation-timing-function: linear;
-      -webkit-animation-iteration-count: infinite;
-      -webkit-animation-duration: 1.5s;
-
-      animation-name: spinner;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      animation-duration: 1.5s;
-
-      -webkit-transform-style: preserve-3d;
-      -moz-transform-style: preserve-3d;
-      -ms-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-
-      @-webkit-keyframes spinner {
-        0% {
-          -webkit-transform: rotateY(0deg);
-        }
-        50% {
-          -webkit-transform: rotateY(-360deg);
-        }
-        100% {
-          -webkit-transform: rotateY(0deg);
-        }
-      }
-
-      @keyframes spinner {
-        0% {
-          -moz-transform: rotateY(0deg);
-          -ms-transform: rotateY(0deg);
-          transform: rotateY(0deg);
-        }
-        50% {
-          -moz-transform: rotateY(-360deg);
-          -ms-transform: rotateY(-360deg);
-          transform: rotateY(-360deg);
-        }
-        100% {
-          -moz-transform: rotateY(0deg);
-          -ms-transform: rotateY(0deg);
-          transform: rotateY(0deg);
-        }
-      }
-    }
-
-    .linear {
-
-      &:before {
-        -webkit-animation: linear_y 1.5s infinite;
-        -moz-animation: linear_y 1.5s infinite;
-
-        @keyframes linear_y {
-          0% {
-            left: -15px;
-          }
-          50% {
-            left: -30px;
-          }
-          100% {
-            left: -15px;
-          }
-        }
-      }
-
-      &:after {
-        -webkit-animation: linear_b 1.5s infinite;
-        -moz-animation: linear_b 1.5s infinite;
-
-        @keyframes linear_b {
-          0% {
-            left: -30px;
-          }
-          50% {
-            left: -15px;
-          }
-          100% {
-            left: -30px;
-          }
-        }
-      }
     }
   }
 }
@@ -358,83 +199,6 @@
       background: url('../img/icons_android-3.png') no-repeat 0 0;
     }
   }
-
-  &:hover, &:active, &:focus {
-    .image:before {
-      -webkit-animation: circles_andr 1.5s infinite;
-      -moz-animation: circles_andr 1.5s infinite;
-
-      @keyframes circles_andr {
-        0% {
-          height: 26px;
-          top: 48px;
-        }
-        50% {
-          height: 18px;
-          top: 56px;
-        }
-        100% {
-          height: 26px;
-          top: 48px;
-        }
-      }
-    }
-
-    .circles {
-      &:before {
-        -webkit-animation: circles_a1 1.5s infinite;
-        -moz-animation: circles_a1 1.5s infinite;
-
-        @keyframes circles_a1 {
-          0% {
-            top: 40px;
-          }
-          50% {
-            top: 48px;
-          }
-          100% {
-            top: 40px;
-          }
-        }
-      }
-
-      &:after {
-        -webkit-animation: circles_a2 1.5s infinite;
-        -moz-animation: circles_a2 1.5s infinite;
-
-        @keyframes circles_a2 {
-          0% {
-            top: 75px;
-          }
-          50% {
-            top: 83px;
-          }
-          100% {
-            top: 75px;
-          }
-        }
-      }
-    }
-
-    .linear {
-      &:before {
-        -webkit-animation: circles_a3 1.5s infinite;
-        -moz-animation: circles_a3 1.5s infinite;
-
-        @keyframes circles_a3 {
-          0% {
-            bottom: -10px;
-          }
-          50% {
-            bottom: -18px;
-          }
-          100% {
-            bottom: -10px;
-          }
-        }
-      }
-    }
-  }
 }
 
 .icon-ios {
@@ -487,103 +251,6 @@
       width: 20px;
       right: 25%;
       top: -8px;
-    }
-  }
-
-  &:hover, &:active, &:focus {
-    .image:before {
-      -webkit-animation-name: spinner;
-      -webkit-animation-timing-function: linear;
-      -webkit-animation-iteration-count: infinite;
-      -webkit-animation-duration: 1.5s;
-
-      animation-name: spinner;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      animation-duration: 1.5s;
-
-      -webkit-transform-style: preserve-3d;
-      -moz-transform-style: preserve-3d;
-      -ms-transform-style: preserve-3d;
-      transform-style: preserve-3d;
-
-      @-webkit-keyframes spinner {
-        0% {
-          -webkit-transform: rotateY(0deg);
-        }
-        50% {
-          -webkit-transform: rotateY(-360deg);
-        }
-        100% {
-          -webkit-transform: rotateY(0deg);
-        }
-      }
-
-      @keyframes spinner {
-        0% {
-          -moz-transform: rotateY(0deg);
-          -ms-transform: rotateY(0deg);
-          transform: rotateY(0deg);
-        }
-        50% {
-          -moz-transform: rotateY(-360deg);
-          -ms-transform: rotateY(-360deg);
-          transform: rotateY(-360deg);
-        }
-        100% {
-          -moz-transform: rotateY(0deg);
-          -ms-transform: rotateY(0deg);
-          transform: rotateY(0deg);
-        }
-      }
-    }
-
-    .circles {
-      &:before {
-        -webkit-animation: circles_cw 1s infinite;
-        -moz-animation: circles_cw 1s infinite;
-
-        @keyframes circles_cw {
-          0% {
-            width: 14px;
-            height: 14px;
-            bottom: -4px;
-          }
-          50% {
-            width: 20px;
-            height: 20px;
-            bottom: -8px;
-          }
-          100% {
-            width: 14px;
-            height: 14px;
-            bottom: -4px;
-          }
-        }
-      }
-
-      &:after {
-        -webkit-animation: circles_w 1s infinite;
-        -moz-animation: circles_w 1s infinite;
-
-        @keyframes circles_w {
-          0% {
-            width: 20px;
-            height: 20px;
-            top: -8px;
-          }
-          50% {
-            width: 14px;
-            height: 14px;
-            top: -4px;
-          }
-          100% {
-            width: 20px;
-            height: 20px;
-            top: -8px;
-          }
-        }
-      }
     }
   }
 }
@@ -656,80 +323,422 @@
       background: url('../img/bug-04.png') no-repeat top left;
     }
   }
+}
 
-  &:hover, &:active, &:focus {
-    .image:before {
-      -webkit-animation: circles_round 1.5s infinite;
-      -moz-animation: circles_round 1.5s infinite;
+.course {
+  &.basic {
+    &:hover, &:active, &:focus {
 
-      @keyframes circles_round {
-        0% {
-          -webkit-transform: rotate(45deg);
-             -moz-transform: rotate(45deg);
-                  transform: rotate(45deg);
+      .image:before {
+        //-webkit-animation: basic_1 1.5s;
+        //-moz-animation: basic_1 1.5s;
+
+        animation-name: basic_1;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-delay: 1s;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+
+
+        @keyframes basic_1 {
+          0% {
+            top: 0;
+          }
+          50% {
+            top: -5px;
+          }
+          100% {
+            top: 0;
+          }
         }
-        50% {
-          -webkit-transform: rotate(-45deg);
-             -moz-transform: rotate(-45deg);
-                  transform: rotate(-45deg);
+      }
+      .circles:before {
+        //-webkit-animation: basic_2 1.5s infinite;
+        //-moz-animation: basic_2 1.5s infinite;
+
+        animation-name: basic_2;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+
+        @keyframes basic_2 {
+          0% {
+            top: 40px;
+          }
+          50% {
+            top: 35px;
+          }
+          100% {
+            top: 40px;
+          }
         }
-        100% {
-          -webkit-transform: rotate(45deg);
-             -moz-transform: rotate(45deg);
-                  transform: rotate(45deg);
+      }
+      .linear:before {
+        //-webkit-animation: basic_3 4.5s infinite;
+        //-moz-animation: basic_3 4.5s infinite;
+
+        animation-name: basic_3;
+        animation-duration: 1s;
+        animation-timing-function: linear;
+        animation-delay: 2s;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+
+
+        @keyframes basic_3 {
+          0% {
+            top: 60px;
+          }
+          50% {
+            top: 55px;
+          }
+          100% {
+            top: 60px;
+          }
         }
       }
     }
+  }
+  &.js {
+    &:hover, &:active, &:focus {
+      .image:before {
+        -webkit-animation-name: spinner;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-duration: 1.5s;
 
-    .circles:after {
-      -webkit-animation: circles_head 1.5s infinite;
-      -moz-animation: circles_head 1.5s infinite;
+        animation-name: spinner;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-duration: 1.5s;
 
-      @keyframes circles_head {
-        0% {
-          top: 25px;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transform-style: preserve-3d;
+
+        @-webkit-keyframes spinner {
+          0% {
+            -webkit-transform: rotateY(0deg);
+          }
+          50% {
+            -webkit-transform: rotateY(-360deg);
+          }
+          100% {
+            -webkit-transform: rotateY(0deg);
+          }
         }
-        50% {
-          top: 30px;
+
+        @keyframes spinner {
+          0% {
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+          }
+          50% {
+            -moz-transform: rotateY(-360deg);
+            -ms-transform: rotateY(-360deg);
+            transform: rotateY(-360deg);
+          }
+          100% {
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+          }
         }
-        100% {
-          top: 25px;
+      }
+
+      .linear {
+
+        &:before {
+          -webkit-animation: linear_y 1.5s infinite;
+          -moz-animation: linear_y 1.5s infinite;
+
+          @keyframes linear_y {
+            0% {
+              left: -15px;
+            }
+            50% {
+              left: -30px;
+            }
+            100% {
+              left: -15px;
+            }
+          }
+        }
+
+        &:after {
+          -webkit-animation: linear_b 1.5s infinite;
+          -moz-animation: linear_b 1.5s infinite;
+
+          @keyframes linear_b {
+            0% {
+              left: -30px;
+            }
+            50% {
+              left: -15px;
+            }
+            100% {
+              left: -30px;
+            }
+          }
         }
       }
     }
+  }
+  &.ios {
+    &:hover, &:active, &:focus {
+      .image:before {
+        -webkit-animation-name: spinner;
+        -webkit-animation-timing-function: linear;
+        -webkit-animation-iteration-count: infinite;
+        -webkit-animation-duration: 1.5s;
 
-    .linear {
+        animation-name: spinner;
+        animation-timing-function: linear;
+        animation-iteration-count: infinite;
+        animation-duration: 1.5s;
 
-      &:before {
-        -webkit-animation: linear_right 1.5s infinite;
-        -moz-animation: linear_right 1.5s infinite;
+        -webkit-transform-style: preserve-3d;
+        -moz-transform-style: preserve-3d;
+        -ms-transform-style: preserve-3d;
+        transform-style: preserve-3d;
 
-        @keyframes linear_right {
+        @-webkit-keyframes spinner {
           0% {
-            top: 70px;
+            -webkit-transform: rotateY(0deg);
           }
           50% {
-            top: 64px;
+            -webkit-transform: rotateY(-360deg);
           }
           100% {
-            top: 70px;
+            -webkit-transform: rotateY(0deg);
+          }
+        }
+
+        @keyframes spinner {
+          0% {
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            transform: rotateY(0deg);
+          }
+          50% {
+            -moz-transform: rotateY(-360deg);
+            -ms-transform: rotateY(-360deg);
+            transform: rotateY(-360deg);
+          }
+          100% {
+            -moz-transform: rotateY(0deg);
+            -ms-transform: rotateY(0deg);
+            transform: rotateY(0deg);
           }
         }
       }
 
-      &:after {
-        -webkit-animation: linear_left 1.5s infinite;
-        -moz-animation: linear_left 1.5s infinite;
+      .circles {
+        &:before {
+          -webkit-animation: circles_cw 1s infinite;
+          -moz-animation: circles_cw 1s infinite;
 
-        @keyframes linear_left {
+          @keyframes circles_cw {
+            0% {
+              width: 14px;
+              height: 14px;
+              bottom: -4px;
+            }
+            50% {
+              width: 20px;
+              height: 20px;
+              bottom: -8px;
+            }
+            100% {
+              width: 14px;
+              height: 14px;
+              bottom: -4px;
+            }
+          }
+        }
+
+        &:after {
+          -webkit-animation: circles_w 1s infinite;
+          -moz-animation: circles_w 1s infinite;
+
+          @keyframes circles_w {
+            0% {
+              width: 20px;
+              height: 20px;
+              top: -8px;
+            }
+            50% {
+              width: 14px;
+              height: 14px;
+              top: -4px;
+            }
+            100% {
+              width: 20px;
+              height: 20px;
+              top: -8px;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.android {
+    &:hover, &:active, &:focus {
+      .image:before {
+        -webkit-animation: circles_andr 1.5s infinite;
+        -moz-animation: circles_andr 1.5s infinite;
+
+        @keyframes circles_andr {
           0% {
-            top: 64px;
+            height: 26px;
+            top: 48px;
           }
           50% {
-            top: 70px;
+            height: 18px;
+            top: 56px;
           }
           100% {
-            top: 64px;
+            height: 26px;
+            top: 48px;
+          }
+        }
+      }
+
+      .circles {
+        &:before {
+          -webkit-animation: circles_a1 1.5s infinite;
+          -moz-animation: circles_a1 1.5s infinite;
+
+          @keyframes circles_a1 {
+            0% {
+              top: 40px;
+            }
+            50% {
+              top: 48px;
+            }
+            100% {
+              top: 40px;
+            }
+          }
+        }
+
+        &:after {
+          -webkit-animation: circles_a2 1.5s infinite;
+          -moz-animation: circles_a2 1.5s infinite;
+
+          @keyframes circles_a2 {
+            0% {
+              top: 75px;
+            }
+            50% {
+              top: 83px;
+            }
+            100% {
+              top: 75px;
+            }
+          }
+        }
+      }
+
+      .linear {
+        &:before {
+          -webkit-animation: circles_a3 1.5s infinite;
+          -moz-animation: circles_a3 1.5s infinite;
+
+          @keyframes circles_a3 {
+            0% {
+              bottom: -10px;
+            }
+            50% {
+              bottom: -18px;
+            }
+            100% {
+              bottom: -10px;
+            }
+          }
+        }
+      }
+    }
+  }
+  &.qa {
+    &:hover, &:active, &:focus {
+      .image:before {
+        -webkit-animation: circles_round 1.5s infinite;
+        -moz-animation: circles_round 1.5s infinite;
+
+        @keyframes circles_round {
+          0% {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+          50% {
+            -webkit-transform: rotate(-45deg);
+            -moz-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+          }
+          100% {
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+            transform: rotate(45deg);
+          }
+        }
+      }
+
+      .circles:after {
+        -webkit-animation: circles_head 1.5s infinite;
+        -moz-animation: circles_head 1.5s infinite;
+
+        @keyframes circles_head {
+          0% {
+            top: 25px;
+          }
+          50% {
+            top: 30px;
+          }
+          100% {
+            top: 25px;
+          }
+        }
+      }
+
+      .linear {
+
+        &:before {
+          -webkit-animation: linear_right 1.5s infinite;
+          -moz-animation: linear_right 1.5s infinite;
+
+          @keyframes linear_right {
+            0% {
+              top: 70px;
+            }
+            50% {
+              top: 64px;
+            }
+            100% {
+              top: 70px;
+            }
+          }
+        }
+
+        &:after {
+          -webkit-animation: linear_left 1.5s infinite;
+          -moz-animation: linear_left 1.5s infinite;
+
+          @keyframes linear_left {
+            0% {
+              top: 64px;
+            }
+            50% {
+              top: 70px;
+            }
+            100% {
+              top: 64px;
+            }
           }
         }
       }
