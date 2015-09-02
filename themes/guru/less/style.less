@@ -1626,19 +1626,8 @@ th {
       background-repeat: no-repeat;
       //width: 100%;
       margin: 0 auto;
-      min-height: 172px;
-    }
-
-    .icon-basic {
-      height: 123px;
-      background-image: url('../img/icon-basic.png');
-    }
-
-    .icon-android {
-      background-image: url('../img/icon-android.png');
-    }
-    .icon-qa {
-      background-image: url('../img/icon-qa.png');
+      min-height: 160px;
+      margin-bottom: 25px;
     }
 
     .course-caption {
@@ -1660,7 +1649,7 @@ th {
           .circle-default();
           width: @little-circle-size;
           height: @little-circle-size;
-          margin-top: -88px;
+          margin-top: -101px;
         }
       }
 
@@ -1766,6 +1755,17 @@ th {
     img {
       width: 50%;
       margin-bottom: 30px;
+    }
+  }
+}
+
+#courses {
+  .js {
+    .course-caption {
+      &:before {
+        .circle-default();
+        margin-top: -113px !important;
+      }
     }
   }
 }

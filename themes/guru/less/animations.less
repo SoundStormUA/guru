@@ -21,14 +21,163 @@
   }
 }
 .icon-basic {
-  //background-image: url('../img/icons-basic.png');
+  width: 120px;
+  height: 120px;
+  position: relative;
+  
+  .image {
+    
+    &:before {
+      position: absolute;
+      content: '';
+      width: 52px;
+      height: 30px;
+      top: 0;
+      left: 50%;
+      margin-left: -21px;
+      background: url('../img/icons_basic1.png') no-repeat 0 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 30px;
+      height: 45px;
+      top: 20px;
+      left: 50%;
+      margin-left: 5px;
+      background: url('../img/icons_basic2.png') no-repeat 0 0;
+    }
+  }
+
+  .circles {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 52px;
+      height: 30px;
+      top: 40px;
+      left: 0px;
+      background: url('../img/icons_basic1.png') no-repeat 0 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 30px;
+      height: 45px;
+      top: 60px;
+      left: 25px;
+      background: url('../img/icons_basic2.png') no-repeat 0 0;
+    }
+  }
+
+  .linear {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 52px;
+      height: 30px;
+      top: 60px;
+      left: 50%;
+      margin-left: 5px;
+      background: url('../img/icons_basic1.png') no-repeat 0 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 30px;
+      height: 45px;
+      top: 80px;
+      right: 0;
+      background: url('../img/icons_basic2.png') no-repeat 0 0;
+    }
+  }
+
+  &:hover, &:active, &:focus {
+
+    .image:before {
+      //-webkit-animation: basic_1 1.5s;
+      //-moz-animation: basic_1 1.5s;
+
+      animation-name: basic_1;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-delay: 1s;
+      animation-iteration-count: 1;
+      animation-fill-mode: backwards;
+
+
+      @keyframes basic_1 {
+        0% {
+          top: 0;
+        }
+        50% {
+          top: -5px;
+        }
+        100% {
+          top: 0;
+        }
+      }
+    }
+    .circles:before {
+      //-webkit-animation: basic_2 1.5s infinite;
+      //-moz-animation: basic_2 1.5s infinite;
+
+      animation-name: basic_2;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-iteration-count: 1;
+      animation-fill-mode: backwards;
+
+      @keyframes basic_2 {
+        0% {
+          top: 40px;
+        }
+        50% {
+          top: 35px;
+        }
+        100% {
+          top: 40px;
+        }
+      }
+    }
+    .linear:before {
+      //-webkit-animation: basic_3 4.5s infinite;
+      //-moz-animation: basic_3 4.5s infinite;
+
+      animation-name: basic_3;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-delay: 2s;
+      animation-iteration-count: 1;
+      animation-fill-mode: backwards;
+
+      @keyframes basic_3 {
+        0% {
+          top: 60px;
+        }
+        50% {
+          top: 55px;
+        }
+        100% {
+          top: 60px;
+        }
+      }
+    }
+  }
 }
 
 .icon-js {
+  margin: 0 0 25px 56px !important;
 
   .image {
     width: 120px;
-    height: 171px;
+    height: 172px;
+
     background-image: url('../img/icons_js.png');
 
     &:before {
@@ -154,10 +303,142 @@
 }
 
 .icon-android {
-  //background-image: url('../img/icons-android.png');
+  position: relative;
+
+  .image {
+    width: 100%;
+    height: 160px;
+    background-image: url('../img/icons_android.png');
+
+    &:before {
+      position: absolute;
+      content: '';
+      background: url('../img/icons_android-head.png');
+      width: 54px;
+      height: 26px;
+      top: 48px;
+      left: 50%;
+      margin-left: -7px;
+    }
+  }
+
+  .circles {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 46px;
+      height: 9px;
+      top: 40px;
+      right: 25px;
+      background: url('../img/icons_android-1.png') no-repeat 0 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 48px;
+      height: 18px;
+      top: 75px;
+      right: -3px;
+      background: url('../img/icons_android-2.png') no-repeat 0 0;
+    }
+  }
+
+  .linear {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 74px;
+      height: 26px;
+      bottom: -10px;
+      left: 50%;
+      margin-left: -68px;
+      background: url('../img/icons_android-3.png') no-repeat 0 0;
+    }
+  }
+
+  &:hover, &:active, &:focus {
+    .image:before {
+      -webkit-animation: circles_andr 1.5s infinite;
+      -moz-animation: circles_andr 1.5s infinite;
+
+      @keyframes circles_andr {
+        0% {
+          height: 26px;
+          top: 48px;
+        }
+        50% {
+          height: 18px;
+          top: 56px;
+        }
+        100% {
+          height: 26px;
+          top: 48px;
+        }
+      }
+    }
+
+    .circles {
+      &:before {
+        -webkit-animation: circles_a1 1.5s infinite;
+        -moz-animation: circles_a1 1.5s infinite;
+
+        @keyframes circles_a1 {
+          0% {
+            top: 40px;
+          }
+          50% {
+            top: 48px;
+          }
+          100% {
+            top: 40px;
+          }
+        }
+      }
+
+      &:after {
+        -webkit-animation: circles_a2 1.5s infinite;
+        -moz-animation: circles_a2 1.5s infinite;
+
+        @keyframes circles_a2 {
+          0% {
+            top: 75px;
+          }
+          50% {
+            top: 83px;
+          }
+          100% {
+            top: 75px;
+          }
+        }
+      }
+    }
+
+    .linear {
+      &:before {
+        -webkit-animation: circles_a3 1.5s infinite;
+        -moz-animation: circles_a3 1.5s infinite;
+
+        @keyframes circles_a3 {
+          0% {
+            bottom: -10px;
+          }
+          50% {
+            bottom: -18px;
+          }
+          100% {
+            bottom: -10px;
+          }
+        }
+      }
+    }
+  }
 }
 
 .icon-ios {
+  margin: 0 0 25px 39px !important;
 
   .image {
     width: 160px;
@@ -167,7 +448,7 @@
     &:before {
       position: absolute;
       content: '';
-      background: url('../img/icons_apple.png');
+      background: url('../img/icons_apple.png') no-repeat 0 0;
       width: 30px;
       height: 37px;
       top: 50%;
@@ -308,5 +589,150 @@
 }
 
 .icon-qa {
-  //background-image: url('../img/icons-qa.png');
+  position: relative;
+  width: 160px;
+  height: 160px;
+
+  .image {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 160px;
+      height: 160px;
+      top: 0;
+      left: 0;
+      background-image: url('../img/icons_qa.png');
+      -webkit-transform: rotate(45deg);
+         -moz-transform: rotate(45deg);
+              transform: rotate(45deg);
+    }
+  }
+
+  .circles {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 49px;
+      height: 54px;
+      top: 60px;
+      left: 50%;
+      margin: 0 0 0 -24px;
+      background: url('../img/bug-03.png') no-repeat 0 0;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 32px;
+      height: 44px;
+      top: 25px;
+      left: 50%;
+      margin: 0 0 0 -16px;
+      background: url('../img/bug-02.png') no-repeat 0 0;
+    }
+  }
+
+  .linear {
+
+    &:before {
+      position: absolute;
+      content: '';
+      width: 15px;
+      height: 52px;
+      top: 70px;
+      right: 40px;
+      background: url('../img/bug-05.png') no-repeat top right;
+    }
+
+    &:after {
+      position: absolute;
+      content: '';
+      width: 15px;
+      height: 52px;
+      top: 70px;
+      left: 41px;
+      background: url('../img/bug-04.png') no-repeat top left;
+    }
+  }
+
+  &:hover, &:active, &:focus {
+    .image:before {
+      -webkit-animation: circles_round 1.5s infinite;
+      -moz-animation: circles_round 1.5s infinite;
+
+      @keyframes circles_round {
+        0% {
+          -webkit-transform: rotate(45deg);
+             -moz-transform: rotate(45deg);
+                  transform: rotate(45deg);
+        }
+        50% {
+          -webkit-transform: rotate(-45deg);
+             -moz-transform: rotate(-45deg);
+                  transform: rotate(-45deg);
+        }
+        100% {
+          -webkit-transform: rotate(45deg);
+             -moz-transform: rotate(45deg);
+                  transform: rotate(45deg);
+        }
+      }
+    }
+
+    .circles:after {
+      -webkit-animation: circles_head 1.5s infinite;
+      -moz-animation: circles_head 1.5s infinite;
+
+      @keyframes circles_head {
+        0% {
+          top: 25px;
+        }
+        50% {
+          top: 30px;
+        }
+        100% {
+          top: 25px;
+        }
+      }
+    }
+
+    .linear {
+
+      &:before {
+        -webkit-animation: linear_right 1.5s infinite;
+        -moz-animation: linear_right 1.5s infinite;
+
+        @keyframes linear_right {
+          0% {
+            top: 70px;
+          }
+          50% {
+            top: 64px;
+          }
+          100% {
+            top: 70px;
+          }
+        }
+      }
+
+      &:after {
+        -webkit-animation: linear_left 1.5s infinite;
+        -moz-animation: linear_left 1.5s infinite;
+
+        @keyframes linear_left {
+          0% {
+            top: 64px;
+          }
+          50% {
+            top: 70px;
+          }
+          100% {
+            top: 64px;
+          }
+        }
+      }
+    }
+  }
 }
