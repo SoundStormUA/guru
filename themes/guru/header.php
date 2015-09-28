@@ -13,7 +13,7 @@
                     <div id="top-menu-container">
                         <nav id="site-navigation" class="navigation main-navigation" role="navigation">
                             <?php wp_nav_menu( array( 'theme_location' => 'primary', 'menu_class' => 'nav-menu', 'container' => false ) ) ?>
-                            <select class="language" name="set-language"><option value="ua">UA</option><option value="en">EN</option><option value="ru">RU</option></select>
+                            <!--<select class="language" name="set-language"><option value="ua">UA</option><option value="en">EN</option><option value="ru">RU</option></select>-->
                         </nav>
                     </div>
                     <div id="slide-course">
@@ -30,7 +30,7 @@
                                 </div>
                             </div>
                             <div class="registration-block">
-                                <a class="btn-registration  register" href="#">Реєстрація</a>
+                                <a class="btn-registration  register" href="#">Реєструйся</a>
                             </div>
                         </div>
                     </div>
