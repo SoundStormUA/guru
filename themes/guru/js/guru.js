@@ -71,7 +71,7 @@ jQuery(document).ready(function(){
         setLanguage('ua')
     }*/
 
-    //translation_ajax();
+    translation_ajax();
     var hash_array = [];
 
     jQuery('#site-navigation a').each(function(ind, elem){
@@ -180,7 +180,7 @@ jQuery(document).ready(function(){
         });
     };
 
-    /*function translation_ajax() {
+    function translation_ajax() {
         jQuery.ajax({
             url: WPAjax.ajaxurl,
             type: 'GET',
@@ -190,11 +190,11 @@ jQuery(document).ready(function(){
             success: function (object) {
                 var headh1 =  jQuery('#slide-course h1');
                 var str = jQuery.parseJSON(object);
-                var translationClass = Object.keys(str['string']);
+                //var translationClass = Object.keys(str['string']);
 
-                for (var i = 0; i <= translationClass.length; i++){
+                /*for (var i = 0; i <= translationClass.length; i++){
                     jQuery('.' + translationClass[i]).text(str['string'][translationClass[i]]);
-                }
+                }*/
 
                 if (location.hash && location.hash != '#home' && location.hash != '#shedule') {
                     var key = location.hash;
@@ -205,7 +205,7 @@ jQuery(document).ready(function(){
                 }
             }
         });
-    }*/
+    }
 
     function ajax_page(name) {
             if(window.location.hash === '#shedule') {
@@ -214,7 +214,7 @@ jQuery(document).ready(function(){
                 var succesShudele = function (html) {
                     innerSection.text('');
                     innerSection.append(html);
-                    //translation_ajax();
+                    translation_ajax();
                     scrollTo("#plan", 1000);
                     drawAnimatedLines();
                 };
@@ -239,7 +239,7 @@ jQuery(document).ready(function(){
                     success: function (html) {
                         innerSection.text('');
                         innerSection.append(html);
-                        //translation_ajax();
+                        translation_ajax();
                         drawAnimatedLines();
                         switchTabs();
                         innerSection.on('click', '#plan', scrollRegister);

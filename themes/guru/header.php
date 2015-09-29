@@ -24,7 +24,7 @@
                             <h1>It School</h1>
                             <div class="block-btn">
                                 <div class="slide-btn">
-                                    <span class="number">1&#47;6</span>
+                                    <span class="number">1&#47;7</span>
                                     <a class="next" id="arrow-prev" href="#"></a>
                                     <a class="prev" id="arrow-next" href="#"></a>
                                 </div>
