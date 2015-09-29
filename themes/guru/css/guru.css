@@ -2349,16 +2349,6 @@ th {
   z-index: 1;
   padding: 10px 0 0 5px;
 }
-.input_div .error2,
-.select_div .error2 {
-  color: #139ff7;
-  text-align: left;
-  position: absolute;
-  left: 0;
-  width: 100%;
-  z-index: 1;
-  padding: 10px 0 0 5px;
-}
 .input_div .selectOptions li span,
 .select_div .selectOptions li span {
   border: none;
@@ -3266,6 +3256,15 @@ footer:after {
 }
 .displayNone {
   display: none;
+}
+#registrationFormDiv .error {
+  color: #139ff7;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 10px 0 0 5px;
 }
 @media (max-width: 767px) {
   .ss2-align {
