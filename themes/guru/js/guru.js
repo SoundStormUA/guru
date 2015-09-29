@@ -2,10 +2,10 @@
  * Created by soundstorm on 05.06.15.
  */
 var errors = {};
-var files;
+//var files;
 var innerSection = jQuery("#content");
 var menuContainer = jQuery("#top-menu-container");
-var select_language = jQuery('select.language');
+/*var select_language = jQuery('select.language');
 var current_language = jQuery.cookie('language');
 
 var setLanguage = function (language){
@@ -20,7 +20,7 @@ var setLanguage = function (language){
             jQuery.cookie('language','ru');
             break;
     }
-};
+};*/
 
 function isElementInViewport(elem) {
     var $elem = jQuery(elem);
@@ -66,7 +66,12 @@ jQuery(window).on("scroll", function () {
 });
 
 jQuery(document).ready(function(){
-    translation_ajax();
+
+    /*if(!current_language){
+        setLanguage('ua')
+    }*/
+
+    //translation_ajax();
     var hash_array = [];
 
     jQuery('#site-navigation a').each(function(ind, elem){
@@ -86,7 +91,7 @@ jQuery(document).ready(function(){
             return elementClass;
         }
         return false
-    };
+    }
 
     function scrollTo(element, time) {
         var offset = -100;
@@ -94,7 +99,7 @@ jQuery(document).ready(function(){
         jQuery('html, body').animate({
             scrollTop: jQuery(element).offset().top + offset
         }, time);
-    };
+    }
 
     menuContainer.on('click', function (event) {
         var curElement = event.target;
@@ -124,17 +129,13 @@ jQuery(document).ready(function(){
         }
     };
 
-    if(!current_language){
-        setLanguage('ua')
-    }
-
-    select_language.val( current_language);
+    /*select_language.val(current_language);
     select_language.on('change',  function (event) {
         event.preventDefault();
         setLanguage(select_language.val());
         ajax_page(window.location.hash ? window.location.hash.substr(1) : 'home');
         translation_ajax();
-    });
+    });*/
 
     innerSection.on('click', '#plan', scrollRegister);
     jQuery("#header, #plan" ).on('click', scrollRegister);
@@ -179,7 +180,7 @@ jQuery(document).ready(function(){
         });
     };
 
-    function translation_ajax() {
+    /*function translation_ajax() {
         jQuery.ajax({
             url: WPAjax.ajaxurl,
             type: 'GET',
@@ -204,7 +205,7 @@ jQuery(document).ready(function(){
                 }
             }
         });
-    }
+    }*/
 
     function ajax_page(name) {
             if(window.location.hash === '#shedule') {
@@ -213,7 +214,7 @@ jQuery(document).ready(function(){
                 var succesShudele = function (html) {
                     innerSection.text('');
                     innerSection.append(html);
-                    translation_ajax();
+                    //translation_ajax();
                     scrollTo("#plan", 1000);
                     drawAnimatedLines();
                 };
@@ -238,7 +239,7 @@ jQuery(document).ready(function(){
                     success: function (html) {
                         innerSection.text('');
                         innerSection.append(html);
-                        translation_ajax();
+                        //translation_ajax();
                         drawAnimatedLines();
                         switchTabs();
                         innerSection.on('click', '#plan', scrollRegister);
@@ -264,7 +265,7 @@ jQuery(document).ready(function(){
             }
             jQuery('#arrow-next').attr('href',next_hash);
             jQuery('#arrow-prev').attr('href',prev_hash);
-        };
+        }
 
         var hashSwitch = function () {
             var num = jQuery('.number');
@@ -272,31 +273,35 @@ jQuery(document).ready(function(){
             {
                 case '#shedule':
                     ajax_page();
-                    num.text('1/6');
+                    num.text('1/7');
                     break;
                 case '#basic':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('2/6');
+                    num.text('2/7');
                     break;
                 case '#js':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('3/6');
+                    num.text('3/7');
                     break;
                 case '#android':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('4/6');
+                    num.text('4/7');
                     break;
                 case '#ios':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('5/6');
+                    num.text('5/7');
                     break;
                 case '#qa':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('6/6');
+                    num.text('6/7');
+                    break;
+                case '#unity':
+                    ajax_page(window.location.hash.substr(1));
+                    num.text('7/7');
                     break;
                 case '#home':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('1/6');
+                    num.text('1/7');
                     break;
             }
         };
@@ -361,10 +366,15 @@ jQuery(document).ready(function(){
                 break;
 
             case 'city_i':
+                var rev_city = /^[0-9-a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
 
                 if (val) {
                     jQuery("#city_p").addClass('not_vissible');
                     delete errors.city;
+                } else if(!rev_city.test(val)){
+                    jQuery("#phone_number_p").removeClass('not_vissible');
+                    errors['phone'] = 'Введіть будь ласка корректно назву міста';
+                    jQuery(this).next('#phone_number_p').html(errors['phone']);
                 } else {
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка назву міста';
@@ -387,7 +397,7 @@ jQuery(document).ready(function(){
         }
     };
 
-    var validateFile = function (file) {
+   /* var validateFile = function (file) {
         var buttonHolder = jQuery('.buttonsHolder');
         var upload_max_size = 5242880;
         var array_ext = ['doc', 'docx', 'odt'];
@@ -417,13 +427,13 @@ jQuery(document).ready(function(){
                 delete errors.file;
             }
         }
-    };
+    };*/
 
     innerSection.unbind().on('focusout', 'input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i', validate);
     innerSection.on("click", "#selectedCourse", validateSelect);
 
 
-    innerSection.on('click', '#addFile', function() {
+    /*innerSection.on('click', '#addFile', function() {
         jQuery('#addFileInput').click();
     });
 
@@ -434,7 +444,7 @@ jQuery(document).ready(function(){
         files = event.target.files;
         var file = files[0];
         jQuery(validateFile(file));
-    }
+    }*/
 
     innerSection.on('submit', "#registrationForm", function (event) {
        var input =  jQuery("input");
@@ -443,7 +453,7 @@ jQuery(document).ready(function(){
 
         input.each(validate);
         jQuery(validateSelect);
-        jQuery(validateFile);
+        //jQuery(validateFile);
         if (Object.keys(errors) == 0 && input.val()!= '') {
 
             var form = document.getElementById("registrationForm");
@@ -457,6 +467,7 @@ jQuery(document).ready(function(){
 
             oReq.onreadystatechange = function() {
                 if (oReq.readyState == 4 && oReq.status == 200) {
+                    jQuery(".selectSpan").text('Оберіть курс:');
                     jQuery('input', '#registrationForm').each(function() {
                         var type = this.type;
 
@@ -532,7 +543,7 @@ jQuery(document).ready(function(){
                 jQuery(element).append(divBottom);
             }
         });
-    };
+    }
 
     drawAnimatedLines();
 
@@ -567,5 +578,5 @@ jQuery(document).ready(function(){
                 selectDiv.toggleClass('active');
             }, 20);
         }
-    };
+    }
 });

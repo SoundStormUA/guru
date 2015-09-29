@@ -6,7 +6,7 @@
  *
  * @package Guru
  */
-$language = $_COOKIE['language'];
+$language = !$_COOKIE['language'] ? $language = 'ua' : $language = $_COOKIE['language'];
 
 if (!isset($content_width)) {
     $content_width = 2000;
@@ -129,6 +129,7 @@ function insert_registered_user()
 
     global $wpdb;
 
+
     $data = array(
         'FIO' => $_POST['contact_full_name'],
         'email' => $_POST['email'],
@@ -138,7 +139,7 @@ function insert_registered_user()
         'status_id' => 1
     );
 
-    if (isset($_FILES['addingFile'])) {
+    /*if (isset($_FILES['addingFile'])) {
 
         $upload_dir = WP_CONTENT_DIR . "/uploads/resume";
         $upload_file_name = 'Resume' . '_' . uniqid() . rand(1000, 9999);
@@ -157,25 +158,92 @@ function insert_registered_user()
         } elseif (!file_exists($upload_dir / $upload_file_name)) {
             $errors['filename'] = 'Error file has not been uploaded to the server';
         }
+    }*/
+
+    //$errors = array();
+
+    $wpdb->insert(
+        $wpdb->prefix . 'registered_users',
+        $data,
+        array(
+            '%s',
+            '%s',
+            '%s',
+            '%s',
+            '%d',
+            '%d',
+            //'%s',
+        )
+    );
+
+    $to = array(
+        'hr@thinkmobiles.com',
+        'maria.zasukhina@thinkmobiles.com',
+        'andriana.lemko@thinkmobiles.com',
+        'alina.yurenko@thinkmobiles.com',
+        'anton.gychka@thinkmobiles.com',
+    );
+
+    $email =
+    $subject = 'New registered user';
+    $course = '';
+    $headers = "From: <{$email}>\r\n";
+    $headers .= "Reply-To: {$email}\r\n";
+
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+
+    switch ($data['course_id']){
+        case '1':
+            $course = 'Basic+';
+            break;
+        case '2':
+            $course = 'JavaScript';
+            break;
+        case '3':
+            $course = 'Android';
+            break;
+        case '4':
+            $course = 'iOS';
+            break;
+        case '5':
+            $course = 'QA';
+            break;
+        case '6':
+            $course = 'Unity';
+            break;
     }
 
-    if (empty($errors)) {
-        $wpdb->insert(
-            $wpdb->prefix . 'registered_users',
-            $data,
-            array(
-                '%s',
-                '%s',
-                '%s',
-                '%s',
-                '%d',
-                '%d',
-                '%s',
-            )
-        );
-        exit;
-        die;
-    }
+    $message = "
+       <html>
+         <head>
+            <title>New registered user</title>
+         </head>
+         <body>
+           <p>Name: " . $data['FIO'] . "<p>
+           <p>E-mail: " . $data['email'] . "<p>
+           <p>Phone: " . $data['phone_number'] . "<p>
+           <p>City: " . $data['city'] . "<p>
+           <p>Course: " . $course . "<p>
+        </body>
+      </html>";
+
+    //echo $to . ' ' . $subject . ' ' . $message . ' ' . $headers;
+
+    // Call the wp_mail function, display message based on the result.
+   /*if (wp_mail($to, $subject, $message, $headers)) {
+        //the message was sent...
+        echo true;
+    } else {
+        //the message was not sent...
+        echo false;
+    };*/
+
+    wp_mail( $to, $subject, $message, $headers );
+
+    exit;
+    die;
+
 }
 
 ;
@@ -268,25 +336,6 @@ function courses($atts, $content = null)
 
     $animationName = $atts['animation'];
 
-    switch ($animationName)
-    {
-        case 'basic':
-            $animation = 'basic';
-            break;
-        case 'js':
-            $animation = 'js';
-            break;
-        case 'android':
-            $animation = 'android';
-            break;
-        case 'ios':
-            $animation = 'ios';
-            break;
-        case 'qa':
-            $animation = 'qa';
-            break;
-    }
-
     if ($ar['name_' . $GLOBALS['language']] == null){
         $ar['name_' . $GLOBALS['language']] = $ar['name_en'];
     }
@@ -297,7 +346,7 @@ function courses($atts, $content = null)
 
     $content = "<div class='course-container course " . $atts['name'] . "'>";
     $content .= '<a href="' . '#' . $atts['name'] . '">';
-    $content .= '<div class="icons icon-' . $animation . '"><div class="image"></div><div class="circles"></div><div class="linear"></div></div>';
+    $content .= '<div class="icons icon-' . $animationName . '"><div class="image"></div><div class="circles"></div><div class="linear"></div></div>';
     $content .= "<header class='course-caption'>";
     $content .= "<span>" . $ar['name_' . $GLOBALS['language']]  . "</span></header>";
     $content .= "<p>" . $ar['info_' . $GLOBALS['language']] . "</p></a></div>";
@@ -509,7 +558,7 @@ function select_shortcode_ul($atts, $content = null)
 
     $input_label = "<div class='selectPlaceholder'>";
     $input_label .= "<input class='select_input hidden' name='{$name_i}'></input>";
-    $input_label .= "<span class='selectSpan phSpan'>Choose your course:</span></div>";
+    $input_label .= "<span class='selectSpan phSpan'>Оберіть курс:</span></div>";
 
     if ($atts['id']) {
         $id = "id='{$atts['id']}'";
@@ -587,8 +636,8 @@ function contact_form($atts, $content = null)
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
         $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
-        $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
-        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden" /></div>';
+        //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
+        //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden" /></div>';
         $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
         $form .= "</form></div>";
     } elseif ($GLOBALS['language'] === 'en'){
@@ -607,9 +656,9 @@ function contact_form($atts, $content = null)
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
         $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Sign up</button>';
-        $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ CV</button>';
-        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
-        $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+        //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ CV</button>';
+        //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+        $form .= '<input id="hidden_to" type="hidden" value="" name="contact_to"/>';
         $form .= "</form></div>";
     } elseif ($GLOBALS['language'] === 'ru'){
         $form = "<div id='registrationFormDiv'>";
@@ -627,9 +676,9 @@ function contact_form($atts, $content = null)
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
         $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Отправить</button>';
-        $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
-        $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
-        $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+        //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
+        //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+        $form .= '<input id="hidden_to" type="hidden" value="" name="contact_to"/>';
         $form .= "</form></div>";
     }
     return $form;
@@ -692,9 +741,9 @@ function contact_form_course($atts, $content = null)
     $form .= '<div class="clearboth"></div>';
     $form .= '<div class="buttonsHolder">';
     $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">' . $sign_up . '</button>';
-    $form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>' . $cv .'</button>';
-    $form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
-    $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
+    //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>' . $cv .'</button>';
+    //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
+    $form .= '<input id="hidden_to" type="hidden" value="" name="contact_to"/>';
     $form .= "</form></div>";
 
     return $form;
@@ -972,7 +1021,7 @@ function send_message()
       </html>";
 
 
-    echo $to . ' ' . $subject . ' ' . $message . ' ' . $headers;
+    //echo $to . ' ' . $subject . ' ' . $message . ' ' . $headers;
 
     // Call the wp_mail function, display message based on the result.
     if (wp_mail($to, $subject, $message, $headers)) {
@@ -983,7 +1032,7 @@ function send_message()
         echo false;
     };
 
-    //wp_mail( $to, $subject, $message, $headers );
+    wp_mail( $to, $subject, $message, $headers );
 
     die();
 }
@@ -1026,7 +1075,8 @@ function drawTestimonials($atts)
 
 add_shortcode('testimonials', 'drawTestimonials');
 
-function caseCourse($courses) {
+function caseCourse($courses)
+{
         switch ($courses) {
             case 'basic':
                 return 1;
@@ -1043,6 +1093,8 @@ function caseCourse($courses) {
             case 'qa':
                 return 5;
                 break;
+            case 'unity':
+                return 6;
         }
 }
 
@@ -1263,7 +1315,7 @@ function renderThemeTable($returned)
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
-        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-trash"></div>';
         $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
         $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
         $resultHtml .= '</div>';
@@ -1502,7 +1554,7 @@ function renderLitTable($returned)
         $resultHtml .= '<div class="cell controlDiv fa fa-settings">';
         $resultHtml .= '<div class="settingsIcons">';
         $resultHtml .= '<div class="settingsIcon close fa fa-close"></div>';
-        $resultHtml .= '<div class="settingsIcon delete fa fa-delete"></div>';
+        $resultHtml .= '<div class="settingsIcon delete fa fa-trash"></div>';
         $resultHtml .= '<div class="settingsIcon save fa fa-save"></div>';
         $resultHtml .= '<div class="settingsIcon edit fa fa-edit"></div>';
         $resultHtml .= '</div>';
