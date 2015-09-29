@@ -773,6 +773,11 @@ function register_my_menu_page()
     add_submenu_page('manage_menu', 'Translation string', 'Translation string', 'manage_options', 'translationpage', 'translation_page');
 }
 
+function my_manage_output()
+{
+    echo 'Coming Soon';
+}
+
 function get_users_data($fio, $email, $phone_number, $city, $course_id, $status_id)
 {
     global $wpdb;
@@ -1783,7 +1788,7 @@ function translationContent()
             $translation_array['string'][$row['select']][] = $row['lang_' . $language];
         }
     }
-    echo  json_encode($header_array + $translation_array);
+    echo  json_encode($header_array);
     exit;
 }
 
