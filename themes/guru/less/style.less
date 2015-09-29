@@ -50,30 +50,30 @@ body {
     display: block !important;
     background: @border-color-header;
     background: -webkit-linear-gradient(top, #46b3d8 10%, #179bd2 10%, #179bd2 20%, #3b6db5 20%,
-      #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
-      #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
-      #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
-      #179bd2 90%, #179bd2 90%, #179bd2 100%);
+    #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
+    #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
+    #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
+    #179bd2 90%, #179bd2 90%, #179bd2 100%);
     background: -moz-linear-gradient(top, #46b3d8 10%, #179bd2 10%, #179bd2 20%, #3b6db5 20%,
-      #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
-      #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
-      #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
-      #179bd2 90%, #179bd2 90%, #179bd2 100%);
+    #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
+    #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
+    #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
+    #179bd2 90%, #179bd2 90%, #179bd2 100%);
     background: -o-linear-gradient(top, #46b3d8 10%, #179bd2 10%, #179bd2 20%, #3b6db5 20%,
-      #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
-      #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
-      #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
-      #179bd2 90%, #179bd2 90%, #179bd2 100%);
+    #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
+    #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
+    #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
+    #179bd2 90%, #179bd2 90%, #179bd2 100%);
     background: -ms-linear-gradient(top, #46b3d8 10%, #179bd2 10%, #179bd2 20%, #3b6db5 20%,
-      #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
-      #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
-      #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
-      #179bd2 90%, #179bd2 90%, #179bd2 100%);
+    #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
+    #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
+    #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
+    #179bd2 90%, #179bd2 90%, #179bd2 100%);
     background: linear-gradient(to bottom, #46b3d8 10%, #179bd2 10%, #179bd2 20%, #3b6db5 20%,
-      #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
-      #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
-      #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
-      #179bd2 90%, #179bd2 90%, #179bd2 100%);
+    #3b6db5 30%, #2354a5 30%, #2354a5 40%, #3b6db5 40%,
+    #3b6db5 50%, #179bd2 50%, #179bd2 60%, #46b3d8 60%,
+    #46b3d8 70%, #179bd2 70%, #179bd2 80%, #179bd2 80%,
+    #179bd2 90%, #179bd2 90%, #179bd2 100%);
   }
   &:before {
     left: -6px;
@@ -1332,6 +1332,7 @@ th {
     margin-left: -300px;
     top: -280px;
   }
+
   .phSpan,
   ::-webkit-input-placeholder {
     color: @placeHolder;
@@ -1345,9 +1346,12 @@ th {
   :-ms-input-placeholder {
     color: @placeHolder;
   }
-
+  #registrationForm{
+    position: relative;
+  }
   #registrationFormDiv {
-    text-align: center;
+    text-align: left;
+    position: relative;
     padding: 52px;
     background-color: #ffffff;
     background-image: url("../img/imgo.jpg");
@@ -1544,6 +1548,7 @@ th {
   }
   .error{
     color: #f01136;
+    text-align: left;
     position: absolute;
     left: 0;
     width: 100%;
@@ -2425,6 +2430,7 @@ footer {
   }
 
   form {
+    position: relative;
     padding: 0 0 70px;
     width: 490px;
     margin: 0 auto;
@@ -2468,7 +2474,8 @@ footer {
 
 
     .input_div .error, .select_div .error {
-      text-align: center;
+      text-align: left;
+      position: absolute;
     }
 
     .buttonsHolder {
@@ -2508,4 +2515,8 @@ footer {
       //}
     }
   }
+}
+#registrationForm{
+  position: relative;
+  text-align: left;
 }
