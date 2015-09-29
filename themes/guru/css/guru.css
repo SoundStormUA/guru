@@ -1378,8 +1378,8 @@ table th {
   margin-left: calc(50px + 12px);
 }
 .sectionTitle span {
-  display: inline-block;
   position: relative;
+  display: inherit;
 }
 .sectionTitle span:before,
 .sectionTitle span:after {
@@ -1430,8 +1430,8 @@ section .section_title:after {
   margin-left: calc(50px + 12px);
 }
 section .section_title span {
-  display: inline-block;
   position: relative;
+  display: inherit;
 }
 section .section_title span:before,
 section .section_title span:after {
@@ -1519,7 +1519,7 @@ th {
   width: 20%;
 }
 .flatTable tbody {
-  font-size: 14px;
+  font-size: 15px;
 }
 .flatTable tbody tr:nth-child(1) {
   height: 85px;
@@ -1629,9 +1629,9 @@ th {
 .addFile {
   text-transform: uppercase;
   color: white;
-  border-radius: 5px;
+  border-radius: 12px;
   text-decoration: none;
-  padding: 10px 30px;
+  padding: 12px 30px;
 }
 .register:active,
 .addFile:active {
@@ -2146,7 +2146,7 @@ th {
   position: relative;
 }
 #registration #registrationFormDiv {
-  text-align: left;
+  text-align: center;
   position: relative;
   padding: 52px;
   background-color: #ffffff;
@@ -2154,7 +2154,7 @@ th {
   border: 3px solid #049acf;
 }
 #registration #registrationFormDiv .sectionTitle {
-  margin: 8px 0 70px 0;
+  margin: 8px 0 30px 0;
 }
 #registration #registrationFormDiv .buttonsHolder {
   display: inline-block;
@@ -2164,14 +2164,12 @@ th {
 #registration #registrationFormDiv .buttonsHolder #addFile {
   font-family: "Lato Bold";
   font-size: 21px;
-  width: 45%;
-  padding: 20px;
+  width: 209px;
+  height: 60px;
+  padding-top: 12px;
   margin-top: 40px;
   outline: none;
   border: none;
-}
-#registration #registrationFormDiv .buttonsHolder #register {
-  float: left;
 }
 #registration #registrationFormDiv .buttonsHolder #addFile {
   float: right;
@@ -2300,7 +2298,7 @@ th {
   box-sizing: border-box;
   font-size: 18px;
   background-color: #ffffff;
-  border: solid 1px #049acf;
+  border: solid 2px #049acf;
   border-radius: 2px;
   transition: border 0.3s;
   width: 100%;
@@ -2341,6 +2339,7 @@ th {
   left: 0;
   width: 100%;
   z-index: 1;
+  padding: 10px 0 0 5px;
 }
 .input_div .selectOptions li span,
 .select_div .selectOptions li span {
@@ -2408,7 +2407,7 @@ th {
 }
 #courses .course-container {
   font-family: "Lato Thin";
-  font-size: 14px;
+  font-size: 15px;
   color: #049acf;
   text-align: center;
   padding: 0 0 10px 0;
@@ -2686,6 +2685,7 @@ a {
   height: 315px;
   background-color: #eee;
   position: relative;
+  display: none;
 }
 .about-cours .video-wrap .video .button {
   background-color: #049acf;
@@ -2748,6 +2748,7 @@ a {
   display: block;
   background: url('../img/play.png') no-repeat top left;
   margin: 3px 0 0 5px;
+  display: none;
 }
 .lection .caption .lection-name {
   color: #049acf;
@@ -3208,12 +3209,12 @@ footer:after {
   font-family: 'Roboto', sans-serif;
   font-size: 22px;
   margin: 0 20px;
-  width: 190px;
+  width: 209px;
   height: 60px;
   text-align: center;
   text-transform: uppercase;
   line-height: 40px;
-  border-radius: 6px;
+  border-radius: 12px;
   display: inline-block;
   cursor: pointer;
 }
@@ -3229,7 +3230,10 @@ footer:after {
 }
 #registrationForm {
   position: relative;
-  text-align: left;
+  text-align: center;
+}
+.displayNone {
+  display: none;
 }
 @media (max-width: 767px) {
   .ss2-align {
