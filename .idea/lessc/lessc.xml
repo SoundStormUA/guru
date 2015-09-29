@@ -9,14 +9,14 @@
               <option name="cssDirectories">
                 <list>
                   <CssDirectory>
-                    <option name="path" value="D:\WebProjects\guru\themes\guru\css" />
+                    <option name="path" value="$PROJECT_DIR$/themes/guru/css" />
                   </CssDirectory>
                 </list>
               </option>
               <option name="excludePattern" value="guru.css" />
               <option name="id" value="0" />
               <option name="includePattern" value="guru.less" />
-              <option name="lessDirPath" value="D:\WebProjects\guru\themes\guru\less" />
+              <option name="lessDirPath" value="$PROJECT_DIR$/themes/guru/less" />
               <option name="name" value="guru" />
             </LessProfile>
           </value>
