@@ -936,7 +936,7 @@ body {
 }
 #header #top-menu-container {
   position: fixed;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: rgba(255, 255, 255, 0.75);
   z-index: 999;
   width: 100%;
   max-width: calc(1128px);
@@ -969,6 +969,13 @@ body {
 #header #site-navigation ul li a {
   color: #049acf;
   text-decoration: none;
+  margin-bottom: 3px;
+}
+#header #site-navigation ul li a:hover {
+  color: #5ee2ce;
+}
+#header #site-navigation ul li a:active {
+  color: #5ee2ce;
 }
 #header #site-navigation ul:before,
 #header #site-navigation ul:after {
@@ -1012,6 +1019,7 @@ body {
   font-size: 82px;
   color: #00A8D6;
   font-family: 'Lato Bold';
+  min-width: 670px;
 }
 #slide-course .slide .registration-block {
   text-align: center;
@@ -1501,7 +1509,7 @@ th {
 }
 .flatTable tbody,
 .flatTable tfoot {
-  font-family: "Lato Thin";
+  font-family: "Lato Regular";
   color: #049acf;
 }
 .flatTable tbody tr,
@@ -1985,7 +1993,7 @@ th {
 .testimonial .testimonialDescription {
   width: calc(100% - 167px);
   float: right;
-  font-family: "Lato Hairline";
+  font-family: "Lato Light";
   color: #0685b4;
   padding-left: 30px;
   text-align: left;
@@ -2003,8 +2011,8 @@ th {
   font-family: "Lato Medium";
 }
 .testimonial .testimonialDescription .tDepartment {
-  font-size: 14px;
-  font-family: "Lato Light";
+  font-size: 16px;
+  font-family: "Lato Regular";
 }
 .testimonial .testimonialDescription .tText {
   font-size: 18px;
@@ -2235,7 +2243,7 @@ th {
 }
 #registration .select_div .selectOptions {
   position: absolute;
-  width: calc(100% - 110px);
+  width: 100%;
   opacity: 0;
   z-index: 10;
   -webkit-transition: opacity 0.3s 0.4s, visibility 0s 0.7s;
@@ -2333,7 +2341,17 @@ th {
 }
 .input_div .error,
 .select_div .error {
-  color: #f01136;
+  color: #fff;
+  text-align: left;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  z-index: 1;
+  padding: 10px 0 0 5px;
+}
+.input_div .error2,
+.select_div .error2 {
+  color: #139ff7;
   text-align: left;
   position: absolute;
   left: 0;
@@ -2406,10 +2424,10 @@ th {
   color: #049ACF;
 }
 #courses .course-container {
-  font-family: "Lato Thin";
+  font-family: "Lato Light";
   font-size: 15px;
   color: #049acf;
-  text-align: center;
+  text-align: left;
   padding: 0 0 10px 0;
   cursor: pointer;
 }
@@ -2430,7 +2448,7 @@ th {
   margin: 0;
 }
 #courses .course-container p {
-  padding: 0 10px 10px 10px;
+  padding: 0;
   margin: 0;
 }
 #courses .course-container:not( :nth-child(1)) .course-caption:before {
@@ -3159,14 +3177,14 @@ footer:after {
 #registrationFormCourse form .courseName {
   background: transparent;
   display: block;
-  font-family: "Lato Light", sans-serif;
+  font-family: "Lato Regular", sans-serif;
   font-size: 20px;
   border-color: #fff;
   border: 2px solid;
   border-radius: 3px;
   color: #ffffff;
   padding: 15px 30px;
-  margin-top: 30px;
+  margin-top: 40px;
   font-weight: 400;
 }
 #registrationFormCourse form input[type='text'] ::-webkit-input-placeholder,
@@ -3192,7 +3210,7 @@ footer:after {
 #registrationFormCourse form .courseName {
   font-family: "Lato Bold", sans-serif;
   font-size: 24px;
-  margin-bottom: 90px;
+  margin-bottom: 70px;
 }
 #registrationFormCourse form .input_div .error,
 #registrationFormCourse form .select_div .error {
@@ -3213,7 +3231,7 @@ footer:after {
   height: 60px;
   text-align: center;
   text-transform: uppercase;
-  line-height: 40px;
+  line-height: 33px;
   border-radius: 12px;
   display: inline-block;
   cursor: pointer;
@@ -3223,10 +3241,24 @@ footer:after {
   background-color: #5ee2ce;
   box-shadow: 0px 6px 0px #32c6b4;
 }
+#registrationFormCourse form .register:hover,
+#registrationFormCourse form .register:focus,
+#registrationFormCourse form .register:active {
+  border-color: #fde509;
+  background-color: #fde509;
+  box-shadow: 0px 6px 0px #e6d205;
+}
 #registrationFormCourse form .addFile {
   border-color: #4cb2d5;
   background-color: #4cb2d5;
   box-shadow: 0px 6px 0px #049acf;
+}
+#registrationFormCourse form .addFile:hover,
+#registrationFormCourse form .addFile:focus,
+#registrationFormCourse form .addFile:active {
+  border-color: #fde509;
+  background-color: #fde509;
+  box-shadow: 0px 6px 0px #e6d205;
 }
 #registrationForm {
   position: relative;
