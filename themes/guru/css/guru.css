@@ -2142,8 +2142,12 @@ th {
 #registration :-ms-input-placeholder {
   color: #049acf;
 }
+#registration #registrationForm {
+  position: relative;
+}
 #registration #registrationFormDiv {
-  text-align: center;
+  text-align: left;
+  position: relative;
   padding: 52px;
   background-color: #ffffff;
   background-image: url("../img/imgo.jpg");
@@ -2332,6 +2336,7 @@ th {
 .input_div .error,
 .select_div .error {
   color: #f01136;
+  text-align: left;
   position: absolute;
   left: 0;
   width: 100%;
@@ -3142,6 +3147,7 @@ footer:after {
   margin: 0;
 }
 #registrationFormCourse form {
+  position: relative;
   padding: 0 0 70px;
   width: 490px;
   margin: 0 auto;
@@ -3189,7 +3195,8 @@ footer:after {
 }
 #registrationFormCourse form .input_div .error,
 #registrationFormCourse form .select_div .error {
-  text-align: center;
+  text-align: left;
+  position: absolute;
 }
 #registrationFormCourse form .buttonsHolder {
   text-align: center;
@@ -3219,6 +3226,10 @@ footer:after {
   border-color: #4cb2d5;
   background-color: #4cb2d5;
   box-shadow: 0px 6px 0px #049acf;
+}
+#registrationForm {
+  position: relative;
+  text-align: left;
 }
 @media (max-width: 767px) {
   .ss2-align {
