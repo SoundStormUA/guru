@@ -368,17 +368,17 @@ jQuery(document).ready(function(){
             case 'city_i':
                 var rev_city = /^[0-9-a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
 
-                if (val) {
-                    jQuery("#city_p").addClass('not_vissible');
-                    delete errors.city;
-                } else if(!rev_city.test(val)){
-                    jQuery("#phone_number_p").removeClass('not_vissible');
-                    errors['phone'] = 'Введіть будь ласка корректно назву міста';
-                    jQuery(this).next('#phone_number_p').html(errors['phone']);
-                } else {
+                if (!val) {
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка назву міста';
                     jQuery(this).next('#city_p').html(errors['city']);
+                } else if(!rev_city.test(val)){
+                    jQuery("#city_p").removeClass('not_vissible');
+                    errors['city'] = 'Введіть будь ласка корректно назву міста';
+                    jQuery(this).next('#phone_number_p').html(errors['phone']);
+                } else {
+                    jQuery("#city_p").addClass('not_vissible');
+                    delete errors.city;
                 }
                 break;
         }
