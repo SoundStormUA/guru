@@ -2441,7 +2441,7 @@ th {
   padding: 0;
   margin: 0;
 }
-#courses .course-container:not( :nth-child(1)) .course-caption:before {
+#courses .course-container .course-caption:before {
   border: 3px solid #0596cb;
   background: #ffffff;
   border-radius: 50%;
@@ -2452,8 +2452,8 @@ th {
   height: 15px;
   margin-top: -101px;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(odd):before,
-#courses .course-container:not( :nth-child(1)):nth-child(even):before {
+#courses .course-container:nth-child(odd):before,
+#courses .course-container:nth-child(even):before {
   content: '';
   width: 100px;
   height: 3px;
@@ -2461,31 +2461,31 @@ th {
   background: #049acf;
   position: absolute;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(odd) {
+#courses .course-container:nth-child(odd) {
   float: left;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(odd):before {
+#courses .course-container:nth-child(odd):before {
   left: 50%;
   -webkit-animation: rightPart 3s infinite;
   -o-animation: rightPart 3s infinite;
   animation: rightPart 3s infinite;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(odd) .course-caption:before {
+#courses .course-container:nth-child(odd) .course-caption:before {
   left: calc(50% - 115px);
   -webkit-animation: leftPart 3s infinite;
   -o-animation: leftPart 3s infinite;
   animation: leftPart 3s infinite;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(even) {
+#courses .course-container:nth-child(even) {
   float: right;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(even):before {
+#courses .course-container:nth-child(even):before {
   right: 50%;
   -webkit-animation: leftPart 3s infinite;
   -o-animation: leftPart 3s infinite;
   animation: leftPart 3s infinite;
 }
-#courses .course-container:not( :nth-child(1)):nth-child(even) .course-caption:before {
+#courses .course-container:nth-child(even) .course-caption:before {
   right: calc(50% - 115px);
   -webkit-animation: rightPart 3s infinite;
   -o-animation: rightPart 3s infinite;
@@ -2683,6 +2683,7 @@ a {
 }
 .about-cours .video-wrap {
   width: 550px;
+  display: none;
 }
 .about-cours .video-wrap .vide-desc {
   margin-top: 30px;
@@ -2693,7 +2694,6 @@ a {
   height: 315px;
   background-color: #eee;
   position: relative;
-  display: none;
 }
 .about-cours .video-wrap .video .button {
   background-color: #049acf;
@@ -3293,20 +3293,14 @@ footer:after {
     position: fixed;
   }
   .course-container {
-    height: 350px;
-    width: 21%;
-    margin: 30px 39.5% 0 39.5%;
+    height: 450px;
+    width: 29%;
+    margin: 30px 10% 0 10%;
   }
-  .course-container:nth-child(1) .course-caption:after {
-    left: calc(50% - 50px);
-  }
-  .course-container:not(:nth-child(1)) {
-    margin: 30px 14% 0 14%;
-  }
-  .course-container:not(:nth-child(1)):nth-child(odd) .course-caption:after {
+  .course-container:nth-child(odd) .course-caption:after {
     left: calc(23.5% - 50px);
   }
-  .course-container:not(:nth-child(1)):nth-child(even) .course-caption:after {
+  .course-container:nth-child(even) .course-caption:after {
     right: calc(23.5% - 50px);
   }
 }

@@ -1666,7 +1666,7 @@ th {
       margin: 0;
     }
 
-    &:not(:nth-child(1)) {
+    //&:not(:nth-child(1)) {
       .course-caption {
         &:before {
           .circle-default();
@@ -1722,7 +1722,7 @@ th {
           }
         }
       }
-    }
+    //}
 
     @keyframes rightPart {
       0% {
@@ -1936,6 +1936,7 @@ a {
   margin-top: 95px;
   .video-wrap {
     width: 550px;
+    display: none;
     .vide-desc {
       margin-top: 30px;
       font-family: "Lato Light";
@@ -1945,7 +1946,6 @@ a {
       height: 315px;
       background-color: #eee;
       position: relative;
-      display: none;
       .button {
         background-color: @main-blue;
         display: inline-block;
