@@ -1804,13 +1804,13 @@ function ajaxPage($name)
 
 function contact_fields()
 {
-    $facebook = get_post_meta (531, 'facebook', true);
-    $vk = get_post_meta (531, 'vk', true);
-    $gplus = get_post_meta (531, 'gplus', true);
-    $in = get_post_meta (531, 'linkedin', true);
-    $skype = get_post_meta (531, 'skype', true);
-    $location = get_post_meta (531, 'location', true);
-    $contactinfo = get_post_meta (531, 'contactinfo', true);
+    $facebook = get_post_meta (66, 'facebook', true);
+    $vk = get_post_meta (66, 'vk', true);
+    $gplus = get_post_meta (66, 'gplus', true);
+    $in = get_post_meta (66, 'linkedin', true);
+    $skype = get_post_meta (66, 'skype', true);
+    $location = get_post_meta (66, 'location', true);
+    $contactinfo = get_post_meta (66, 'contactinfo', true);
 
     $contentFooter = '
     <div class="social-footer">
