@@ -3234,9 +3234,9 @@ footer:after {
 #registrationFormCourse form .register:hover,
 #registrationFormCourse form .register:focus,
 #registrationFormCourse form .register:active {
-  border-color: #fde509;
-  background-color: #fde509;
-  box-shadow: 0px 6px 0px #e6d205;
+  border-color: #4cb2d5;
+  background-color: #4cb2d5;
+  box-shadow: 0px 6px 0px #049acf;
 }
 #registrationFormCourse form .addFile {
   border-color: #4cb2d5;
@@ -3246,9 +3246,9 @@ footer:after {
 #registrationFormCourse form .addFile:hover,
 #registrationFormCourse form .addFile:focus,
 #registrationFormCourse form .addFile:active {
-  border-color: #fde509;
-  background-color: #fde509;
-  box-shadow: 0px 6px 0px #e6d205;
+  border-color: #4cb2d5;
+  background-color: #4cb2d5;
+  box-shadow: 0px 6px 0px #049acf;
 }
 #registrationForm {
   position: relative;
