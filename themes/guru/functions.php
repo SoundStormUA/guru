@@ -357,12 +357,13 @@ function courses($atts, $content = null)
 add_shortcode('add_course', 'courses');
 
 function courseName($atts)
+
 {
     //Atributes
     extract(shortcode_atts(
             array(
-              'name' => '',
-              'choose' => ''
+                'name' => '',
+                'choose' => ''
             ), $atts)
     );
 
@@ -381,6 +382,8 @@ function courseName($atts)
 
     $name = $ar['name_' . $GLOBALS['language']];
     $info = $ar['info_' . $GLOBALS['language']];
+    $infolections = $ar['infolections_' . $GLOBALS['language']];
+
     if ($ar['name_' . $GLOBALS['language']] === null){
         $name = $ar['name_en'];
     }
@@ -389,16 +392,20 @@ function courseName($atts)
         $info = $ar['info_en'];
     }
 
+    if ($ar['infolections_' . $GLOBALS['language']] === null){
+        $infolections = $ar['infolections_en'];
+    }
 
     if ($atts['choose'] === 'name'){
         return $name;
     } elseif ($atts['choose'] === 'info' ){
         return $info;
+    } elseif ($atts['choose'] === 'infolections' ){
+        return $infolections;
     }
 }
 
 add_shortcode('name_course', 'courseName');
-
 
 function get_data_for_select($table, $field)
 {
@@ -1115,6 +1122,7 @@ function contentThemes($atts) {
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
     $html .= '<p class="vide-desc"></p></div>';
     $html .= '</div>';
+    $html .= '<p class="course-desc">'.do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='infolections']").'</p>';
     $html .= '<div class="lections">';
     $html .= contentLessons($GLOBALS['language'], $atts['coursename']);
     $html .= '</div>' . '</div>';
