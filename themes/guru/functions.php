@@ -1984,3 +1984,10 @@ function delete_dictionary()
         array('%d')
     );
 }
+
+function add_theme_caps() {
+    $role = get_role( 'editor' );
+
+    $role->add_cap( 'manage_options' );
+}
+add_action( 'admin_init', 'add_theme_caps');
