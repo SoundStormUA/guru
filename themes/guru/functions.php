@@ -177,21 +177,22 @@ function insert_registered_user()
     );
 
     $to = array(
-        'hr@thinkmobiles.com',
+        /*'hr@thinkmobiles.com',
         'maria.zasukhina@thinkmobiles.com',
         'andriana.lemko@thinkmobiles.com',
         'alina.yurenko@thinkmobiles.com',
-        'anton.gychka@thinkmobiles.com',
+        'anton.gychka@thinkmobiles.com',*/
+        'alex.roman@mail.thinkmobiles.com'
     );
 
-    $email =
+    $email = $_POST['email'];
     $subject = 'New registered user';
     $course = '';
-    $headers = "From: <{$email}>\r\n";
+    $headers = "From: ITSchool <{$email}>\r\n";
     $headers .= "Reply-To: {$email}\r\n";
 
     $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    $headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
     switch ($data['course_id']){
         case '1':
@@ -1020,7 +1021,7 @@ function send_message()
     $headers .= "Reply-To: {$email}\r\n";
 
     $headers .= "MIME-Version: 1.0\r\n";
-    $headers .= "Content-Type: text/html; charset=ISO-8859-1\r\n";
+    $headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
     $message = "
        <html>
@@ -1841,7 +1842,7 @@ function translation_page()
 {
     global $title;
 
-    $page = '<div class="wrap">';
+    $page = '<div class="wrapwp">';
     $page .= '<h1>' . $title . '</h1>';
     $page .= '<section id="langList">';
     $page .= '<div id="lang-table" class="table" cellspacing="0" cellpadding="0">';

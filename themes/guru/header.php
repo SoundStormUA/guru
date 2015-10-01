@@ -18,7 +18,7 @@
                     </div>
                     <div id="slide-course">
                         <div class="logo-block">
-                            <p class="logo"><b>THINK</b>MOBILES</p>
+                            <p class="logo"><b>ThinkMobiles</p>
                         </div>
                         <div class="slide">
                             <h1>It School</h1>
