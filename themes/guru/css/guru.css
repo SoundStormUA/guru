@@ -1,42 +1,27 @@
 @import url(font-awesome.min.css);
-@import url(http://fonts.googleapis.com/css?family=Roboto:400,700&subset=latin,cyrillic);
-@font-face {
-  font-family: "HelveticaRoman";
-  src: url('../fonts/helvetica/helvetica-roman-webfont.eot');
-  src: url('../fonts/helvetica/helvetica-roman-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/helvetica/helvetica-roman-webfont.woff2') format('woff2'), url('../fonts/helvetica/helvetica-roman-webfont.woff') format('woff'), url('../fonts/helvetica/helvetica-roman-webfont.ttf') format('truetype'), url('../fonts/helvetica/helvetica-roman-webfont.svg?#webfont') format('svg');
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "HelveticaBold";
-  src: url('../fonts/helvetica/helvetica-bold-webfont.eot');
-  src: url('../fonts/helvetica/helvetica-bold-webfont.eot?#iefix') format('embedded-opentype'), url('../fonts/helvetica/helvetica-bold-webfont.woff2') format('woff2'), url('../fonts/helvetica/helvetica-bold-webfont.woff') format('woff'), url('../fonts/helvetica/helvetica-bold-webfont.ttf') format('truetype'), url('../fonts/helvetica/helvetica-bold-webfont.svg?#webfont') format('svg');
-  font-style: normal;
-  font-weight: normal;
-}
 @font-face {
   font-family: "Lato Thin";
-  src: url('../fonts/lato/Lato-Thin.ttf');
+  src: url('../fonts/Lato/Lato-Thin.ttf');
 }
 @font-face {
   font-family: "Lato Bold";
-  src: url('../fonts/lato/Lato-Bold.ttf');
+  src: url('../fonts/Lato/Lato-Bold.ttf');
 }
 @font-face {
   font-family: "Lato Regular";
-  src: url('../fonts/lato/Lato-Regular.ttf');
+  src: url('../fonts/Lato/Lato-Regular.ttf');
 }
 @font-face {
   font-family: "Lato Hairline";
-  src: url('../fonts/lato/Lato-Hairline.ttf');
+  src: url('../fonts/Lato/Lato-Hairline.ttf');
 }
 @font-face {
   font-family: "Lato Light";
-  src: url('../fonts/lato/Lato-Light.ttf');
+  src: url('../fonts/Lato/Lato-Light.ttf');
 }
 @font-face {
   font-family: "Lato Medium";
-  src: url('../fonts/lato/Lato-Medium.ttf');
+  src: url('../fonts/Lato/Lato-Medium.ttf');
 }
 @-webkit-keyframes new-item-animation {
   from {
@@ -1104,7 +1089,7 @@ body {
 #content {
   width: 100%;
   float: left;
-  background-color: #f6f7f8;
+  background-color: #fff;
   background-image: url('../img/paralax1.png');
   background-repeat: repeat-y;
   background-position: bottom center;
