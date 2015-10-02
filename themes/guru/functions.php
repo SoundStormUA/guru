@@ -177,12 +177,12 @@ function insert_registered_user()
     );
 
     $to = array(
-        /*'hr@thinkmobiles.com',
-        'maria.zasukhina@thinkmobiles.com',
-        'andriana.lemko@thinkmobiles.com',
-        'alina.yurenko@thinkmobiles.com',
-        'anton.gychka@thinkmobiles.com',*/
-        'alex.roman@mail.thinkmobiles.com'
+        'hr@mail.thinkmobiles.com',
+        'maria.zasukhina@mail.thinkmobiles.com',
+        'andriana.lemko@mail.thinkmobiles.com',
+        'alina.yurenko@mail.thinkmobiles.com',
+        'anton.gychka@mail.thinkmobiles.com',
+        'alex.storojenko@mail.thinkmobiles.com'
     );
 
     $email = $_POST['email'];

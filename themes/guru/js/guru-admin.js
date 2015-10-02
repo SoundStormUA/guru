@@ -1,15 +1,6 @@
 /**
  * Created by soundstorm on 10.06.15.
  */
-
-function scrollTo(element, time) {
-    var offset = -100;
-
-    jQuery('html, body').animate({
-        scrollTop: jQuery(element).offset().top + offset
-    }, time);
-};
-
 function eventsLoad(element) {
     jQuery(element).find(".controlDiv").hover(function () {
         jQuery(this).children(".settingsIcons").toggleClass("display");
@@ -233,6 +224,14 @@ function newRow() {
 
     var div = jQuery('<div>' + html + '</div>');
 
+    function scrollTo(element, time) {
+        var offset = -100;
+
+        jQuery('html, body').animate({
+            scrollTop: jQuery(element).offset().top + offset
+        }, time);
+    }
+
     eventsLoad(div);
     jQuery("#tableBody").append(div.children());
     scrollTo('#newRow');
@@ -356,9 +355,9 @@ function getFilteredData(that) {
 
                 //jQuery(el).addClass('new-item');
                 jQuery("#tableBody").append(el);
-                    //.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-                    //    jQuery(el).removeClass('new-item')
-                    //});
+                //.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                //    jQuery(el).removeClass('new-item')
+                //});
 
                 eventsLoad(el);
 

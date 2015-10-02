@@ -9,6 +9,7 @@
     <body>
         <div id="wrapper" class="wrap">
             <div id="wrap-bg" class="page">
+                <a href="#0" class="cd-top"></a>
                 <div id="header">
                     <div id="top-menu-container">
                         <nav id="site-navigation" class="navigation main-navigation" role="navigation">
