@@ -366,13 +366,13 @@ jQuery(document).ready(function(){
                 break;
 
             case 'city_i':
-                var rev_city = /^[0-9-a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
+                var rev_city = /^[a-zA-Zа-яА-ЯЁёЇїІі\s]+$/;
 
                 if (!val) {
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка назву міста';
                     jQuery(this).next('#city_p').html(errors['city']);
-                } else if(!rev_city.test(val)){
+                } else if (!rev_city.test(val)){
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка корректно назву міста';
                     jQuery(this).next('#phone_number_p').html(errors['phone']);
@@ -432,6 +432,22 @@ jQuery(document).ready(function(){
     innerSection.unbind().on('focusout', 'input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i', validate);
     innerSection.on("click", "#selectedCourse", validateSelect);
 
+    [].slice.call( document.querySelectorAll( 'button.contact-submit' ) ).forEach( function( bttn ) {
+        new ProgressButton( bttn, {
+            callback : function( instance ) {
+                var progress = 0,
+                    interval = setInterval( function() {
+                        progress = Math.min( progress + Math.random() * 0.2, 1 );
+                        instance._setProgress( progress );
+
+                        if( progress === 1 ) {
+                            instance._stop(1);
+                            clearInterval( interval );
+                        }
+                    }, 100 );
+            }
+        });
+    });
 
     /*innerSection.on('click', '#addFile', function() {
         jQuery('#addFileInput').click();
@@ -447,13 +463,14 @@ jQuery(document).ready(function(){
     }*/
 
     innerSection.on('submit', "#registrationForm", function (event) {
-       var input =  jQuery("input");
+        var input =  jQuery("input");
         event.preventDefault();
         event.stopPropagation();
 
         input.each(validate);
         jQuery(validateSelect);
         //jQuery(validateFile);
+
         if (Object.keys(errors) == 0 && input.val()!= '') {
 
             var form = document.getElementById("registrationForm");
@@ -477,10 +494,16 @@ jQuery(document).ready(function(){
                             delete files[0];
                             jQuery(".filename").text('');
                         }
+
+                        button.removeClass("state-error");
+                        button.addClass("state-success");
                     });
                 }
             };
             oReq.send(formData);
+        } else {
+            button.removeClass('state-success');
+            button.addClass("state-error")
         }
     });
 
@@ -501,7 +524,7 @@ jQuery(document).ready(function(){
         var containerTop = jQuery(".equaliser");
         var containerBottom = jQuery(".equaliser-bottom");
         var headerElementWidth = jQuery("#header").width();
-        var widthBettween = 23;
+        var widthBettween = 42;
         var circleSize = 7;
         var count = ~~(headerElementWidth / widthBettween);
         var firstLeft = (headerElementWidth - (count * widthBettween)) / 2;
@@ -512,7 +535,7 @@ jQuery(document).ready(function(){
 
         containerTop.each(function (index, element) {
             jQuery(element).empty();
-            jQuery(element).width((count * 23));
+            jQuery(element).width((count * 42));
             var left = 0;
 
             for (var i = count; i >= 1; i--) {

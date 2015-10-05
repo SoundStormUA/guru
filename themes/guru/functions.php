@@ -27,10 +27,10 @@ if (!function_exists('enqueue_admin_style')) :
         $assets = array(
             'css' => '/css/guru.css',
             'js' => '/js/guru-admin.js',
-            'ckeditor' => '/js/ckeditor/ckeditor.js',
         );
+
         wp_enqueue_style('guru-theme', get_template_directory_uri() . $assets['css']);
-        wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
+        wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], true);
         wp_enqueue_script('ckeditor', get_template_directory_uri() . $assets['ckeditor'], array('jquery', 'guru-theme'), '', true);
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
     }
@@ -51,10 +51,17 @@ if (!function_exists('guru_scripts_styles')) :
             'css' => '/css/guru.css',
             'js' => '/js/guru.js',
             'cookie' => '/js/jquery.cookie.js',
+            'js-classie'=> '/js/classie.js',
+            'progressButton'=>'/js/progressButton.js',
+            'ckeditor' => '/js/ckeditor/ckeditor.js',
+            'modern'=> '/js/modernizr.custom.js'
         );
 
         wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
+        wp_enqueue_script('modernizr', get_template_directory_uri() . $assets['modern']);
+        wp_enqueue_script('js-class', get_template_directory_uri() . $assets['js-classie']);
+        wp_enqueue_script('progressButtons', get_template_directory_uri() . $assets['progressButton']);
         wp_enqueue_script('guru-cookie', get_template_directory_uri() . $assets['cookie'], array('jquery'), $version);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
@@ -643,7 +650,7 @@ function contact_form($atts, $content = null)
         $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Оберіть бажаний курс:[/select_ul]");
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
-        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Надіслати</button>';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="fill" data-horizontal>Надіслати</button>';
         //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
         //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden" /></div>';
         $form .= '<input id="hidden_to" type="hidden" value="itschool@thinkmobiles.com" name="contact_to"/>';
@@ -663,7 +670,7 @@ function contact_form($atts, $content = null)
         $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Select the desired rate:[/select_ul]");
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
-        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Sign up</button>';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="fill" data-horizontal>Sign up</button>';
         //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ CV</button>';
         //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
         $form .= '<input id="hidden_to" type="hidden" value="" name="contact_to"/>';
@@ -683,7 +690,7 @@ function contact_form($atts, $content = null)
         $form .= do_shortcode("[select_ul id='selectedCourse' name_i='selectedCourse' required values='" . $selectList['ids'] . "'  options='" . $selectList['names'] . "' type='text']Выберите желаемый курс:[/select_ul]");
         $form .= '<div class="clearboth"></div>';
         $form .= '<div class="buttonsHolder">';
-        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">Отправить</button>';
+        $form .= '<button name="submit" id="register" class="contact-submit register" data-style="fill" data-horizontal>Отправить</button>';
         //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>+ резюме</button>';
         //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
         $form .= '<input id="hidden_to" type="hidden" value="" name="contact_to"/>';
@@ -748,7 +755,7 @@ function contact_form_course($atts, $content = null)
     $form .= '<span class="courseName">' . do_shortcode('[name_course name="' . $atts['coursename'] . '" choose="name"]') . '</span><div class ="selectPlaceholder"><input class="select_input hidden" name="selectedCourse" type="hidden" value = "' . $id . '"></div><p id="selectedCourse_p" class="error not_vissible"></p>';
     $form .= '<div class="clearboth"></div>';
     $form .= '<div class="buttonsHolder">';
-    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="move-up">' . $sign_up . '</button>';
+    $form .= '<button name="submit" id="register" class="contact-submit register" data-style="fill" data-horizontal>' . $sign_up . '</button>';
     //$form .= '<button id="addFile" type="button" class="addFile" data-style="move-up" ><span class="progress-bar"></span>' . $cv .'</button>';
     //$form .= '<input type="file" name="addingFile" id="addFileInput" class="hidden"></input></div>';
     $form .= '<input id="hidden_to" type="hidden" value="" name="contact_to"/>';
@@ -1061,7 +1068,8 @@ function drawTestimonials($atts)
                 'department' => '',
                 'text_ua' => '',
                 'text_en' => '',
-                'text_ru' => ''
+                'text_ru' => '',
+                'direction' =>'right'
             ), $atts)
     );
 
@@ -1071,16 +1079,27 @@ function drawTestimonials($atts)
         $atts['name_en'];
     };
 
+    $img = '<div class="testimonial-img">';
+    $img .= '<div class="img-background"><img src="' . $atts['image'] . '"></div>';
+    $img .= '<div class="circle-img"></div>';
+    $img .= '</div>';
+
     $testimonial = '<div class="testimonial hide">';
-    $testimonial .= '<div class="testimonial-img">';
-    $testimonial .= '<div class="img-background"><img src="' . $atts['image'] . '"></div>';
-    $testimonial .= '<div class="circle-img"></div>';
-    $testimonial .= '</div>';
+
+    if ( $atts['direction'] === 'right'){
+        $testimonial .= $img;
+    }
+
     $testimonial .= '<div class="testimonialDescription">';
     $testimonial .= '<span class="tPerson">' . $atts['name_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '<span class="tDepartment">' . $atts['department'] . '</span>';
     $testimonial .= '<span class="tText">' . $atts['text_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '</div>';
+
+    if ( $atts['direction'] === 'left'){
+        $testimonial .= $img;
+    }
+
     $testimonial .= '</div>';
 
     return $testimonial;
