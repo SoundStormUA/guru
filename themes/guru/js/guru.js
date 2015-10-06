@@ -38,7 +38,7 @@ function isElementInViewport(elem) {
 }
 
 
-function checkAnimation() {
+/*function checkAnimation() {
     var $elemHolder = jQuery('#testimonialsHolder');
     var $elem = $elemHolder.find('.testimonial');
 
@@ -63,7 +63,8 @@ function checkAnimation() {
 
 jQuery(window).on("scroll", function () {
     checkAnimation();
-});
+	
+});*/
 
 jQuery(document).ready(function(){
 
@@ -208,14 +209,15 @@ jQuery(document).ready(function(){
     }
 
     function ajax_page(name) {
-            if(window.location.hash === '#shedule') {
+
+			if(window.location.hash === '#shedule') {
                 name = 'home';
 
                 var succesShudele = function (html) {
                     innerSection.text('');
                     innerSection.append(html);
                     translation_ajax();
-                    scrollTo("#plan", 1000);
+					scrollTo("#plan", 1000);
                     drawAnimatedLines();
                 };
 
@@ -242,6 +244,7 @@ jQuery(document).ready(function(){
                         translation_ajax();
                         drawAnimatedLines();
                         switchTabs();
+						jQuery("body").animate({"scrollTop":0},"slow");
                         innerSection.on('click', '#plan', scrollRegister);
                     }
                 });
@@ -293,11 +296,11 @@ jQuery(document).ready(function(){
                     break;
                 case '#qa':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('6/7');
+                    num.text('7/7');
                     break;
                 case '#unity':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('7/7');
+                    num.text('6/7');
                     break;
                 case '#home':
                     ajax_page(window.location.hash.substr(1));
@@ -375,7 +378,7 @@ jQuery(document).ready(function(){
                 } else if (!rev_city.test(val)){
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка корректно назву міста';
-                    jQuery(this).next('#phone_number_p').html(errors['phone']);
+                    jQuery(this).next('#city_p').html(errors['city']);
                 } else {
                     jQuery("#city_p").addClass('not_vissible');
                     delete errors.city;
@@ -432,23 +435,6 @@ jQuery(document).ready(function(){
     innerSection.unbind().on('focusout', 'input#contact_full_name_i, input#email_i, input#phone_number_i, input#city_i', validate);
     innerSection.on("click", "#selectedCourse", validateSelect);
 
-    [].slice.call( document.querySelectorAll( 'button.contact-submit' ) ).forEach( function( bttn ) {
-        new ProgressButton( bttn, {
-            callback : function( instance ) {
-                var progress = 0,
-                    interval = setInterval( function() {
-                        progress = Math.min( progress + Math.random() * 0.2, 1 );
-                        instance._setProgress( progress );
-
-                        if( progress === 1 ) {
-                            instance._stop(1);
-                            clearInterval( interval );
-                        }
-                    }, 100 );
-            }
-        });
-    });
-
     /*innerSection.on('click', '#addFile', function() {
         jQuery('#addFileInput').click();
     });
@@ -461,18 +447,29 @@ jQuery(document).ready(function(){
         var file = files[0];
         jQuery(validateFile(file));
     }*/
-
-    innerSection.on('submit', "#registrationForm", function (event) {
+	
+	innerSection.on('submit', "#registrationForm", function (event) {
+		var button = jQuery("button.contact-submit");
         var input =  jQuery("input");
-        event.preventDefault();
+		
+		var validateFunction = function(){
+			setTimeout(function(){
+				input.each(validate);
+				jQuery(validateSelect);
+				//jQuery(validateFile);	
+			}, 300);  
+		};
+		
+        button.addClass("progress-submit");
+		button.html('<i class="fa fa-paper-plane"></i>');
+		
+		event.preventDefault();
         event.stopPropagation();
-
-        input.each(validate);
-        jQuery(validateSelect);
-        //jQuery(validateFile);
-
-        if (Object.keys(errors) == 0 && input.val()!= '') {
-
+		
+		validateFunction();
+        
+		if (Object.keys(errors) == 0 && input.val()!= '') {
+			
             var form = document.getElementById("registrationForm");
             var formData = new FormData(form);
 
@@ -487,24 +484,42 @@ jQuery(document).ready(function(){
                     jQuery(".selectSpan").text('Оберіть курс:');
                     jQuery('input', '#registrationForm').each(function() {
                         var type = this.type;
-
+						
                         if (type === 'text'){
                             this.value = '';
                         } else if (type === 'file') {
                             delete files[0];
                             jQuery(".filename").text('');
                         }
-
-                        button.removeClass("state-error");
-                        button.addClass("state-success");
                     });
-                }
+					
+					setTimeout(function(){
+						button.removeClass("progress-submit");
+						button.addClass("success-submit");
+						button.html('<i class="fa fa-user-plus"></i>');
+					}, 1000);
+                } else {
+					setTimeout(function(){
+						button.removeClass("progress-submit");
+						button.addClass("error-submit");
+						button.text('<i class="fa fa-user-times"></i>');
+					}, 1000);
+				}
             };
             oReq.send(formData);
         } else {
-            button.removeClass('state-success');
-            button.addClass("state-error")
-        }
+			setTimeout(function(){
+				button.removeClass("progress-submit");
+				button.addClass("error-submit");
+				button.html('<i class="fa fa-user-times"></i>')
+			}, 1000);
+		}
+		setTimeout(function() {
+			button.removeClass("progress-submit");
+			button.removeClass("error-submit");
+			button.removeClass("success-submit");
+			button.text("Надіслати");
+		}, 3500);
     });
 
     innerSection.on("click", ".selectPlaceholder", function () {

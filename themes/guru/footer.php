@@ -1,5 +1,5 @@
 <footer>
-	<div class="left"><img src="wp-content/themes/guru/img/footer-map.png" alt="#"/></div>
+	<div class="left"><img src="<?php echo get_stylesheet_directory_uri();?>/img/footer-map.png" alt="#"/></div>
 	<div class="right">
 		<?php echo contact_fields();?>
 	</div>

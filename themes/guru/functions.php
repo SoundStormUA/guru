@@ -51,17 +51,11 @@ if (!function_exists('guru_scripts_styles')) :
             'css' => '/css/guru.css',
             'js' => '/js/guru.js',
             'cookie' => '/js/jquery.cookie.js',
-            'js-classie'=> '/js/classie.js',
-            'progressButton'=>'/js/progressButton.js',
             'ckeditor' => '/js/ckeditor/ckeditor.js',
-            'modern'=> '/js/modernizr.custom.js'
         );
 
         wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
-        wp_enqueue_script('modernizr', get_template_directory_uri() . $assets['modern']);
-        wp_enqueue_script('js-class', get_template_directory_uri() . $assets['js-classie']);
-        wp_enqueue_script('progressButtons', get_template_directory_uri() . $assets['progressButton']);
         wp_enqueue_script('guru-cookie', get_template_directory_uri() . $assets['cookie'], array('jquery'), $version);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
@@ -247,7 +241,7 @@ function insert_registered_user()
         echo false;
     };*/
 
-    wp_mail( $to, $subject, $message, $headers );
+    //wp_mail( $to, $subject, $message, $headers );
 
     exit;
     die;
@@ -1069,7 +1063,6 @@ function drawTestimonials($atts)
                 'text_ua' => '',
                 'text_en' => '',
                 'text_ru' => '',
-                'direction' =>'right'
             ), $atts)
     );
 
@@ -1084,22 +1077,13 @@ function drawTestimonials($atts)
     $img .= '<div class="circle-img"></div>';
     $img .= '</div>';
 
-    $testimonial = '<div class="testimonial hide">';
-
-    if ( $atts['direction'] === 'right'){
-        $testimonial .= $img;
-    }
-
+    $testimonial = '<div class="testimonial">';
+	$testimonial .= $img;
     $testimonial .= '<div class="testimonialDescription">';
     $testimonial .= '<span class="tPerson">' . $atts['name_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '<span class="tDepartment">' . $atts['department'] . '</span>';
     $testimonial .= '<span class="tText">' . $atts['text_' . $GLOBALS['language']] . '</span>';
     $testimonial .= '</div>';
-
-    if ( $atts['direction'] === 'left'){
-        $testimonial .= $img;
-    }
-
     $testimonial .= '</div>';
 
     return $testimonial;
