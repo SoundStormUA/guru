@@ -53,13 +53,14 @@ if (!function_exists('guru_scripts_styles')) :
             'cookie' => '/js/jquery.cookie.js',
             'ckeditor' => '/js/ckeditor/ckeditor.js',
         );
-
-        wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
+		
+		wp_enqueue_style('guru-theme-css', get_template_directory_uri() . $assets['css'], array(), $version);
         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], array('jquery'), $version, true);
         wp_enqueue_script('guru-cookie', get_template_directory_uri() . $assets['cookie'], array('jquery'), $version);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
-    }
+    
+	}
 endif;
 
 add_action('after_setup_theme', 'register_menu');
@@ -129,7 +130,6 @@ function insert_registered_user()
 {
 
     global $wpdb;
-
 
     $data = array(
         'FIO' => $_POST['contact_full_name'],
@@ -241,7 +241,7 @@ function insert_registered_user()
         echo false;
     };*/
 
-    //wp_mail( $to, $subject, $message, $headers );
+    wp_mail( $to, $subject, $message, $headers );
 
     exit;
     die;
@@ -1126,7 +1126,8 @@ function contentThemes($atts) {
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
     $html .= '<p class="vide-desc"></p></div>';
     $html .= '</div>';
-    $html .= '<p class="course-desc">'.do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='infolections']").'</p>';
+	$html .= '<p class="course-desc">'. do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='info']") .'</p>';
+    $html .= '<p class="course-desc">'. do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='infolections']") .'</p>';
     $html .= '<div class="lections">';
     $html .= contentLessons($GLOBALS['language'], $atts['coursename']);
     $html .= '</div>' . '</div>';
@@ -1442,20 +1443,23 @@ function contentLiterature($language, $name) {
 
     $id = caseCourse($name);
 
-	$tmp=array();
+	$tmp = array();
 
 	foreach ($litTable as $row) {
-        if ($row['course_id'] == $id) {
-		    $tmp[!$row['author_' . $language] ? $row['author_en'] : $row['author_' . $language] ][] = !$row['title_' . $language] ? $row['title_en'] : $row['title_' . $language];
+        if ((int)$row['course_id'] === $id) {
+		    $tmp[$row['author_' . $language]][] = $row['title_' . $language];
 	    }
 	}
-	foreach ($tmp as $author => $title){
-        $result = '<div class="source">';
-	    foreach($title as $key => $value){
-	        $result .= '<span class="title">' . $value . '</span>';
-	    }
-	    $result .= '<span class="author">' . $author . '</span>';
-        $result .= '</div>';
+	
+	foreach ($tmp as $author => $value){
+		$result .= '<div class="source">';
+		
+		foreach($value as $title) {
+			$result .= '<span class="title">' . $title . '</span>';
+		}
+		
+		$result .= '<span class="author">' . $author . '</span>';
+		$result .= '</div>';
 	}
 	return $result;
 }

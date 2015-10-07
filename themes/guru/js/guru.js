@@ -453,15 +453,13 @@ jQuery(document).ready(function(){
         var input =  jQuery("input");
 		
 		var validateFunction = function(){
-			setTimeout(function(){
-				input.each(validate);
-				jQuery(validateSelect);
-				//jQuery(validateFile);	
-			}, 300);  
+			input.each(validate);
+			jQuery(validateSelect);
+			//jQuery(validateFile);	 
 		};
 		
         button.addClass("progress-submit");
-		button.html('<i class="fa fa-paper-plane"></i>');
+		button.html('<i class="fa fa-paper-plane"></i>')
 		
 		event.preventDefault();
         event.stopPropagation();

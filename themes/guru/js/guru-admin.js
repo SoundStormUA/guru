@@ -262,135 +262,136 @@ function newRow() {
 jQuery(document).ready(function(){
     eventsLoad('#tableBody');
     jQuery('.addIcon').click(newRow);
-});
 
-jQuery("#sortRow").find("select").change(function() {
-    getFilteredData(this);
-});
 
-jQuery("#sortRow").find("input").keyup(function() {
-    getFilteredData(this);
-});
-
-jQuery(".emailSend").click(function () {
-    jQuery.ajax({
-        url: WPAjax.ajaxurl,
-        type: 'POST',
-        data: {
-            action: 'get-template',
-            file: 'admin/sendEmail.php'
-        },
-        success: function (html) {
-            jQuery("#users-table, #theme-table").prepend("<div class='backLayer'></div>");
-            jQuery("#usersList").append(html);
-            jQuery("#sForm").addClass("open");
-            addEventCloseEmailForm();
-            CKEDITOR.replace('emailText');
-        }
+    jQuery("#sortRow").find("select").change(function() {
+        getFilteredData(this);
     });
-});
 
-function addEventCloseEmailForm() {
-    jQuery("#closeForm").click(function () {
-        jQuery("#sForm").remove();
-        jQuery("#users-table").find(".backLayer").remove();
+    jQuery("#sortRow").find("input").keyup(function() {
+        getFilteredData(this);
     });
-    jQuery("#sendButton").click(function() {
+
+    jQuery(".emailSend").click(function () {
         jQuery.ajax({
             url: WPAjax.ajaxurl,
             type: 'POST',
             data: {
-                action: 'send_message',
-                email: 'soundstorm.mail@gmail.com',
-                subject: jQuery("#emailSubject").val(),
-                content: jQuery("#emailText").val()
+                action: 'get-template',
+                file: 'admin/sendEmail.php'
             },
-            success: function(data) {
-                alert(data);
+            success: function (html) {
+                jQuery("#users-table").prepend("<div class='backLayer'></div>");
+                jQuery("#usersList").append(html);
+                jQuery("#sForm").addClass("open");
+                addEventCloseEmailForm();
+                CKEDITOR.replace('emailText');
             }
-        })
+        });
     });
-}
 
-function getFilteredData(that) {
-    var actionName = '';
-    var title = jQuery('h1').text();
-    var inputs = jQuery(that).closest("#sortRow").find("input");
-    var course_id = jQuery(that).closest("#sortRow").find("#courseInput_i").val();
-    var status_id = jQuery(that).closest("#sortRow").find("#statusInput_i").val();
-
-    if ( title.indexOf("themes") > -1 ){
-        actionName = "action=render-themes";
-    } else if ( title.indexOf("literature") > -1) {
-        actionName = "action=render-literature";
-    } else {
-        actionName = "action=render-user";
+    function addEventCloseEmailForm() {
+        jQuery("#closeForm").click(function () {
+            jQuery("#sForm").remove();
+            jQuery("#users-table").find(".backLayer").remove();
+        });
+        jQuery("#sendButton").click(function() {
+            jQuery.ajax({
+                url: WPAjax.ajaxurl,
+                type: 'POST',
+                data: {
+                    action: 'send_message',
+                    email: 'soundstorm.mail@gmail.com',
+                    subject: jQuery("#emailSubject").val(),
+                    content: jQuery("#emailText").val()
+                },
+                success: function(data) {
+                    alert(data);
+                }
+            })
+        });
     }
 
-    var formData = actionName;
+    function getFilteredData(that) {
+        var actionName = '';
+        var title = jQuery('h1').text();
+        var inputs = jQuery(that).closest("#sortRow").find("input");
+        var course_id = jQuery(that).closest("#sortRow").find("#courseInput_i").val();
+        var status_id = jQuery(that).closest("#sortRow").find("#statusInput_i").val();
 
-    if (course_id) {
-        formData += "&course_id=" + course_id;
+        if ( title.indexOf("themes") > -1 ){
+            actionName = "action=render-themes";
+        } else if ( title.indexOf("literature") > -1) {
+            actionName = "action=render-literature";
+        } else {
+            actionName = "action=render-user";
+        }
+
+        var formData = actionName;
+
+        if (course_id) {
+            formData += "&course_id=" + course_id;
+        }
+
+        if (status_id) {
+            formData += "&status_id=" + status_id;
+        }
+
+        if (inputs.serialize()) {
+            formData +=  "&" + inputs.serialize();
+        }
+
+        jQuery.ajax({
+            url: WPAjax.ajaxurl,
+            type: 'POST',
+            data: formData,
+            success: function (data) {
+                var html = jQuery.parseHTML(data);
+
+                jQuery("#tableBody").empty();
+
+                jQuery.each(html , function(i, el){
+                    //setTimeout(function() {
+
+                    //jQuery(el).addClass('new-item');
+                    jQuery("#tableBody").append(el);
+                    //.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                    //    jQuery(el).removeClass('new-item')
+                    //});
+
+                    eventsLoad(el);
+
+                    //}, i*600);
+                });
+
+            }
+        });
+
     }
 
-    if (status_id) {
-        formData += "&status_id=" + status_id;
-    }
-
-    if (inputs.serialize()) {
-        formData +=  "&" + inputs.serialize();
-    }
-
-    jQuery.ajax({
-        url: WPAjax.ajaxurl,
-        type: 'POST',
-        data: formData,
-        success: function (data) {
-            var html = jQuery.parseHTML(data);
-
-            jQuery("#tableBody").empty();
-
-            jQuery.each(html , function(i, el){
-                //setTimeout(function() {
-
-                //jQuery(el).addClass('new-item');
-                jQuery("#tableBody").append(el);
-                //.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-                //    jQuery(el).removeClass('new-item')
-                //});
-
-                eventsLoad(el);
-
-                //}, i*600);
-            });
-
+    jQuery("#selectAll").click(function () {
+        if (this.getAttribute( "checked" )) {
+            jQuery(this).attr("checked", false);
+            jQuery(this).closest(".table").find("input:checkbox").attr("checked", false);
+        } else {
+            jQuery(this).closest(".table").find("input:checkbox").attr("checked", true);
         }
     });
 
-}
+    function setReadOnly(that) {
+        var inputs = jQuery(that).closest(".row").find("input:not(:checkbox)");
+        var selects = jQuery(that).closest(".row").find("select");
 
-jQuery("#selectAll").click(function () {
-    if (this.getAttribute( "checked" )) {
-        jQuery(this).attr("checked", false);
-        jQuery(this).closest(".table").find("input:checkbox").attr("checked", false);
-    } else {
-        jQuery(this).closest(".table").find("input:checkbox").attr("checked", true);
+        jQuery(inputs).each(function () {
+            if (jQuery(this).attr("readonly")) {
+                return;
+            }
+            jQuery(this).val(jQuery(this).attr("data-val"));
+        });
+
+        jQuery(that).closest(".row").find("input:checkbox").attr("checked", false);
+        jQuery(inputs).attr("readonly", true);
+        jQuery(selects).attr("readonly", true);
+        jQuery(selects).attr("disabled", true);
     }
 });
-
-function setReadOnly(that) {
-    var inputs = jQuery(that).closest(".row").find("input:not(:checkbox)");
-    var selects = jQuery(that).closest(".row").find("select");
-
-    jQuery(inputs).each(function () {
-        if (jQuery(this).attr("readonly")) {
-            return;
-        }
-        jQuery(this).val(jQuery(this).attr("data-val"));
-    });
-
-    jQuery(that).closest(".row").find("input:checkbox").attr("checked", false);
-    jQuery(inputs).attr("readonly", true);
-    jQuery(selects).attr("readonly", true);
-    jQuery(selects).attr("disabled", true);
-}

@@ -493,10 +493,13 @@
 .course.basic:active .image:before,
 .course.basic:focus .image:before {
   animation-name: basic_1;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-delay: 0.5s;
-  animation-iteration-count: 1;
+  animation-duration: 1s;
+ -webkit-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+   -moz-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+     -o-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+        transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+  animation-delay: 0.3s;
+  animation-iteration-count: infinite;
   animation-fill-mode: backwards;
 }
 @keyframes basic_1 {
@@ -514,9 +517,13 @@
 .course.basic:active .circles:before,
 .course.basic:focus .circles:before {
   animation-name: basic_2;
-  animation-duration: 0.5s;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
+  animation-duration: 1s;
+  ani-webkit-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+   -moz-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+     -o-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+        transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+  animation-iteration-count: infinite;
+   animation-delay: .6s;
   animation-fill-mode: backwards;
 }
 @keyframes basic_2 {
@@ -534,10 +541,13 @@
 .course.basic:active .linear:before,
 .course.basic:focus .linear:before {
   animation-name: basic_3;
-  animation-duration: .5s;
-  animation-timing-function: linear;
-  animation-delay: 1s;
-  animation-iteration-count: 1;
+  animation-duration: 1s;
+ -webkit-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+   -moz-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+     -o-transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+        transition: all 500ms cubic-bezier(1.000, 0.000, 0.010, 1.005);
+  animation-delay: .9s;
+  animation-iteration-count: infinite;
   animation-fill-mode: backwards;
 }
 @keyframes basic_3 {
