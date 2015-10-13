@@ -15,28 +15,29 @@ if (!isset($content_width)) {
 define('templates_directory', get_template_directory_uri() . '/templates/');
 
 add_action('admin_enqueue_scripts', 'enqueue_admin_styles');
-
-if (!function_exists('enqueue_admin_style')) :
-
-    function enqueue_admin_styles()
-    {
-        global $wp_version;
-
-        $version = wp_get_theme(wp_get_theme()->template)->get('Version');
-
-        $assets = array(
-            'css' => '/css/guru.css',
-            'js' => '/js/guru-admin.js',
-        );
-
-        wp_enqueue_style('guru-theme', get_template_directory_uri() . $assets['css']);
-        wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], true);
-        wp_enqueue_script('ckeditor', get_template_directory_uri() . $assets['ckeditor'], array('jquery', 'guru-theme'), '', true);
-        wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
-    }
-
-    ;
-endif;
+ 
+ if (!function_exists('enqueue_admin_style')) :
+ 
+     function enqueue_admin_styles()
+     {
+         global $wp_version;
+ 
+         $version = wp_get_theme(wp_get_theme()->template)->get('Version');
+ 
+         $assets = array(
+             'css' => '/css/tables.css',
+             'js' => '/js/guru-admin.js',
+			 'ckeditor' => '/js/ckeditor/ckeditor.js',
+         );
+ 
+         wp_enqueue_style('guru-theme', get_template_directory_uri() . $assets['css']);
+         wp_enqueue_script('guru-theme', get_template_directory_uri() . $assets['js'], $version, true);
+         wp_enqueue_script('ckeditor', get_template_directory_uri() . $assets['ckeditor'], array('jquery', 'guru-theme'), '', true);
+         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
+     }
+ 
+     ;
+ endif;
 
 add_action('wp_enqueue_scripts', 'guru_scripts_styles');
 
@@ -59,12 +60,11 @@ if (!function_exists('guru_scripts_styles')) :
         wp_enqueue_script('guru-cookie', get_template_directory_uri() . $assets['cookie'], array('jquery'), $version);
         wp_enqueue_style('guru-style', get_stylesheet_uri());
         wp_localize_script('guru-theme', 'WPAjax', array('ajaxurl' => admin_url('admin-ajax.php')));
-    
 	}
 endif;
 
 add_action('after_setup_theme', 'register_menu');
-
+add_theme_support( 'post-thumbnails', array( 'post' ) );
 if (!function_exists(' register_menu ')) :
     function register_menu()
     {
@@ -101,7 +101,7 @@ function get_table($tableName)
         $tableName = $wpdb->prefix . $_POST['tableName'];
     }
     $result = array();
-    $query = "SELECT * FROM " . $tableName;
+    $query = "SELECT * FROM " . $tableName . " ORDER BY ID";
 
     $data_rows = $wpdb->get_results($query, ARRAY_A);
     foreach ($data_rows as $row) {
@@ -202,18 +202,23 @@ function insert_registered_user()
         case '2':
             $course = 'JavaScript';
             break;
-        case '3':
-            $course = 'Android';
-            break;
-        case '4':
-            $course = 'iOS';
-            break;
-        case '5':
-            $course = 'QA';
-            break;
-        case '6':
+		case '3':
+			$course = 'JavaScript PRO';
+			break;
+		case '4':
             $course = 'Unity';
             break;
+        case '5':
+            $course = 'Android';
+            break;
+        case '6':
+            $course = 'iOS';
+            break;
+        case '7':
+            $course = 'QA';
+            break;
+        
+		
     }
 
     $message = "
@@ -780,6 +785,7 @@ function register_my_menu_page()
     add_submenu_page('manage_menu', 'Manage themes', 'Manage themes', 'manage_options', 'themespage', 'my_theme_page');
     add_submenu_page('manage_menu', 'Manage literature', 'Manage literature', 'manage_options', 'literapage', 'my_literature_page');
     add_submenu_page('manage_menu', 'Translation string', 'Translation string', 'manage_options', 'translationpage', 'translation_page');
+	add_submenu_page('manage_menu', 'Manage landing JS', 'Manage landing JS ', 'manage_options', 'managelandingjs', 'manage_landingJS');
 }
 
 function my_manage_output()
@@ -1100,17 +1106,21 @@ function caseCourse($courses)
             case 'js':
                 return 2;
                 break;
-            case 'android':
-                return 3;
-                break;
-            case 'ios':
+			case 'js-pro':
+				return 3;
+				break;
+			case 'unity':
                 return 4;
-                break;
-            case 'qa':
+				break;	
+            case 'android':
                 return 5;
                 break;
-            case 'unity':
+            case 'ios':
                 return 6;
+                break;
+            case 'qa':
+                return 7;
+                break;
         }
 }
 
@@ -1126,8 +1136,8 @@ function contentThemes($atts) {
 	$html .= '<div class="video">' . '<a class="button">' . 'Вчитись з нами легко' . '</a>' . '</div>';
     $html .= '<p class="vide-desc"></p></div>';
     $html .= '</div>';
-	$html .= '<p class="course-desc">'. do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='info']") .'</p>';
-    $html .= '<p class="course-desc">'. do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='infolections']") .'</p>';
+	$html .= '<div class="course-desc">'. do_shortcode("[insert page='about_". $atts['coursename'] ."'  display='content']") .'</div>';
+    //$html .= '<p class="course-desc">'. do_shortcode("[name_course name='" . $atts['coursename'] . "' choose='infolections']") .'</p>';
     $html .= '<div class="lections">';
     $html .= contentLessons($GLOBALS['language'], $atts['coursename']);
     $html .= '</div>' . '</div>';
@@ -1750,7 +1760,7 @@ function htmlShortcodeTab()
 					<path d="M10.9,21.1h15.7c0.8,0,1.5-0.7,1.5-1.5s-0.7-1.5-1.5-1.5H10.9c-0.8,0-1.5,0.7-1.5,1.5S10.1,21.1,10.9,21.1z"/>
 					<path d="M26.6,23.5H10.9c-0.8,0-1.5,0.7-1.5,1.5s0.7,1.5,1.5,1.5h15.7c0.8,0,1.5-0.7,1.5-1.5S27.4,23.5,26.6,23.5z"/>
 				</svg>
-					<span class="first">структура курсу</span></a></li>
+					<span class="first">Про курс</span></a></li>
 			<li id="secondTab">
 				<a href="#second">
 					<svg class="ico" x="0px" y="0px" viewBox="0 0 50 50" enable-background="new 0 0 50 50" xml:space="preserve">
@@ -1830,10 +1840,10 @@ function contact_fields()
 
     $contentFooter = '
     <div class="social-footer">
-    <a href="' . $facebook . '" class="social-ico fb"></a>
-    <a href="' . $vk . '" class="social-ico vk"></a>
-    <a href="' . $gplus  . '" class="social-ico g"></a>
-    <a href="' . $in .'" class="social-ico in"></a>
+    <a href="' . $facebook . '" target="_blank" class="social-ico fb"></a>
+    <a href="' . $vk . '" target="_blank" class="social-ico vk"></a>
+    <a href="' . $gplus  . '" target="_blank" class="social-ico g"></a>
+    <a href="' . $in .'" target="_blank" class="social-ico in"></a>
     <a href="' . $skype  . '" class="social-ico skype"></a>
     </div>
     <div class="info">
@@ -1962,7 +1972,7 @@ function insertDictionaryTable()
     $wpdb->insert(
         $wpdb->prefix .'dictionary',
         array(
-            'select' => $_POST['select_class'],
+            'select_class' => $_POST['select_class'],
             'lang_ua' => $_POST['lang_ua'],
             'lang_en' => $_POST['lang_en'],
             'lang_ru' => $_POST['lang_ru']
@@ -1999,3 +2009,53 @@ function add_theme_caps() {
     $role->add_cap( 'manage_options' );
 }
 add_action( 'admin_init', 'add_theme_caps');
+
+function manage_landingJS()
+{
+	global $wpdb;
+	
+	$query = "SELECT * FROM " . $wpdb->prefix . 'landing_js' . " ORDER BY sort_id";
+	$table = $wpdb->get_results($query, ARRAY_A);
+	$array = array_filter ($table);
+	foreach($table as $row){
+		?>
+		<div class="manage-landing-wrap">
+			<h1 class="title">Manage Sections Landing</h1>
+			<form method="POST">
+			<section id="<?php echo $row['section_name'];?>" class="landing-section">
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Title</label>
+				<input class="sections title" name="section_title" value="<?php echo $row['section_title'];?>"/>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Background(url)</label>
+				<input class="sections background" name="section_background" value="<?php echo $row['section_background'];?>"/>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Background:hover(url)</label>
+				<input class="sections background" name="section_background:hover" value="<?php echo $row['section_background:hover'];?>"/>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section LI</label>
+				<textarea class="sections li" name="section-li"><?php echo $row['section_li'];?></textarea>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Text</label>
+				<textarea class="sections text" name="section_text"><?php echo $row['section_text'];?></textarea>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Img(url)</label>
+				<input class="sections img" name="section_img" value="<?php echo $row['section_img'];?>"/>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Tagline Text</label>
+				<textarea class="sections tagline_text" name="section_tagline_text"><?php echo $row['section_tagline_text'];?></textarea>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Tagline Button Text</label>
+				<input class="sections tagline-text-button" name="section_tagline_text_button" value="<?php echo $row['section_tagline_text_button'];?>"/>
+				<label id="label-<?php echo $row['section_name'];?>" class="landing-label">Section Sort_id</label>
+				<input class="sections sort_id" name="sort_id" value="<?php echo $row['sort_id'];?>"/>				
+				<input type="submit" name="submit_landing_section" id="submit" class="button button-primary" value="Save Changes">
+			</section>
+			</form>	
+		</div>
+		<?php
+	}
+}
+
+function updateSection()
+{
+	global $wpdb;
+	var_dump($_POST);
+	var_dump($wpdb);
+}
+	
+if(isset($_POST['submit_landing_section'])) {
+	updateSection();
+}

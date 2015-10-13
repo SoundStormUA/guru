@@ -209,15 +209,33 @@ function eventsLoad(element) {
             });
         }
     });
+	
+	function setReadOnly(that) {
+        var inputs = jQuery(that).closest(".row").find("input:not(:checkbox)");
+        var selects = jQuery(that).closest(".row").find("select");
+
+        jQuery(inputs).each(function () {
+            if (jQuery(this).attr("readonly")) {
+                return;
+            }
+            jQuery(this).val(jQuery(this).attr("data-val"));
+        });
+
+        jQuery(that).closest(".row").find("input:checkbox").attr("checked", false);
+        jQuery(inputs).attr("readonly", true);
+        jQuery(selects).attr("readonly", true);
+        jQuery(selects).attr("disabled", true);
+    }
+	
 }
 
 function newRow() {
     var title = jQuery("h1").text();
 
     if (title.indexOf("themes")> -1){
-        var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="day"></div><div class="cell"><input name="theme_en"></div><div class="cell"><input name="theme_ua"></div><div class="cell"><input name="theme_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-trash"></div></div></div></div>';
+        var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="theme_id" type="checkbox" checked="checked"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">JavaScript PRO</option><option value="4">Unity3D</option><option value="5">Android</option><option value="6">iOS</option><option value="7">QA</option></select></div><div class="cell"><input name="day" value="" data-val=""></div><div class="cell"><input name="theme_en" value="" data-val=""></div><div class="cell"><input name="theme_ua" value="" data-val=""></div><div class="cell"><input name="theme_ru" value="" data-val=""></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-trash"></div></div></div></div></div>';
     } else if (title.indexOf("literature")> -1) {
-        var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">Android</option><option value="4">iOS</option><option value="5">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ua"></div><div class="cell"><input name="author_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-trash"></div></div></div></div></div></div></div>';
+        var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="lit_id" type="checkbox"></div><div class="cell number"></div><div class="cell"><select name="selected_course" id="courseSelect_" data-val="1"> <option value="1" selected="">Basic+</option><option value="2">JavaScript</option><option value="3">JavaScript PRO</option><option value="4">Unity3D</option><option value="5">Android</option><option value="6">iOS</option><option value="7">QA</option></select></div><div class="cell"><input name="title_en"></div><div class="cell"><input name="title_ua"></div><div class="cell"><input name="title_ru"></div><div class="cell"><input name="author_en"></div><div class="cell"><input name="author_ua"></div><div class="cell"><input name="author_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-trash"></div></div></div></div></div></div></div>';
     } else {
         var html = '<div id="newRow" class="row addRow"><div class="layer"></div><div class="cell check"><input name="dic_id" type="checkbox"></div><div class="cell"><input name="select_class"></div><div class="cell"><input name="lang_ua"></div><div class="cell"><input name="lang_en"></div><div class="cell"><input name="lang_ru"></div><div class="cell controlDiv fa fa-settings"><div class="settingsIcons"><div class="settingsIcon save fa fa-save"></div><div class="settingsIcon delete fa fa-trash"></div></div></div>';
     }
@@ -378,20 +396,4 @@ jQuery(document).ready(function(){
         }
     });
 
-    function setReadOnly(that) {
-        var inputs = jQuery(that).closest(".row").find("input:not(:checkbox)");
-        var selects = jQuery(that).closest(".row").find("select");
-
-        jQuery(inputs).each(function () {
-            if (jQuery(this).attr("readonly")) {
-                return;
-            }
-            jQuery(this).val(jQuery(this).attr("data-val"));
-        });
-
-        jQuery(that).closest(".row").find("input:checkbox").attr("checked", false);
-        jQuery(inputs).attr("readonly", true);
-        jQuery(selects).attr("readonly", true);
-        jQuery(selects).attr("disabled", true);
-    }
 });

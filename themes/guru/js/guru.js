@@ -97,7 +97,7 @@ jQuery(document).ready(function(){
     function scrollTo(element, time) {
         var offset = -100;
 
-        jQuery('html, body').animate({
+        jQuery('html, body').stop().animate({
             scrollTop: jQuery(element).offset().top + offset
         }, time);
     }
@@ -137,9 +137,21 @@ jQuery(document).ready(function(){
         ajax_page(window.location.hash ? window.location.hash.substr(1) : 'home');
         translation_ajax();
     });*/
+	
+    //innerSection.on('click', '#plan', scrollRegister);
+    var placeholdeClearFunction = function(){
+		jQuery("#registrationForm").find("input[type='text']").on("focus", function(){
+		var textPlaceholder = jQuery(this).attr("placeholder");
+		jQuery(this).removeAttr("placeholder");
+		jQuery("#registrationForm").find("input[type='text']").on("focusout", function(){
+			if (jQuery(this).val() === ''){
+				jQuery(this).attr("placeholder", textPlaceholder);
+			}
+		});
+	});
+	};
 
-    innerSection.on('click', '#plan', scrollRegister);
-    jQuery("#header, #plan" ).on('click', scrollRegister);
+	jQuery("#header, #plan" ).on('click', scrollRegister);
 
     var switchTabs = function () {
         var first = jQuery('#firstTab');
@@ -196,7 +208,7 @@ jQuery(document).ready(function(){
                 /*for (var i = 0; i <= translationClass.length; i++){
                     jQuery('.' + translationClass[i]).text(str['string'][translationClass[i]]);
                 }*/
-
+				
                 if (location.hash && location.hash != '#home' && location.hash != '#shedule') {
                     var key = location.hash;
                     key = key.substring(1, key.length);
@@ -204,21 +216,29 @@ jQuery(document).ready(function(){
                 } else {
                     headh1.text('IT School');
                 }
+				
+				jQuery(".animated-header").removeClass("slideOutLeft");
+				jQuery(".animated-header").addClass("slideInRight");
             }
         });
     }
 
     function ajax_page(name) {
-
+			jQuery(".animated-header").removeClass("slideInRight");
+			jQuery(".animated-header").addClass("slideOutLeft");
 			if(window.location.hash === '#shedule') {
                 name = 'home';
 
                 var succesShudele = function (html) {
-                    innerSection.text('');
+					innerSection.text('');
                     innerSection.append(html);
                     translation_ajax();
 					scrollTo("#plan", 1000);
                     drawAnimatedLines();
+					placeholdeClearFunction();
+					setTimeout(function(){
+							jQuery(".animated-header").removeClass("slideInRight");
+					},300);
                 };
 
                 jQuery.ajax({
@@ -242,10 +262,14 @@ jQuery(document).ready(function(){
                         innerSection.text('');
                         innerSection.append(html);
                         translation_ajax();
-                        drawAnimatedLines();
+						drawAnimatedLines();
                         switchTabs();
-						jQuery("body").animate({"scrollTop":0},"slow");
+						jQuery("body").stop().animate({"scrollTop":0}, 1000);
                         innerSection.on('click', '#plan', scrollRegister);
+						placeholdeClearFunction();
+						setTimeout(function(){
+							jQuery(".animated-header").removeClass("slideInRight");
+						},800);
                     }
                 });
             }
@@ -268,50 +292,83 @@ jQuery(document).ready(function(){
             }
             jQuery('#arrow-next').attr('href',next_hash);
             jQuery('#arrow-prev').attr('href',prev_hash);
-        }
-
+        }          
+		
         var hashSwitch = function () {
             var num = jQuery('.number');
             switch(window.location.hash )
             {
                 case '#shedule':
                     ajax_page();
-                    num.text('1/7');
+                    num.text('1/8');
+                    break;
+				case '#home':
+                    ajax_page(window.location.hash.substr(1));
+                    num.text('1/8');
                     break;
                 case '#basic':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('2/7');
+                    num.text('2/8');
                     break;
                 case '#js':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('3/7');
+                    num.text('3/8');
+                    break;
+				case '#js-pro':
+                    ajax_page(window.location.hash.substr(1));
+                    num.text('4/8');
+                    break;
+				case '#unity':
+                    ajax_page(window.location.hash.substr(1));
+                    num.text('5/8');
                     break;
                 case '#android':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('4/7');
+                    num.text('6/8');
                     break;
                 case '#ios':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('5/7');
+                    num.text('7/8');
                     break;
                 case '#qa':
                     ajax_page(window.location.hash.substr(1));
-                    num.text('7/7');
-                    break;
-                case '#unity':
-                    ajax_page(window.location.hash.substr(1));
-                    num.text('6/7');
-                    break;
-                case '#home':
-                    ajax_page(window.location.hash.substr(1));
-                    num.text('1/7');
+                    num.text('8/8');
                     break;
             }
         };
-
+		
+	placeholdeClearFunction();
     jQuery(hashSwitch);
-    jQuery(window).bind('hashchange', hashSwitch);
-
+    jQuery(window).on('hashchange', hashSwitch);
+	
+	switch(window.location.pathname) 
+	{
+		case '/plan/':	
+			window.location.href = window.location.href.replace('/plan/','/#shedule');
+			break;
+		case '/basic/':
+			window.location.href = window.location.href.replace('/basic/','/#basic');
+			break;
+		case '/js/':
+			window.location.href = window.location.href.replace('/js/','/#js');
+			break;
+		case '/js-pro/':
+			window.location.href = window.location.href.replace('/js-pro/','/#js-pro');
+			break;
+		case '/android/':
+			window.location.href = window.location.href.replace('/android/','/#android');
+			break;
+		case '/ios/':	
+			window.location.href = window.location.href.replace('/ios/','/#ios');
+			break;
+		case '/unity/': 
+			window.location.href = window.location.href.replace('/unity/','/#unity');
+			break;
+		case '/qa/':
+			window.location.href = window.location.href.replace('/qa/','/#qa');
+			break;
+	}
+	
     var validate = function () {
         var id = jQuery(this).attr('id');
         var val = jQuery(this).val();
@@ -323,11 +380,11 @@ jQuery(document).ready(function(){
                 if (!val) {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
                     errors['contact_full_name'] = 'Введіть будь ласка прізвище, ім\'я, по-батькові';
-                    jQuery(this).next('#contact_full_name_p').html('<span class="fullName">' + errors['contact_full_name'] + '</span>');
+                    jQuery(this).next('#contact_full_name_p').html('<span class="error-span">' + errors['contact_full_name'] + '</span>');
                 } else if (!rev_name.test(val) || val.length < 2) {
                     jQuery("#contact_full_name_p").removeClass('not_vissible');
                     errors['contact_full_name'] = 'Введіть будь ласка корректні данні!';
-                    jQuery(this).next('#contact_full_name_p').html(errors['contact_full_name']);
+                    jQuery(this).next('#contact_full_name_p').html('<span class="error-span">' + errors['contact_full_name'] + '</span>');
                 } else {
                     jQuery("#contact_full_name_p").addClass('not_vissible');
                     delete errors.contact_full_name;
@@ -340,11 +397,11 @@ jQuery(document).ready(function(){
                 if (!val) {
                     jQuery("#email_p").removeClass('not_vissible');
                     errors['email'] = 'Введіть будь ласка Email';
-                    jQuery(this).next('#email_p').html(errors['email'])
+                    jQuery(this).next('#email_p').html('<span class="error-span">' + errors['email'] + '</span>')
                 } else if (!rev_email.test(val)) {
                     jQuery("#email_p").removeClass('not_vissible');
                     errors['email'] = 'Введіть будь ласка корректний Email';
-                    jQuery(this).next('#email_p').html(errors['email']);
+                    jQuery(this).next('#email_p').html('<span class="error-span">' + errors['email'] + '</span>');
                 } else {
                     jQuery("#email_p").addClass('not_vissible');
                     delete errors.email;
@@ -357,11 +414,11 @@ jQuery(document).ready(function(){
                 if (!val) {
                     jQuery("#phone_number_p").removeClass('not_vissible');
                     errors['phone'] = 'Введіть будь ласка контактний телефон';
-                    jQuery(this).next('#phone_number_p').html(errors['phone']);
+                    jQuery(this).next('#phone_number_p').html('<span class="error-span">' + errors['phone'] + '</span>');
                 } else if (!rev_phone.test(val)) {
                     jQuery("#phone_number_p").removeClass('not_vissible');
                     errors['phone'] = 'Введіть будь ласка корректний контактний телефон';
-                    jQuery(this).next('#phone_number_p').html(errors['phone']);
+                    jQuery(this).next('#phone_number_p').html('<span class="error-span">' + errors['phone'] + '</span>');
                 } else {
                     jQuery("#phone_number_p").addClass('not_vissible');
                     delete errors.phone;
@@ -374,11 +431,11 @@ jQuery(document).ready(function(){
                 if (!val) {
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка назву міста';
-                    jQuery(this).next('#city_p').html(errors['city']);
+                    jQuery(this).next('#city_p').html('<span class="error-span">' + errors['city'] + '</span>');
                 } else if (!rev_city.test(val)){
                     jQuery("#city_p").removeClass('not_vissible');
                     errors['city'] = 'Введіть будь ласка корректно назву міста';
-                    jQuery(this).next('#city_p').html(errors['city']);
+                    jQuery(this).next('#city_p').html('<span class="error-span">' + errors['city'] + '</span>');
                 } else {
                     jQuery("#city_p").addClass('not_vissible');
                     delete errors.city;
@@ -399,7 +456,7 @@ jQuery(document).ready(function(){
             delete errors.selected;
         }
     };
-
+	
    /* var validateFile = function (file) {
         var buttonHolder = jQuery('.buttonsHolder');
         var upload_max_size = 5242880;
@@ -447,7 +504,7 @@ jQuery(document).ready(function(){
         var file = files[0];
         jQuery(validateFile(file));
     }*/
-	
+		
 	innerSection.on('submit', "#registrationForm", function (event) {
 		var button = jQuery("button.contact-submit");
         var input =  jQuery("input");
@@ -464,60 +521,95 @@ jQuery(document).ready(function(){
 		event.preventDefault();
         event.stopPropagation();
 		
-		validateFunction();
-        
-		if (Object.keys(errors) == 0 && input.val()!= '') {
-			
-            var form = document.getElementById("registrationForm");
-            var formData = new FormData(form);
-
-            var oReq = new XMLHttpRequest();
-
-            formData.append('action', 'insert-user');
-
-            oReq.open("POST", WPAjax.ajaxurl, true);
-
-            oReq.onreadystatechange = function() {
-                if (oReq.readyState == 4 && oReq.status == 200) {
-                    jQuery(".selectSpan").text('Оберіть курс:');
-                    jQuery('input', '#registrationForm').each(function() {
-                        var type = this.type;
-						
-                        if (type === 'text'){
-                            this.value = '';
-                        } else if (type === 'file') {
-                            delete files[0];
-                            jQuery(".filename").text('');
-                        }
-                    });
-					
-					setTimeout(function(){
-						button.removeClass("progress-submit");
-						button.addClass("success-submit");
-						button.html('<i class="fa fa-user-plus"></i>');
-					}, 1000);
-                } else {
-					setTimeout(function(){
-						button.removeClass("progress-submit");
-						button.addClass("error-submit");
-						button.text('<i class="fa fa-user-times"></i>');
-					}, 1000);
-				}
-            };
-            oReq.send(formData);
-        } else {
-			setTimeout(function(){
-				button.removeClass("progress-submit");
-				button.addClass("error-submit");
-				button.html('<i class="fa fa-user-times"></i>')
-			}, 1000);
-		}
 		setTimeout(function() {
-			button.removeClass("progress-submit");
-			button.removeClass("error-submit");
-			button.removeClass("success-submit");
-			button.text("Надіслати");
-		}, 3500);
+			validateFunction();
+			
+			if (Object.keys(errors) == 0 && input.val()!= '') {
+				
+				var form = document.getElementById("registrationForm");
+				var formData = new FormData(form);
+				var timeout;
+
+				var oReq = new XMLHttpRequest();
+
+				formData.append('action', 'insert-user');
+
+				oReq.open("POST", WPAjax.ajaxurl, true);
+
+				oReq.onreadystatechange = function() {
+					if (oReq.readyState == 4 && oReq.status == 200) {
+						jQuery(".selectSpan").text('Оберіть курс:');
+						jQuery('input', '#registrationForm').each(function() {
+							var type = this.type;
+							
+							if (type === 'text'){
+								this.value = '';
+							} else if (type === 'file') {
+								delete files[0];
+								jQuery(".filename").text('');
+							}
+						});
+						
+						jQuery("#somedialog").on('click', "button.action" ,function(){
+							jQuery("#somedialog").removeClass("dialog--open");
+							jQuery("#somedialog").addClass("dialog--close");
+							setTimeout(function(){
+								jQuery("#somedialog").removeClass("dialog--close");
+								jQuery("#somedialog").hide();
+							},1000);
+						});
+						
+						if (timeout) clearTimeout(timeout);
+						
+						timeout = setTimeout(function(){
+							button.removeClass("progress-submit");
+							button.addClass("success-submit");
+							button.html('<i class="fa fa-user-plus"></i>');
+							jQuery("#somedialog").addClass("dialog--open");
+							jQuery("#somedialog").show();
+							setTimeout(function() {
+								button.removeClass("progress-submit");
+								button.removeClass("error-submit");
+								button.removeClass("success-submit");
+								jQuery("#somedialog").removeClass("dialog--open");
+								jQuery("#somedialog").addClass("dialog--close");
+								jQuery("#somedialog").removeClass("dialog--close");
+								jQuery("#somedialog").hide();
+								button.text("Надіслати");
+							}, 2500);
+						}, 1000);
+					} else {
+						if (timeout) clearTimeout(timeout);
+						timeout = setTimeout(function(){
+							button.removeClass("progress-submit");
+							button.addClass("error-submit");
+							button.text('<i class="fa fa-user-times"></i>');
+							setTimeout(function() {
+								button.removeClass("progress-submit");
+								button.removeClass("error-submit");
+								button.removeClass("success-submit");
+								button.text("Надіслати");
+							}, 2500);
+						}, 1000);
+					}
+				};
+				oReq.send(formData);
+			} else {
+				setTimeout(function(){
+					button.removeClass("progress-submit");
+					button.addClass("error-submit");
+					button.html('<i class="fa fa-user-times"></i>')
+					setTimeout(function() {
+						button.removeClass("progress-submit");
+						button.removeClass("error-submit");
+						button.removeClass("success-submit");
+						button.text("Надіслати");
+						jQuery(".error").addClass("not_vissible")
+					}, 2500);
+				}, 1000);
+			}
+		}, 1000)
+		
     });
 
     innerSection.on("click", ".selectPlaceholder", function () {
@@ -616,7 +708,7 @@ jQuery(document).ready(function(){
         }
     }
 });
-
+  
 jQuery(document).ready(function($){
     // browser window scroll (in pixels) after which the "back to top" link is shown
     var offset = 300,
@@ -643,5 +735,4 @@ jQuery(document).ready(function($){
             }, scroll_top_duration
         );
     });
-
 });
